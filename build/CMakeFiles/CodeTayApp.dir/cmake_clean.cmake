@@ -1,0 +1,29 @@
+file(REMOVE_RECURSE
+  "CMakeFiles/CodeTayApp.dir/src/Core/App.cpp.obj"
+  "CMakeFiles/CodeTayApp.dir/src/Core/App.cpp.obj.d"
+  "CMakeFiles/CodeTayApp.dir/src/Core/State.cpp.obj"
+  "CMakeFiles/CodeTayApp.dir/src/Core/State.cpp.obj.d"
+  "CMakeFiles/CodeTayApp.dir/src/Screen/MainMenu.cpp.obj"
+  "CMakeFiles/CodeTayApp.dir/src/Screen/MainMenu.cpp.obj.d"
+  "CMakeFiles/CodeTayApp.dir/src/Screen/SLLScreen.cpp.obj"
+  "CMakeFiles/CodeTayApp.dir/src/Screen/SLLScreen.cpp.obj.d"
+  "CMakeFiles/CodeTayApp.dir/src/SinglyLinkedList/ListNode.cpp.obj"
+  "CMakeFiles/CodeTayApp.dir/src/SinglyLinkedList/ListNode.cpp.obj.d"
+  "CMakeFiles/CodeTayApp.dir/src/SinglyLinkedList/SinglyLinkedList.cpp.obj"
+  "CMakeFiles/CodeTayApp.dir/src/SinglyLinkedList/SinglyLinkedList.cpp.obj.d"
+  "CMakeFiles/CodeTayApp.dir/src/UI/Button.cpp.obj"
+  "CMakeFiles/CodeTayApp.dir/src/UI/Button.cpp.obj.d"
+  "CMakeFiles/CodeTayApp.dir/src/UI/InputBox.cpp.obj"
+  "CMakeFiles/CodeTayApp.dir/src/UI/InputBox.cpp.obj.d"
+  "CMakeFiles/CodeTayApp.dir/src/main.cpp.obj"
+  "CMakeFiles/CodeTayApp.dir/src/main.cpp.obj.d"
+  "CodeTayApp.exe"
+  "CodeTayApp.exe.manifest"
+  "CodeTayApp.pdb"
+  "libCodeTayApp.dll.a"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang CXX)
+  include(CMakeFiles/CodeTayApp.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

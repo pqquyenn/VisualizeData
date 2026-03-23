@@ -1,0 +1,3 @@
+C:/Users/LENOVO/Desktop/Codetay/build/CMakeFiles/CodeTayApp.dir
+C:/Users/LENOVO/Desktop/Codetay/build/CMakeFiles/edit_cache.dir
+C:/Users/LENOVO/Desktop/Codetay/build/CMakeFiles/rebuild_cache.dir

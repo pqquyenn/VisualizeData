@@ -1,0 +1,56 @@
+[
+{
+  "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\Core\\App.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\Core\\App.cpp",
+  "file": "C:/Users/LENOVO/Desktop/Codetay/src/Core/App.cpp",
+  "output": "CMakeFiles/CodeTayApp.dir/src/Core/App.cpp.obj"
+},
+{
+  "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\Core\\State.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\Core\\State.cpp",
+  "file": "C:/Users/LENOVO/Desktop/Codetay/src/Core/State.cpp",
+  "output": "CMakeFiles/CodeTayApp.dir/src/Core/State.cpp.obj"
+},
+{
+  "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\Screen\\MainMenu.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\Screen\\MainMenu.cpp",
+  "file": "C:/Users/LENOVO/Desktop/Codetay/src/Screen/MainMenu.cpp",
+  "output": "CMakeFiles/CodeTayApp.dir/src/Screen/MainMenu.cpp.obj"
+},
+{
+  "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\Screen\\SLLScreen.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\Screen\\SLLScreen.cpp",
+  "file": "C:/Users/LENOVO/Desktop/Codetay/src/Screen/SLLScreen.cpp",
+  "output": "CMakeFiles/CodeTayApp.dir/src/Screen/SLLScreen.cpp.obj"
+},
+{
+  "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\SinglyLinkedList\\ListNode.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\SinglyLinkedList\\ListNode.cpp",
+  "file": "C:/Users/LENOVO/Desktop/Codetay/src/SinglyLinkedList/ListNode.cpp",
+  "output": "CMakeFiles/CodeTayApp.dir/src/SinglyLinkedList/ListNode.cpp.obj"
+},
+{
+  "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\SinglyLinkedList\\SinglyLinkedList.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\SinglyLinkedList\\SinglyLinkedList.cpp",
+  "file": "C:/Users/LENOVO/Desktop/Codetay/src/SinglyLinkedList/SinglyLinkedList.cpp",
+  "output": "CMakeFiles/CodeTayApp.dir/src/SinglyLinkedList/SinglyLinkedList.cpp.obj"
+},
+{
+  "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\UI\\Button.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\UI\\Button.cpp",
+  "file": "C:/Users/LENOVO/Desktop/Codetay/src/UI/Button.cpp",
+  "output": "CMakeFiles/CodeTayApp.dir/src/UI/Button.cpp.obj"
+},
+{
+  "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\UI\\InputBox.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\UI\\InputBox.cpp",
+  "file": "C:/Users/LENOVO/Desktop/Codetay/src/UI/InputBox.cpp",
+  "output": "CMakeFiles/CodeTayApp.dir/src/UI/InputBox.cpp.obj"
+},
+{
+  "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\main.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\main.cpp",
+  "file": "C:/Users/LENOVO/Desktop/Codetay/src/main.cpp",
+  "output": "CMakeFiles/CodeTayApp.dir/src/main.cpp.obj"
+}
+]
