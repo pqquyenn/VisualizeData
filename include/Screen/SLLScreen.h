@@ -2,7 +2,7 @@
 #include "State.h"
 #include "Button.h"
 #include "InputBox.h"
-#include "SinglyLinkedList.h" // Nhớ include thư viện này
+#include "SinglyLinkedList.h"
 
 class App;
 
@@ -10,8 +10,10 @@ class SLLScreen : public State {
 private:
     Button* btnBack;
     Button* btnInsert;
+    Button* btnSearch;
+    Button* btnDelete;
     InputBox* inputVal;
-    SinglyLinkedList* sll; // Khai báo danh sách liên kết ở đây
+    SinglyLinkedList* sll;
 
 public:
     SLLScreen(App* app);

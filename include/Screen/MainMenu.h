@@ -5,7 +5,7 @@
 class MainMenu : public State {
 private:
     Button* btnSLL;
-
+    Button* btnAVL;
 public:
     MainMenu(App* app);
     ~MainMenu();
