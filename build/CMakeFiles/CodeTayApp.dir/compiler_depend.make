@@ -134,7 +134,6 @@ CMakeFiles/CodeTayApp.dir/src/AVLTree/AVLNode.cpp.obj: C:/Users/LENOVO/Desktop/C
   C:/msys64/ucrt64/include/c++/15.2.0/bits/range_access.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/refwrap.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/requires_hosted.h \
-  C:/msys64/ucrt64/include/c++/15.2.0/bits/specfun.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/std_abs.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_algo.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_algobase.h \
@@ -166,7 +165,6 @@ CMakeFiles/CodeTayApp.dir/src/AVLTree/AVLNode.cpp.obj: C:/Users/LENOVO/Desktop/C
   C:/msys64/ucrt64/include/c++/15.2.0/cctype \
   C:/msys64/ucrt64/include/c++/15.2.0/cerrno \
   C:/msys64/ucrt64/include/c++/15.2.0/clocale \
-  C:/msys64/ucrt64/include/c++/15.2.0/cmath \
   C:/msys64/ucrt64/include/c++/15.2.0/concepts \
   C:/msys64/ucrt64/include/c++/15.2.0/cstddef \
   C:/msys64/ucrt64/include/c++/15.2.0/cstdio \
@@ -187,7 +185,6 @@ CMakeFiles/CodeTayApp.dir/src/AVLTree/AVLNode.cpp.obj: C:/Users/LENOVO/Desktop/C
   C:/msys64/ucrt64/include/c++/15.2.0/ios \
   C:/msys64/ucrt64/include/c++/15.2.0/iosfwd \
   C:/msys64/ucrt64/include/c++/15.2.0/iterator \
-  C:/msys64/ucrt64/include/c++/15.2.0/limits \
   C:/msys64/ucrt64/include/c++/15.2.0/locale \
   C:/msys64/ucrt64/include/c++/15.2.0/map \
   C:/msys64/ucrt64/include/c++/15.2.0/new \
@@ -201,18 +198,6 @@ CMakeFiles/CodeTayApp.dir/src/AVLTree/AVLNode.cpp.obj: C:/Users/LENOVO/Desktop/C
   C:/msys64/ucrt64/include/c++/15.2.0/string \
   C:/msys64/ucrt64/include/c++/15.2.0/string_view \
   C:/msys64/ucrt64/include/c++/15.2.0/system_error \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/bessel_function.tcc \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/beta_function.tcc \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/ell_integral.tcc \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/exp_integral.tcc \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/gamma.tcc \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/hypergeometric.tcc \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/legendre_function.tcc \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/modified_bessel_func.tcc \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/poly_hermite.tcc \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/poly_laguerre.tcc \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/riemann_zeta.tcc \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/special_function_util.h \
   C:/msys64/ucrt64/include/c++/15.2.0/tuple \
   C:/msys64/ucrt64/include/c++/15.2.0/type_traits \
   C:/msys64/ucrt64/include/c++/15.2.0/typeinfo \
@@ -241,7 +226,6 @@ CMakeFiles/CodeTayApp.dir/src/AVLTree/AVLNode.cpp.obj: C:/Users/LENOVO/Desktop/C
   C:/msys64/ucrt64/include/limits.h \
   C:/msys64/ucrt64/include/locale.h \
   C:/msys64/ucrt64/include/malloc.h \
-  C:/msys64/ucrt64/include/math.h \
   C:/msys64/ucrt64/include/process.h \
   C:/msys64/ucrt64/include/pthread.h \
   C:/msys64/ucrt64/include/pthread_compat.h \
@@ -1051,11 +1035,8 @@ CMakeFiles/CodeTayApp.dir/src/Screen/AVLScreen.cpp.obj: C:/Users/LENOVO/Desktop/
   C:/Users/LENOVO/Desktop/Codetay/include/Core/State.h \
   C:/Users/LENOVO/Desktop/Codetay/include/Screen/AVLScreen.h \
   C:/Users/LENOVO/Desktop/Codetay/include/Screen/MainMenu.h \
-  C:/Users/LENOVO/Desktop/Codetay/include/SinglyLinkedList/ListNode.h \
-  C:/Users/LENOVO/Desktop/Codetay/include/SinglyLinkedList/SinglyLinkedList.h \
   C:/Users/LENOVO/Desktop/Codetay/include/UI/Button.h \
   C:/Users/LENOVO/Desktop/Codetay/include/UI/InputBox.h \
-  C:/Users/LENOVO/Desktop/Codetay/include/UI/PlaybackController.h \
   C:/msys64/ucrt64/include/SFML/Config.hpp \
   C:/msys64/ucrt64/include/SFML/Graphics.hpp \
   C:/msys64/ucrt64/include/SFML/Graphics/BlendMode.hpp \
@@ -1321,7 +1302,6 @@ CMakeFiles/CodeTayApp.dir/src/Screen/MainMenu.cpp.obj: C:/Users/LENOVO/Desktop/C
   C:/Users/LENOVO/Desktop/Codetay/include/SinglyLinkedList/SinglyLinkedList.h \
   C:/Users/LENOVO/Desktop/Codetay/include/UI/Button.h \
   C:/Users/LENOVO/Desktop/Codetay/include/UI/InputBox.h \
-  C:/Users/LENOVO/Desktop/Codetay/include/UI/PlaybackController.h \
   C:/msys64/ucrt64/include/SFML/Config.hpp \
   C:/msys64/ucrt64/include/SFML/Graphics.hpp \
   C:/msys64/ucrt64/include/SFML/Graphics/BlendMode.hpp \
@@ -1584,7 +1564,6 @@ CMakeFiles/CodeTayApp.dir/src/Screen/SLLScreen.cpp.obj: C:/Users/LENOVO/Desktop/
   C:/Users/LENOVO/Desktop/Codetay/include/SinglyLinkedList/SinglyLinkedList.h \
   C:/Users/LENOVO/Desktop/Codetay/include/UI/Button.h \
   C:/Users/LENOVO/Desktop/Codetay/include/UI/InputBox.h \
-  C:/Users/LENOVO/Desktop/Codetay/include/UI/PlaybackController.h \
   C:/msys64/ucrt64/include/SFML/Config.hpp \
   C:/msys64/ucrt64/include/SFML/Graphics.hpp \
   C:/msys64/ucrt64/include/SFML/Graphics/BlendMode.hpp \
@@ -1971,6 +1950,7 @@ CMakeFiles/CodeTayApp.dir/src/SinglyLinkedList/ListNode.cpp.obj: C:/Users/LENOVO
   C:/msys64/ucrt64/include/c++/15.2.0/bits/range_access.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/refwrap.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/requires_hosted.h \
+  C:/msys64/ucrt64/include/c++/15.2.0/bits/specfun.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/std_abs.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_algo.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_algobase.h \
@@ -2002,6 +1982,7 @@ CMakeFiles/CodeTayApp.dir/src/SinglyLinkedList/ListNode.cpp.obj: C:/Users/LENOVO
   C:/msys64/ucrt64/include/c++/15.2.0/cctype \
   C:/msys64/ucrt64/include/c++/15.2.0/cerrno \
   C:/msys64/ucrt64/include/c++/15.2.0/clocale \
+  C:/msys64/ucrt64/include/c++/15.2.0/cmath \
   C:/msys64/ucrt64/include/c++/15.2.0/concepts \
   C:/msys64/ucrt64/include/c++/15.2.0/cstddef \
   C:/msys64/ucrt64/include/c++/15.2.0/cstdio \
@@ -2022,6 +2003,7 @@ CMakeFiles/CodeTayApp.dir/src/SinglyLinkedList/ListNode.cpp.obj: C:/Users/LENOVO
   C:/msys64/ucrt64/include/c++/15.2.0/ios \
   C:/msys64/ucrt64/include/c++/15.2.0/iosfwd \
   C:/msys64/ucrt64/include/c++/15.2.0/iterator \
+  C:/msys64/ucrt64/include/c++/15.2.0/limits \
   C:/msys64/ucrt64/include/c++/15.2.0/locale \
   C:/msys64/ucrt64/include/c++/15.2.0/map \
   C:/msys64/ucrt64/include/c++/15.2.0/new \
@@ -2035,6 +2017,18 @@ CMakeFiles/CodeTayApp.dir/src/SinglyLinkedList/ListNode.cpp.obj: C:/Users/LENOVO
   C:/msys64/ucrt64/include/c++/15.2.0/string \
   C:/msys64/ucrt64/include/c++/15.2.0/string_view \
   C:/msys64/ucrt64/include/c++/15.2.0/system_error \
+  C:/msys64/ucrt64/include/c++/15.2.0/tr1/bessel_function.tcc \
+  C:/msys64/ucrt64/include/c++/15.2.0/tr1/beta_function.tcc \
+  C:/msys64/ucrt64/include/c++/15.2.0/tr1/ell_integral.tcc \
+  C:/msys64/ucrt64/include/c++/15.2.0/tr1/exp_integral.tcc \
+  C:/msys64/ucrt64/include/c++/15.2.0/tr1/gamma.tcc \
+  C:/msys64/ucrt64/include/c++/15.2.0/tr1/hypergeometric.tcc \
+  C:/msys64/ucrt64/include/c++/15.2.0/tr1/legendre_function.tcc \
+  C:/msys64/ucrt64/include/c++/15.2.0/tr1/modified_bessel_func.tcc \
+  C:/msys64/ucrt64/include/c++/15.2.0/tr1/poly_hermite.tcc \
+  C:/msys64/ucrt64/include/c++/15.2.0/tr1/poly_laguerre.tcc \
+  C:/msys64/ucrt64/include/c++/15.2.0/tr1/riemann_zeta.tcc \
+  C:/msys64/ucrt64/include/c++/15.2.0/tr1/special_function_util.h \
   C:/msys64/ucrt64/include/c++/15.2.0/tuple \
   C:/msys64/ucrt64/include/c++/15.2.0/type_traits \
   C:/msys64/ucrt64/include/c++/15.2.0/typeinfo \
@@ -2063,6 +2057,7 @@ CMakeFiles/CodeTayApp.dir/src/SinglyLinkedList/ListNode.cpp.obj: C:/Users/LENOVO
   C:/msys64/ucrt64/include/limits.h \
   C:/msys64/ucrt64/include/locale.h \
   C:/msys64/ucrt64/include/malloc.h \
+  C:/msys64/ucrt64/include/math.h \
   C:/msys64/ucrt64/include/process.h \
   C:/msys64/ucrt64/include/pthread.h \
   C:/msys64/ucrt64/include/pthread_compat.h \
@@ -2227,7 +2222,6 @@ CMakeFiles/CodeTayApp.dir/src/SinglyLinkedList/SinglyLinkedList.cpp.obj: C:/User
   C:/msys64/ucrt64/include/c++/15.2.0/bits/range_access.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/refwrap.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/requires_hosted.h \
-  C:/msys64/ucrt64/include/c++/15.2.0/bits/specfun.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/std_abs.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_algo.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_algobase.h \
@@ -2259,7 +2253,6 @@ CMakeFiles/CodeTayApp.dir/src/SinglyLinkedList/SinglyLinkedList.cpp.obj: C:/User
   C:/msys64/ucrt64/include/c++/15.2.0/cctype \
   C:/msys64/ucrt64/include/c++/15.2.0/cerrno \
   C:/msys64/ucrt64/include/c++/15.2.0/clocale \
-  C:/msys64/ucrt64/include/c++/15.2.0/cmath \
   C:/msys64/ucrt64/include/c++/15.2.0/concepts \
   C:/msys64/ucrt64/include/c++/15.2.0/cstddef \
   C:/msys64/ucrt64/include/c++/15.2.0/cstdio \
@@ -2280,7 +2273,6 @@ CMakeFiles/CodeTayApp.dir/src/SinglyLinkedList/SinglyLinkedList.cpp.obj: C:/User
   C:/msys64/ucrt64/include/c++/15.2.0/ios \
   C:/msys64/ucrt64/include/c++/15.2.0/iosfwd \
   C:/msys64/ucrt64/include/c++/15.2.0/iterator \
-  C:/msys64/ucrt64/include/c++/15.2.0/limits \
   C:/msys64/ucrt64/include/c++/15.2.0/locale \
   C:/msys64/ucrt64/include/c++/15.2.0/map \
   C:/msys64/ucrt64/include/c++/15.2.0/new \
@@ -2294,18 +2286,6 @@ CMakeFiles/CodeTayApp.dir/src/SinglyLinkedList/SinglyLinkedList.cpp.obj: C:/User
   C:/msys64/ucrt64/include/c++/15.2.0/string \
   C:/msys64/ucrt64/include/c++/15.2.0/string_view \
   C:/msys64/ucrt64/include/c++/15.2.0/system_error \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/bessel_function.tcc \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/beta_function.tcc \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/ell_integral.tcc \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/exp_integral.tcc \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/gamma.tcc \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/hypergeometric.tcc \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/legendre_function.tcc \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/modified_bessel_func.tcc \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/poly_hermite.tcc \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/poly_laguerre.tcc \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/riemann_zeta.tcc \
-  C:/msys64/ucrt64/include/c++/15.2.0/tr1/special_function_util.h \
   C:/msys64/ucrt64/include/c++/15.2.0/tuple \
   C:/msys64/ucrt64/include/c++/15.2.0/type_traits \
   C:/msys64/ucrt64/include/c++/15.2.0/typeinfo \
@@ -2334,7 +2314,6 @@ CMakeFiles/CodeTayApp.dir/src/SinglyLinkedList/SinglyLinkedList.cpp.obj: C:/User
   C:/msys64/ucrt64/include/limits.h \
   C:/msys64/ucrt64/include/locale.h \
   C:/msys64/ucrt64/include/malloc.h \
-  C:/msys64/ucrt64/include/math.h \
   C:/msys64/ucrt64/include/process.h \
   C:/msys64/ucrt64/include/pthread.h \
   C:/msys64/ucrt64/include/pthread_compat.h \
@@ -3402,13 +3381,37 @@ C:/Users/LENOVO/Desktop/Codetay/src/UI/InputBox.cpp:
 
 C:/Users/LENOVO/Desktop/Codetay/src/UI/Button.cpp:
 
+C:/msys64/ucrt64/include/math.h:
+
+C:/msys64/ucrt64/include/c++/15.2.0/tr1/special_function_util.h:
+
+C:/msys64/ucrt64/include/c++/15.2.0/tr1/riemann_zeta.tcc:
+
+C:/msys64/ucrt64/include/c++/15.2.0/tr1/poly_hermite.tcc:
+
+C:/msys64/ucrt64/include/c++/15.2.0/tr1/modified_bessel_func.tcc:
+
+C:/msys64/ucrt64/include/c++/15.2.0/tr1/hypergeometric.tcc:
+
+C:/msys64/ucrt64/include/c++/15.2.0/tr1/exp_integral.tcc:
+
+C:/msys64/ucrt64/include/c++/15.2.0/tr1/ell_integral.tcc:
+
+C:/msys64/ucrt64/include/c++/15.2.0/tr1/beta_function.tcc:
+
+C:/msys64/ucrt64/include/c++/15.2.0/tr1/bessel_function.tcc:
+
+C:/msys64/ucrt64/include/c++/15.2.0/limits:
+
+C:/msys64/ucrt64/include/c++/15.2.0/bits/specfun.h:
+
 C:/Users/LENOVO/Desktop/Codetay/src/SinglyLinkedList/ListNode.cpp:
 
 C:/Users/LENOVO/Desktop/Codetay/src/Screen/SLLScreen.cpp:
 
-C:/Users/LENOVO/Desktop/Codetay/src/Screen/MainMenu.cpp:
-
 C:/Users/LENOVO/Desktop/Codetay/include/SinglyLinkedList/ListNode.h:
+
+C:/Users/LENOVO/Desktop/Codetay/src/Screen/MainMenu.cpp:
 
 C:/Users/LENOVO/Desktop/Codetay/include/Screen/AVLScreen.h:
 
@@ -3417,24 +3420,6 @@ C:/Users/LENOVO/Desktop/Codetay/src/Screen/AVLScreen.cpp:
 C:/Users/LENOVO/Desktop/Codetay/include/Screen/MainMenu.h:
 
 C:/Users/LENOVO/Desktop/Codetay/include/Core/State.h:
-
-C:/Users/LENOVO/Desktop/Codetay/src/Core/App.cpp:
-
-C:/Users/LENOVO/Desktop/Codetay/include/AVLTree/AVLTree.h:
-
-C:/Users/LENOVO/Desktop/Codetay/src/AVLTree/AVLTree.cpp:
-
-C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/syslimits.h:
-
-C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stddef.h:
-
-C:/msys64/ucrt64/include/wctype.h:
-
-C:/msys64/ucrt64/include/vadefs.h:
-
-C:/msys64/ucrt64/include/sys/types.h:
-
-C:/msys64/ucrt64/include/stdlib.h:
 
 C:/msys64/ucrt64/include/c++/15.2.0/bits/locale_facets_nonio.h:
 
@@ -3449,8 +3434,6 @@ C:/msys64/ucrt64/include/SFML/Graphics/Glsl.hpp:
 C:/msys64/ucrt64/include/c++/15.2.0/bits/invoke.h:
 
 C:/msys64/ucrt64/include/SFML/Graphics/Color.hpp:
-
-C:/msys64/ucrt64/include/c++/15.2.0/tr1/poly_hermite.tcc:
 
 C:/msys64/ucrt64/include/c++/15.2.0/bits/erase_if.h:
 
@@ -3488,12 +3471,6 @@ C:/msys64/ucrt64/include/pthread_signal.h:
 
 C:/msys64/ucrt64/include/_mingw_secapi.h:
 
-C:/msys64/ucrt64/include/math.h:
-
-C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/limits.h:
-
-C:/msys64/ucrt64/include/_mingw_mac.h:
-
 C:/msys64/ucrt64/include/c++/15.2.0/bits/locale_classes.tcc:
 
 C:/msys64/ucrt64/include/SFML/Window.hpp:
@@ -3517,6 +3494,8 @@ C:/msys64/ucrt64/include/SFML/Window/Touch.hpp:
 C:/msys64/ucrt64/include/c++/15.2.0/bits/ios_base.h:
 
 C:/msys64/ucrt64/include/SFML/Window/Mouse.hpp:
+
+C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/syslimits.h:
 
 C:/msys64/ucrt64/include/SFML/Window/Event.hpp:
 
@@ -3548,8 +3527,6 @@ C:/msys64/ucrt64/include/SFML/Graphics/ConvexShape.hpp:
 
 C:/msys64/ucrt64/include/c++/15.2.0/cerrno:
 
-C:/msys64/ucrt64/include/c++/15.2.0/limits:
-
 C:/Users/LENOVO/Desktop/Codetay/src/Core/State.cpp:
 
 C:/msys64/ucrt64/include/SFML/Graphics/Shader.hpp:
@@ -3559,10 +3536,6 @@ C:/msys64/ucrt64/include/c++/15.2.0/pstl/pstl_config.h:
 C:/msys64/ucrt64/include/c++/15.2.0/bits/concept_check.h:
 
 C:/msys64/ucrt64/include/SFML/Window/Context.hpp:
-
-C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/mm_malloc.h:
-
-C:/msys64/ucrt64/include/c++/15.2.0/bits/allocator.h:
 
 C:/Users/LENOVO/Desktop/Codetay/src/SinglyLinkedList/SinglyLinkedList.cpp:
 
@@ -3575,6 +3548,10 @@ C:/msys64/ucrt64/include/SFML/System/ThreadLocalPtr.inl:
 C:/msys64/ucrt64/include/c++/15.2.0/bits/stringfwd.h:
 
 C:/msys64/ucrt64/include/c++/15.2.0/cstddef:
+
+C:/msys64/ucrt64/include/c++/15.2.0/tr1/gamma.tcc:
+
+C:/msys64/ucrt64/include/SFML/Graphics/Vertex.hpp:
 
 C:/msys64/ucrt64/include/SFML/Window/VideoMode.hpp:
 
@@ -3636,7 +3613,9 @@ C:/msys64/ucrt64/include/SFML/Graphics/RenderWindow.hpp:
 
 C:/msys64/ucrt64/include/c++/15.2.0/bits/basic_ios.tcc:
 
-C:/msys64/ucrt64/include/c++/15.2.0/tr1/modified_bessel_func.tcc:
+C:/msys64/ucrt64/include/c++/15.2.0/tr1/poly_laguerre.tcc:
+
+C:/msys64/ucrt64/include/SFML/System/InputStream.hpp:
 
 C:/msys64/ucrt64/include/c++/15.2.0/bits/locale_facets_nonio.tcc:
 
@@ -3660,11 +3639,13 @@ C:/msys64/ucrt64/include/SFML/Window/WindowHandle.hpp:
 
 C:/msys64/ucrt64/include/_mingw_off_t.h:
 
-C:/msys64/ucrt64/include/c++/15.2.0/tr1/bessel_function.tcc:
-
 C:/msys64/ucrt64/include/SFML/Graphics/RenderStates.hpp:
 
 C:/msys64/ucrt64/include/SFML/Graphics/Drawable.hpp:
+
+C:/msys64/ucrt64/include/c++/15.2.0/cmath:
+
+C:/msys64/ucrt64/include/c++/15.2.0/bits/locale_facets.tcc:
 
 C:/msys64/ucrt64/include/SFML/Graphics/RectangleShape.hpp:
 
@@ -3684,27 +3665,27 @@ C:/msys64/ucrt64/include/SFML/Graphics/Glsl.inl:
 
 C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_iterator_base_funcs.h:
 
+C:/msys64/ucrt64/include/c++/15.2.0/bits/allocator.h:
+
+C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/mm_malloc.h:
+
 C:/msys64/ucrt64/include/SFML/Graphics/VertexArray.hpp:
 
 C:/msys64/ucrt64/include/_mingw.h:
 
 C:/msys64/ucrt64/include/SFML/System/Sleep.hpp:
 
-C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdint.h:
-
-C:/msys64/ucrt64/include/c++/15.2.0/map:
-
 C:/msys64/ucrt64/include/SFML/Graphics/RenderTarget.hpp:
 
 C:/msys64/ucrt64/include/SFML/Graphics/VertexBuffer.hpp:
-
-C:/msys64/ucrt64/include/c++/15.2.0/tr1/exp_integral.tcc:
 
 C:/msys64/ucrt64/include/SFML/System/MemoryInputStream.hpp:
 
 C:/msys64/ucrt64/include/SFML/Graphics/View.hpp:
 
 C:/msys64/ucrt64/include/c++/15.2.0/bits/ostream_insert.h:
+
+C:/Users/LENOVO/Desktop/Codetay/src/Core/App.cpp:
 
 C:/msys64/ucrt64/include/c++/15.2.0/bits/basic_string.tcc:
 
@@ -3717,20 +3698,6 @@ C:/msys64/ucrt64/include/c++/15.2.0/bits/new_allocator.h:
 C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_iterator_base_types.h:
 
 C:/msys64/ucrt64/include/SFML/System/Clock.hpp:
-
-C:/msys64/ucrt64/include/swprintf.inl:
-
-C:/msys64/ucrt64/include/SFML/System/Err.hpp:
-
-C:/msys64/ucrt64/include/c++/15.2.0/tr1/ell_integral.tcc:
-
-C:/msys64/ucrt64/include/wchar.h:
-
-C:/msys64/ucrt64/include/SFML/Graphics/Rect.inl:
-
-C:/Users/LENOVO/Desktop/Codetay/src/AVLTree/AVLNode.cpp:
-
-C:/msys64/ucrt64/include/SFML/System/String.hpp:
 
 C:/msys64/ucrt64/include/SFML/System/Export.hpp:
 
@@ -3747,6 +3714,8 @@ C:/msys64/ucrt64/include/c++/15.2.0/iosfwd:
 C:/msys64/ucrt64/include/SFML/Window/Vulkan.hpp:
 
 C:/msys64/ucrt64/include/SFML/System/Mutex.hpp:
+
+C:/msys64/ucrt64/include/wctype.h:
 
 C:/msys64/ucrt64/include/stddef.h:
 
@@ -3768,9 +3737,9 @@ C:/msys64/ucrt64/include/c++/15.2.0/bits/exception_defines.h:
 
 C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_uninitialized.h:
 
-C:/msys64/ucrt64/include/sys/timeb.h:
+C:/msys64/ucrt64/include/SFML/System/Err.hpp:
 
-C:/msys64/ucrt64/include/sec_api/stdio_s.h:
+C:/msys64/ucrt64/include/swprintf.inl:
 
 C:/msys64/ucrt64/include/c++/15.2.0/bits/predefined_ops.h:
 
@@ -3789,20 +3758,6 @@ C:/msys64/ucrt64/include/limits.h:
 C:/msys64/ucrt64/include/c++/15.2.0/bits/range_access.h:
 
 C:/msys64/ucrt64/include/c++/15.2.0/concepts:
-
-C:/msys64/ucrt64/include/c++/15.2.0/bits/specfun.h:
-
-C:/msys64/ucrt64/include/c++/15.2.0/clocale:
-
-C:/msys64/ucrt64/include/c++/15.2.0/pstl/glue_algorithm_defs.h:
-
-C:/msys64/ucrt64/include/SFML/Window/Clipboard.hpp:
-
-C:/msys64/ucrt64/include/c++/15.2.0/cwctype:
-
-C:/msys64/ucrt64/include/c++/15.2.0/stdexcept:
-
-C:/msys64/ucrt64/include/pthread_compat.h:
 
 C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_algo.h:
 
@@ -3870,9 +3825,17 @@ C:/msys64/ucrt64/include/c++/15.2.0/tr1/legendre_function.tcc:
 
 C:/msys64/ucrt64/include/c++/15.2.0/cctype:
 
-C:/msys64/ucrt64/include/c++/15.2.0/bits/locale_facets.tcc:
+C:/msys64/ucrt64/include/c++/15.2.0/clocale:
 
-C:/msys64/ucrt64/include/c++/15.2.0/cmath:
+C:/msys64/ucrt64/include/c++/15.2.0/pstl/glue_algorithm_defs.h:
+
+C:/msys64/ucrt64/include/SFML/Window/Clipboard.hpp:
+
+C:/msys64/ucrt64/include/c++/15.2.0/cwctype:
+
+C:/msys64/ucrt64/include/c++/15.2.0/stdexcept:
+
+C:/msys64/ucrt64/include/pthread_compat.h:
 
 C:/msys64/ucrt64/include/c++/15.2.0/cstdlib:
 
@@ -3881,8 +3844,6 @@ C:/msys64/ucrt64/include/c++/15.2.0/ios:
 C:/msys64/ucrt64/include/c++/15.2.0/ctime:
 
 C:/msys64/ucrt64/include/c++/15.2.0/new:
-
-C:/msys64/ucrt64/include/c++/15.2.0/tr1/riemann_zeta.tcc:
 
 C:/msys64/ucrt64/include/c++/15.2.0/debug/debug.h:
 
@@ -3898,6 +3859,8 @@ C:/msys64/ucrt64/include/c++/15.2.0/bits/utility.h:
 
 C:/msys64/ucrt64/include/c++/15.2.0/ostream:
 
+C:/msys64/ucrt64/include/sys/types.h:
+
 C:/msys64/ucrt64/include/c++/15.2.0/pstl/execution_defs.h:
 
 C:/msys64/ucrt64/include/corecrt_startup.h:
@@ -3906,21 +3869,7 @@ C:/msys64/ucrt64/include/stdio.h:
 
 C:/msys64/ucrt64/include/c++/15.2.0/stdlib.h:
 
-C:/msys64/ucrt64/include/SFML/System/InputStream.hpp:
-
-C:/msys64/ucrt64/include/c++/15.2.0/tr1/poly_laguerre.tcc:
-
 C:/msys64/ucrt64/include/c++/15.2.0/streambuf:
-
-C:/msys64/ucrt64/include/c++/15.2.0/tr1/beta_function.tcc:
-
-C:/msys64/ucrt64/include/SFML/Graphics/Vertex.hpp:
-
-C:/msys64/ucrt64/include/c++/15.2.0/tr1/gamma.tcc:
-
-C:/msys64/ucrt64/include/c++/15.2.0/tr1/hypergeometric.tcc:
-
-C:/msys64/ucrt64/include/c++/15.2.0/tr1/special_function_util.h:
 
 C:/msys64/ucrt64/include/c++/15.2.0/tuple:
 
@@ -3930,9 +3879,17 @@ C:/msys64/ucrt64/include/c++/15.2.0/x86_64-w64-mingw32/bits/c++allocator.h:
 
 C:/msys64/ucrt64/include/pthread_time.h:
 
+C:/msys64/ucrt64/include/c++/15.2.0/map:
+
+C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdint.h:
+
 C:/msys64/ucrt64/include/c++/15.2.0/x86_64-w64-mingw32/bits/c++config.h:
 
 C:/msys64/ucrt64/include/c++/15.2.0/x86_64-w64-mingw32/bits/ctype_base.h:
+
+C:/msys64/ucrt64/include/sec_api/stdio_s.h:
+
+C:/msys64/ucrt64/include/sys/timeb.h:
 
 C:/msys64/ucrt64/include/c++/15.2.0/x86_64-w64-mingw32/bits/gthr-default.h:
 
@@ -3956,12 +3913,6 @@ C:/msys64/ucrt64/include/SFML/Window/Joystick.hpp:
 
 C:/msys64/ucrt64/include/crtdefs.h:
 
-C:/msys64/ucrt64/include/time.h:
-
-C:/msys64/ucrt64/include/c++/15.2.0/bits/memoryfwd.h:
-
-C:/msys64/ucrt64/include/ctype.h:
-
 C:/msys64/ucrt64/include/malloc.h:
 
 C:/msys64/ucrt64/include/c++/15.2.0/x86_64-w64-mingw32/bits/ctype_inline.h:
@@ -3982,6 +3933,34 @@ C:/msys64/ucrt64/include/c++/15.2.0/bits/std_abs.h:
 
 C:/msys64/ucrt64/include/sec_api/wchar_s.h:
 
+C:/msys64/ucrt64/include/c++/15.2.0/bits/memoryfwd.h:
+
+C:/msys64/ucrt64/include/ctype.h:
+
+C:/msys64/ucrt64/include/time.h:
+
 C:/msys64/ucrt64/include/c++/15.2.0/istream:
 
 C:/msys64/ucrt64/include/stdint.h:
+
+C:/msys64/ucrt64/include/stdlib.h:
+
+C:/msys64/ucrt64/include/vadefs.h:
+
+C:/msys64/ucrt64/include/SFML/Graphics/Rect.inl:
+
+C:/Users/LENOVO/Desktop/Codetay/src/AVLTree/AVLNode.cpp:
+
+C:/msys64/ucrt64/include/SFML/System/String.hpp:
+
+C:/msys64/ucrt64/include/wchar.h:
+
+C:/msys64/ucrt64/include/_mingw_mac.h:
+
+C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/limits.h:
+
+C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stddef.h:
+
+C:/Users/LENOVO/Desktop/Codetay/src/AVLTree/AVLTree.cpp:
+
+C:/Users/LENOVO/Desktop/Codetay/include/AVLTree/AVLTree.h:

@@ -250,6 +250,5 @@ CMakeFiles/CodeTayApp.dir/src/Screen/SLLScreen.cpp.obj: \
  C:/Users/LENOVO/Desktop/Codetay/include/UI/InputBox.h \
  C:/Users/LENOVO/Desktop/Codetay/include/SinglyLinkedList/SinglyLinkedList.h \
  C:/Users/LENOVO/Desktop/Codetay/include/SinglyLinkedList/ListNode.h \
- C:/Users/LENOVO/Desktop/Codetay/include/UI/PlaybackController.h \
  C:/Users/LENOVO/Desktop/Codetay/include/Core/App.h \
  C:/Users/LENOVO/Desktop/Codetay/include/Screen/MainMenu.h

@@ -3,10 +3,8 @@
 #include "Button.h"
 #include "InputBox.h"
 #include "SinglyLinkedList.h"
-#include "PlaybackController.h"
 
 class App;
-
 
 class SLLScreen : public State {
 private:
@@ -16,23 +14,22 @@ private:
     Button* btnDelete;
     Button* btnInit;
 
-    // THÊM 2 BIẾN NÀY:
-    Button* btnSpeedDown; 
+    // Tích hợp trực tiếp Playback Buttons (Không dùng PlaybackController)
+    Button* btnStepBack;
+    Button* btnPausePlay;
+    Button* btnStepForward;
+    Button* btnSpeedDown;
     Button* btnSpeedUp;
 
-    // ... (phần còn lại giữ nguyên)
     InputBox* inputVal;
     SinglyLinkedList* sll;
-    PlaybackController* playbackController;
 
-    // --- THÊM 4 BIẾN NÀY CHO TÍNH NĂNG CAMERA ---
-    sf::View listView;           // Camera để soi danh sách
-    bool isPanning = false;      // Đang giữ chuột để kéo hay không?
-    sf::Vector2i oldMousePos;    // Lưu vị trí chuột cũ để tính khoảng cách kéo
-    bool isViewInitialized = false; // Đảm bảo Camera chỉ khởi tạo 1 lần
+    sf::View listView;
+    bool isPanning = false;
+    sf::Vector2i oldMousePos;
+    bool isViewInitialized = false;
 
 public:
-    // ... (Giữ nguyên phần public)
     SLLScreen(App* app);
     ~SLLScreen();
 

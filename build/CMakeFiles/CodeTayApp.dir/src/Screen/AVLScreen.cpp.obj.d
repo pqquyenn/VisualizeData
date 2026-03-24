@@ -248,9 +248,6 @@ CMakeFiles/CodeTayApp.dir/src/Screen/AVLScreen.cpp.obj: \
  C:/msys64/ucrt64/include/SFML/Graphics/VertexBuffer.hpp \
  C:/Users/LENOVO/Desktop/Codetay/include/UI/Button.h \
  C:/Users/LENOVO/Desktop/Codetay/include/UI/InputBox.h \
- C:/Users/LENOVO/Desktop/Codetay/include/UI/PlaybackController.h \
- C:/Users/LENOVO/Desktop/Codetay/include/SinglyLinkedList/SinglyLinkedList.h \
- C:/Users/LENOVO/Desktop/Codetay/include/SinglyLinkedList/ListNode.h \
  C:/Users/LENOVO/Desktop/Codetay/include/AVLTree/AVLTree.h \
  C:/Users/LENOVO/Desktop/Codetay/include/AVLTree/AVLNode.h \
  C:/Users/LENOVO/Desktop/Codetay/include/Core/App.h \

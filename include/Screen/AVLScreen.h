@@ -1,11 +1,10 @@
 #pragma once
-#include "State.h" // Nhớ trỏ đúng đường dẫn của bạn
+#include "State.h"
 #include "Button.h"
 #include "InputBox.h"
-#include "PlaybackController.h"
 #include "AVLTree.h"
 
-class App; // Forward declaration
+class App;
 
 class AVLScreen : public State {
 private:
@@ -15,12 +14,16 @@ private:
     Button* btnDelete;
     Button* btnInit;
 
-    InputBox* inputVal;
-    
-    AVLTree* avlTree;
-    PlaybackController* playbackController;
+    // Các nút Playback được tích hợp thẳng vào đây để không lệ thuộc SinglyLinkedList
+    Button* btnStepBack;
+    Button* btnPausePlay;
+    Button* btnStepForward;
+    Button* btnSpeedDown;
+    Button* btnSpeedUp;
 
-    // Camera (View) để hỗ trợ kéo thả, zoom cho Cây to
+    InputBox* inputVal;
+    AVLTree* avlTree;
+
     sf::View treeView;
     bool isPanning = false;
     sf::Vector2i oldMousePos;

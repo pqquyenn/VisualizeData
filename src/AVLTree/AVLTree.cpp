@@ -1,157 +1,287 @@
 #include "AVLTree.h"
-#include <algorithm> // cho std::max
+#include <cstdlib>
+#include <ctime>
 
-AVLTree::AVLTree(sf::Font& font) : font(font), root(nullptr), currentStep(-1) {}
+AVLTree::AVLTree(sf::Font& font) : font(font), root(nullptr), currentStep(0), timer(0), delay(0.8f), isPaused(false) {
+    std::srand(std::time(0));
+}
 
-AVLTree::~AVLTree() { clear(root); }
+AVLTree::~AVLTree() { clear(); }
 
-void AVLTree::clear(AVLNode* node) {
-    if (node) {
-        clear(node->left);
-        clear(node->right);
-        delete node;
+void AVLTree::clear() {
+    clearLogical(root);
+    root = nullptr;
+    for (auto& pair : visualNodes) delete pair.second;
+    visualNodes.clear();
+    snapshots.clear();
+}
+
+void AVLTree::clearLogical(LogicalNode* node) {
+    if (!node) return;
+    clearLogical(node->left);
+    clearLogical(node->right);
+    delete node;
+}
+
+int AVLTree::height(LogicalNode* n) { return n ? n->height : 0; }
+int AVLTree::getBalance(LogicalNode* n) { return n ? height(n->left) - height(n->right) : 0; }
+void AVLTree::updateHeight(LogicalNode* n) { if (n) n->height = 1 + std::max(height(n->left), height(n->right)); }
+
+// --- THUẬT TOÁN ĐỊNH TUYẾN TOẠ ĐỘ TRÊN CÂY ---
+void AVLTree::calculateLayout(LogicalNode* node, float x, float y, float hGap, std::vector<NodeInfo>& snapshotNodes) {
+    if (!node) return;
+    NodeInfo info;
+    info.value = node->value;
+    info.pos = sf::Vector2f(x, y);
+    info.color = node->color;
+    info.leftVal = node->left ? node->left->value : -1;
+    info.rightVal = node->right ? node->right->value : -1;
+    snapshotNodes.push_back(info);
+
+    calculateLayout(node->left, x - hGap, y + 80.f, hGap / 2.0f, snapshotNodes);
+    calculateLayout(node->right, x + hGap, y + 80.f, hGap / 2.0f, snapshotNodes);
+}
+
+void AVLTree::saveSnapshot() {
+    StepSnapshot snap;
+    // Khởi tạo layout từ giữa màn hình, toạ độ x=600, y=100, khoảng cách gốc = 250
+    calculateLayout(root, 600.f, 150.f, 250.f, snap.nodes);
+    snapshots.push_back(snap);
+}
+
+// Hàm đẩy cấu hình Step hiện tại ra màn hình
+void AVLTree::applyStep(size_t stepIndex) {
+    if (stepIndex >= snapshots.size()) return;
+    for (auto& pair : visualNodes) pair.second->isActive = false; // Ẩn hết
+
+    for (const auto& info : snapshots[stepIndex].nodes) {
+        if (visualNodes.find(info.value) == visualNodes.end()) {
+            visualNodes[info.value] = new AVLNode(info.value, font); // Tạo mới nếu chưa có
+            visualNodes[info.value]->currentPos = info.pos; // Spawn tại chỗ
+        }
+        AVLNode* vn = visualNodes[info.value];
+        vn->isActive = true;
+        vn->targetPos = info.pos;
+        vn->targetColor = info.color;
+        vn->leftVal = info.leftVal;
+        vn->rightVal = info.rightVal;
     }
 }
 
-// ================= CÁC HÀM TIỆN ÍCH AVL =================
-int AVLTree::height(AVLNode* node) {
-    return node ? node->height : 0;
-}
-
-int AVLTree::getBalance(AVLNode* node) {
-    return node ? height(node->left) - height(node->right) : 0;
-}
-
-// ================= THUẬT TOÁN XOAY CÂY =================
-AVLNode* AVLTree::rightRotate(AVLNode* y) {
-    AVLNode* x = y->left;
-    AVLNode* T2 = x->right;
-
+// --- ROTATIONS ---
+void AVLTree::rightRotate(LogicalNode*& y) {
+    LogicalNode* x = y->left;
+    LogicalNode* T2 = x->right;
     x->right = y;
     y->left = T2;
-
-    y->height = std::max(height(y->left), height(y->right)) + 1;
-    x->height = std::max(height(x->left), height(x->right)) + 1;
-
-    return x;
+    updateHeight(y);
+    updateHeight(x);
+    y = x; // Update liên kết cha trực tiếp
 }
 
-AVLNode* AVLTree::leftRotate(AVLNode* x) {
-    AVLNode* y = x->right;
-    AVLNode* T2 = y->left;
-
+void AVLTree::leftRotate(LogicalNode*& x) {
+    LogicalNode* y = x->right;
+    LogicalNode* T2 = y->left;
     y->left = x;
     x->right = T2;
-
-    x->height = std::max(height(x->left), height(x->right)) + 1;
-    y->height = std::max(height(y->left), height(y->right)) + 1;
-
-    return y;
+    updateHeight(x);
+    updateHeight(y);
+    x = y;
 }
 
-// ================= TÍNH TOẠ ĐỘ NODE (LAYOUT) =================
-// Hàm này cực kỳ quan trọng để chia đều không gian cho nhánh trái/phải
-void AVLTree::calculateLayout(AVLNode* node, float x, float y, float horizontalSpacing) {
-    if (!node) return;
-    
-    node->targetPos = sf::Vector2f(x, y);
-    
-    // Nếu node chưa có toạ độ hiện tại (vừa được tạo), cho nó xuất phát từ trên trời rớt xuống
-    if (node->currentPos.x == 0 && node->currentPos.y == 0) {
-        node->currentPos = sf::Vector2f(x, y - 200.0f);
-    }
-
-    // Đệ quy tính cho 2 con, khoảng cách X giảm dần theo độ sâu
-    calculateLayout(node->left, x - horizontalSpacing, y + 80.0f, horizontalSpacing * 0.5f);
-    calculateLayout(node->right, x + horizontalSpacing, y + 80.0f, horizontalSpacing * 0.5f);
-}
-
-// ================= LƯU LỊCH SỬ (SNAPSHOT) =================
-// Hàm này tạm thời đang rỗng, để tích hợp History hoàn chỉnh ta sẽ cần viết một hàm đệ quy 
-// duyệt qua toàn bộ node hiện tại và copy thông tin đẩy vào mảng `history`.
-// Tạm thời gọi hàm layout mỗi khi lưu trạng thái.
-void AVLTree::saveState() {
-    // 1. Tính toán lại toàn bộ vị trí dựa trên cấu trúc cây hiện tại
-    // Điểm neo root ở toạ độ (600, 150), khoảng cách ban đầu 300
-    calculateLayout(root, 600.0f, 150.0f, 300.0f);
-    
-    // Tương lai: Thêm logic copy state vào mảng history ở đây để Playback hoạt động
-}
-
-// ================= CHỨC NĂNG CHÍNH MÀ UI GỌI =================
-AVLNode* AVLTree::insertNode(AVLNode* node, int val) {
+// --- INSERTION ---
+void AVLTree::insertRecursive(LogicalNode*& node, int key) {
     if (node == nullptr) {
-        AVLNode* newNode = new AVLNode(val, font);
-        newNode->currentColor = sf::Color(255, 165, 0); // Màu cam khi mới chèn
-        return newNode;
+        node = new LogicalNode(key);
+        node->color = sf::Color(50, 205, 50); // Mới thêm -> Xanh lá
+        saveSnapshot();
+        return;
     }
+    
+    node->color = sf::Color(255, 165, 0); // Đang duyệt -> Cam
+    saveSnapshot();
 
-    if (val < node->val)
-        node->left = insertNode(node->left, val);
-    else if (val > node->val)
-        node->right = insertNode(node->right, val);
-    else return node; // Không cho phép trùng
+    if (key < node->value) insertRecursive(node->left, key);
+    else if (key > node->value) insertRecursive(node->right, key);
+    else return;
 
-    // Cập nhật chiều cao
-    node->height = 1 + std::max(height(node->left), height(node->right));
-
-    // Kiểm tra cân bằng
+    updateHeight(node);
     int balance = getBalance(node);
 
-    // Left Left Case
-    if (balance > 1 && val < node->left->val)
-        return rightRotate(node);
+    if (balance > 1 || balance < -1) {
+        node->color = sf::Color(139, 0, 0); // Mất cân bằng -> Đỏ
+        saveSnapshot();
 
-    // Right Right Case
-    if (balance < -1 && val > node->right->val)
-        return leftRotate(node);
+        if (balance > 1 && key < node->left->value) rightRotate(node);
+        else if (balance < -1 && key > node->right->value) leftRotate(node);
+        else if (balance > 1 && key > node->left->value) { leftRotate(node->left); rightRotate(node); }
+        else if (balance < -1 && key < node->right->value) { rightRotate(node->right); leftRotate(node); }
+        
+        saveSnapshot(); // Chụp lại sau khi xoay
+    }
+}
 
-    // Left Right Case
-    if (balance > 1 && val > node->left->val) {
-        node->left = leftRotate(node->left);
-        return rightRotate(node);
+void AVLTree::insertVal(int val) {
+    snapshots.clear();
+    currentStep = 0;
+    resetColors(root);
+    saveSnapshot(); // Bắt đầu
+
+    insertRecursive(root, val);
+
+    resetColors(root);
+    saveSnapshot(); // Kết thúc
+    applyStep(0);
+    isPaused = false;
+}
+
+// --- DELETION ---
+AVLTree::LogicalNode* AVLTree::minValueNode(LogicalNode* node) {
+    LogicalNode* current = node;
+    while (current->left != nullptr) current = current->left;
+    return current;
+}
+
+void AVLTree::deleteRecursive(LogicalNode*& node, int key) {
+    if (node == nullptr) return;
+
+    node->color = sf::Color(255, 165, 0);
+    saveSnapshot();
+
+    if (key < node->value) deleteRecursive(node->left, key);
+    else if (key > node->value) deleteRecursive(node->right, key);
+    else {
+        node->color = sf::Color(139, 0, 0); // Tìm thấy node xoá -> Đỏ
+        saveSnapshot();
+
+        if ((node->left == nullptr) || (node->right == nullptr)) {
+            LogicalNode* temp = node->left ? node->left : node->right;
+            if (temp == nullptr) {
+                temp = node;
+                node = nullptr;
+            } else {
+                LogicalNode* oldNode = node;
+                node = temp; // Nối tắt
+                temp = oldNode;
+            }
+            delete temp;
+            saveSnapshot();
+        } else {
+            LogicalNode* temp = minValueNode(node->right);
+            node->value = temp->value; // Copy giá trị
+            saveSnapshot();
+            deleteRecursive(node->right, temp->value);
+        }
     }
 
-    // Right Left Case
-    if (balance < -1 && val < node->right->val) {
-        node->right = rightRotate(node->right);
-        return leftRotate(node);
+    if (node == nullptr) return;
+
+    updateHeight(node);
+    int balance = getBalance(node);
+
+    if (balance > 1 || balance < -1) {
+        node->color = sf::Color(139, 0, 0); // Unbalanced node
+        saveSnapshot();
+
+        if (balance > 1 && getBalance(node->left) >= 0) rightRotate(node);
+        else if (balance > 1 && getBalance(node->left) < 0) { leftRotate(node->left); rightRotate(node); }
+        else if (balance < -1 && getBalance(node->right) <= 0) leftRotate(node);
+        else if (balance < -1 && getBalance(node->right) > 0) { rightRotate(node->right); leftRotate(node); }
+        saveSnapshot();
     }
-
-    return node;
 }
 
-void AVLTree::insert(int val) {
-    root = insertNode(root, val);
-    saveState(); // Cập nhật lại layout và lưu lịch sử sau khi Insert + Xoay (nếu có)
+void AVLTree::deleteVal(int val) {
+    snapshots.clear();
+    currentStep = 0;
+    resetColors(root);
+    saveSnapshot();
+    deleteRecursive(root, val);
+    resetColors(root);
+    saveSnapshot();
+    applyStep(0);
+    isPaused = false;
 }
 
-// Hàm update đệ quy cập nhật animation cho từng node
-void updateNodeAnim(AVLNode* node, float dt) {
+// --- SEARCH ---
+void AVLTree::searchRecursive(LogicalNode* node, int key) {
+    if (node == nullptr) return;
+    node->color = sf::Color(255, 165, 0);
+    saveSnapshot();
+
+    if (node->value == key) {
+        node->color = sf::Color(50, 205, 50); // Found
+        saveSnapshot();
+        return;
+    }
+    if (key < node->value) searchRecursive(node->left, key);
+    else searchRecursive(node->right, key);
+}
+
+void AVLTree::searchVal(int val) {
+    snapshots.clear();
+    currentStep = 0;
+    resetColors(root);
+    saveSnapshot();
+    searchRecursive(root, val);
+    applyStep(0);
+    isPaused = false;
+}
+
+void AVLTree::initTree(int n) {
+    clear();
+    for (int i = 0; i < n; i++) {
+        int val = std::rand() % 100 + 1;
+        insertVal(val);
+        currentStep = snapshots.size() - 1; // Nhảy thẳng đến cuối
+        applyStep(currentStep);
+    }
+    resetColors(root);
+}
+
+void AVLTree::resetColors(LogicalNode* node) {
     if (!node) return;
-    node->updateAnimation(dt);
-    updateNodeAnim(node->left, dt);
-    updateNodeAnim(node->right, dt);
+    node->color = sf::Color(70, 130, 180);
+    resetColors(node->left);
+    resetColors(node->right);
 }
 
-void AVLTree::update(float deltaTime) {
-    updateNodeAnim(root, deltaTime);
+// --- PLAYBACK CONTROLS ---
+void AVLTree::stepForward() {
+    if (snapshots.empty()) return;
+    if (currentStep < snapshots.size() - 1) {
+        currentStep++;
+        applyStep(currentStep);
+    }
 }
 
-void drawNodeInfo(AVLNode* node, sf::RenderWindow& window) {
-    if (!node) return;
-    node->draw(window); // Draw con trái/phải trước, sau đó vẽ chính nó
-    drawNodeInfo(node->left, window);
-    drawNodeInfo(node->right, window);
+void AVLTree::stepBackward() {
+    if (snapshots.empty()) return;
+    if (currentStep > 0) {
+        currentStep--;
+        applyStep(currentStep);
+    }
+}
+
+void AVLTree::increaseSpeed() { delay = std::max(0.1f, delay - 0.2f); }
+void AVLTree::decreaseSpeed() { delay = std::min(2.0f, delay + 0.2f); }
+
+void AVLTree::updateAnimation(float deltaTime) {
+    if (snapshots.empty() || isPaused) return;
+    timer += deltaTime;
+    if (timer >= delay) {
+        timer = 0.0f;
+        if (currentStep < snapshots.size() - 1) stepForward();
+        else isPaused = true;
+    }
+}
+
+void AVLTree::updatePosition(float deltaTime) {
+    for (auto& pair : visualNodes) pair.second->update(deltaTime);
 }
 
 void AVLTree::draw(sf::RenderWindow& window) {
-    drawNodeInfo(root, window);
+    // Vẽ mũi tên trước để nằm dưới các hình tròn Node
+    for (auto& pair : visualNodes) pair.second->drawArrows(window, visualNodes);
+    for (auto& pair : visualNodes) pair.second->draw(window);
 }
-
-// Tạm thời các hàm này để trống để bạn hoàn thiện sau
-void AVLTree::remove(int val) {}
-void AVLTree::search(int val) {}
-void AVLTree::initRandom(int n) {}
-void AVLTree::stepForward() {}
-void AVLTree::stepBackward() {}

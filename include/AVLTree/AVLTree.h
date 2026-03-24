@@ -1,61 +1,83 @@
 #pragma once
 #include "AVLNode.h"
 #include <vector>
+#include <map>
+#include <SFML/Graphics.hpp>
 
-// Struct dùng để "chụp ảnh" lại 1 node tại 1 thời điểm
-struct NodeSnapshot {
-    int val;
+// Lưu trữ trạng thái hiển thị của một node tại một thời điểm
+struct NodeInfo {
+    int value;
     sf::Vector2f pos;
     sf::Color color;
-    int leftChildVal;  // Dùng -1 nếu không có
-    int rightChildVal; // Dùng -1 nếu không có
+    int leftVal;
+    int rightVal;
 };
 
-// Lưu toàn bộ cây tại 1 bước (1 frame trong lịch sử)
-struct TreeSnapshot {
-    std::vector<NodeSnapshot> nodes;
+// Lưu trữ toàn bộ khung hình của 1 bước hoạt ảnh
+struct StepSnapshot {
+    std::vector<NodeInfo> nodes;
 };
 
 class AVLTree {
 private:
-    AVLNode* root;
+    struct LogicalNode {
+        int value;
+        int height;
+        LogicalNode* left;
+        LogicalNode* right;
+        sf::Color color;
+        LogicalNode(int v) : value(v), height(1), left(nullptr), right(nullptr), color(sf::Color(70, 130, 180)) {}
+    };
+
+    LogicalNode* root;
     sf::Font& font;
-    
-    // Hệ thống lịch sử cho Playback
-    std::vector<TreeSnapshot> history;
-    int currentStep;
+    std::map<int, AVLNode*> visualNodes; // Quản lý object SFML
 
-    // Các hàm Logic AVL nội bộ (Đệ quy)
-    int height(AVLNode* node);
-    int getBalance(AVLNode* node);
-    AVLNode* rightRotate(AVLNode* y);
-    AVLNode* leftRotate(AVLNode* x);
-    
-    AVLNode* insertNode(AVLNode* node, int val);
-    AVLNode* deleteNode(AVLNode* root, int val);
-    
-    // Hàm tính toán toạ độ (Layout) để cây không bị đè nhau
-    void calculateLayout(AVLNode* node, float x, float y, float horizontalSpacing);
+    std::vector<StepSnapshot> snapshots;
+    size_t currentStep;
+    float timer;
+    float delay;
+    bool isPaused;
 
-    // Hàm dọn dẹp bộ nhớ
-    void clear(AVLNode* node);
+    // Các hàm Helper Tree Logic (Dùng reference pointer để cập nhật trực tiếp)
+    int height(LogicalNode* n);
+    int getBalance(LogicalNode* n);
+    void updateHeight(LogicalNode* n);
+    
+    void rightRotate(LogicalNode*& y);
+    void leftRotate(LogicalNode*& x);
+    
+    void insertRecursive(LogicalNode*& node, int key);
+    void deleteRecursive(LogicalNode*& node, int key);
+    LogicalNode* minValueNode(LogicalNode* node);
+    void searchRecursive(LogicalNode* node, int key);
+
+    void clearLogical(LogicalNode* node);
+    void resetColors(LogicalNode* node);
+    
+    // Core Animation Builder
+    void calculateLayout(LogicalNode* node, float x, float y, float hGap, std::vector<NodeInfo>& snapshotNodes);
+    void saveSnapshot();
+    void applyStep(size_t stepIndex);
 
 public:
     AVLTree(sf::Font& font);
     ~AVLTree();
 
-    // Các hàm gọi từ UI
-    void insert(int val);
-    void remove(int val);
-    void search(int val);
-    void initRandom(int n);
+    void initTree(int n);
+    void insertVal(int val);
+    void deleteVal(int val);
+    void searchVal(int val);
+    void clear();
 
-    // Xử lý Playback
-    void saveState(); 
+    // Playback Controls
+    void togglePause() { isPaused = !isPaused; }
     void stepForward();
     void stepBackward();
-    void resetToCurrentState(); // Áp dụng Snapshot hiện tại lên UI
+    void increaseSpeed();
+    void decreaseSpeed();
 
-    void update(float deltaTime);
+    void updatePosition(float deltaTime);
+    void updateAnimation(float deltaTime);
     void draw(sf::RenderWindow& window);
 };

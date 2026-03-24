@@ -1,64 +1,69 @@
 #pragma once
 #include "ListNode.h"
+#include <vector>
+#include <map>
 #include <SFML/Graphics.hpp>
 
-// Định nghĩa chế độ hoạt ảnh đang chạy
-enum class AnimMode { NONE, SEARCH, DELETE };
+struct SLLNodeInfo {
+    int id;
+    int value;
+    sf::Vector2f pos;
+    sf::Color color;
+    int nextId;
+};
+
+struct SLLStepSnapshot {
+    std::vector<SLLNodeInfo> nodes;
+};
 
 class SinglyLinkedList {
 private:
-    ListNode* head;
+    struct LogicalNode {
+        int id;
+        int value;
+        sf::Color color;
+        LogicalNode* next;
+        LogicalNode(int id, int v) : id(id), value(v), color(sf::Color(70, 130, 180)), next(nullptr) {}
+    };
+
+    LogicalNode* head;
+    int idCounter; // Định danh độc nhất cho mỗi node, chống lỗi khi nhập trùng value
     sf::Font& font;
+    std::map<int, ListNode*> visualNodes;
+
+    std::vector<SLLStepSnapshot> snapshots;
+    size_t currentStep;
+    float timer;
+    float delay;
+    bool isPaused;
 
     float startX = 100.f;
     float startY = 350.f;
     float nodeSpacing = 110.f;
 
-    // Các biến Playback Timer
-    bool isPaused = false;
-    float timer = 0.0f;
-    float delay = 0.8f; 
-
-    // Quản lý Trạng thái Hoạt ảnh (Kiến trúc mới)
-    AnimMode currentMode = AnimMode::NONE;
-    int targetValue = 0;
-    size_t currentStep = 0;
-    size_t totalSteps = 0;
-    bool nodeWasFound = false;
-
-    // Các hàm nội bộ
-    void updateLayout();
-    void drawArrow(sf::RenderWindow& window, sf::Vector2f start, sf::Vector2f end);
+    void saveSnapshot();
+    void applyStep(size_t stepIndex);
     void resetColors();
-    void applyColorsByStep(); // Hàm render màu theo bước cực chuẩn
-    void performPhysicalDelete();
+    void clearLogical();
 
 public:
     SinglyLinkedList(sf::Font& font);
     ~SinglyLinkedList();
 
-    void clear(); 
-    void initList(int n); 
-
-    void insertNode(int val); 
-    void insertNodeNoAnimation(int val); 
-
-    void startDelete(int val);
+    void initList(int n);
+    void insertNode(int val);
     void startSearch(int val);
-    
+    void startDelete(int val);
+    void clear();
+
     // Playback control
     void togglePause() { isPaused = !isPaused; }
-    bool getPauseStatus() const { return isPaused; }
     void stepForward();
     void stepBackward();
-
-    //
-    // THÊM 2 HÀM NÀY:
     void increaseSpeed();
     void decreaseSpeed();
 
     void updatePosition(float deltaTime);
     void updateAnimation(float deltaTime); 
     void draw(sf::RenderWindow& window);
-
 };
