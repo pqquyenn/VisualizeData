@@ -175,12 +175,13 @@ void SinglyLinkedList::stepForward() {
     if (currentStep < totalSteps) {
         currentStep++; // Tiến 1 bước
         applyColorsByStep();
-    } else {
-        // Đã quét hết hoặc đã tìm thấy -> Kết thúc quy trình
+    } 
+    // SỬA Ở ĐÂY: Nếu người dùng bấm TỚI (>) khi đang ở bước cuối cùng -> Kết thúc quy trình
+    else if (currentStep == totalSteps) {
         if (currentMode == AnimMode::DELETE && nodeWasFound) {
-            performPhysicalDelete(); // Chỉ xóa thật khi chạy hết hoạt ảnh
+            performPhysicalDelete(); // Thực sự xoá node khỏi danh sách
         }
-        currentMode = AnimMode::NONE;
+        currentMode = AnimMode::NONE; // Reset trạng thái
         applyColorsByStep(); // Trả về xanh
     }
 }
@@ -194,17 +195,21 @@ void SinglyLinkedList::stepBackward() {
         applyColorsByStep();
     }
 }
-
 void SinglyLinkedList::updateAnimation(float deltaTime) {
     if (isPaused || currentMode == AnimMode::NONE) return;
 
     timer += deltaTime;
     if (timer >= delay) {
         timer = 0.0f;
-        stepForward(); // Auto chạy tới nếu không Pause
+        
+        // SỬA Ở ĐÂY: Nếu đang chạy tự động mà chạm đích -> Tự động Pause để người dùng xem/lùi lại
+        if (currentStep == totalSteps) {
+            isPaused = true; 
+        } else {
+            stepForward();
+        }
     }
 }
-
 // ---------------------------------------------------------
 // DRAWING VÀ CẬP NHẬT GIAO DIỆN (Giữ nguyên)
 // ---------------------------------------------------------
@@ -247,4 +252,15 @@ void SinglyLinkedList::draw(sf::RenderWindow& window) {
         curr->draw(window);
         curr = curr->next;
     }
+}
+
+// Thêm vào cuối file SinglyLinkedList.cpp
+void SinglyLinkedList::increaseSpeed() {
+    delay -= 0.2f; // Giảm thời gian chờ
+    if (delay < 0.2f) delay = 0.2f; // Giới hạn tốc độ max
+}
+
+void SinglyLinkedList::decreaseSpeed() {
+    delay += 0.2f; // Tăng thời gian chờ
+    if (delay > 2.0f) delay = 2.0f; // Giới hạn tốc độ min
 }

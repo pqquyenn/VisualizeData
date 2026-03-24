@@ -52,7 +52,13 @@ public:
     void stepForward();
     void stepBackward();
 
+    //
+    // THÊM 2 HÀM NÀY:
+    void increaseSpeed();
+    void decreaseSpeed();
+
     void updatePosition(float deltaTime);
     void updateAnimation(float deltaTime); 
     void draw(sf::RenderWindow& window);
+
 };

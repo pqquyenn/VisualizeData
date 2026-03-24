@@ -13,6 +13,10 @@ SLLScreen::SLLScreen(App* app) : State(app) {
     btnDelete = new Button(510, 80, 100, 40, app->font, "Delete");
     btnInit = new Button(630, 80, 100, 40, app->font, "Init");
 
+
+    // THÊM KHỞI TẠO NÚT TỐC ĐỘ (Toạ độ nối tiếp sau nút Init)
+    btnSpeedDown = new Button(750, 80, 50, 40, app->font, "<<");
+    btnSpeedUp = new Button(810, 80, 50, 40, app->font, ">>");
     sll = new SinglyLinkedList(app->font);
     
     // Khởi tạo cụm nút playback và truyền sll vào
@@ -28,6 +32,10 @@ SLLScreen::~SLLScreen() {
     delete inputVal; 
     delete sll;
     delete playbackController;
+
+    delete btnInit;
+    delete btnSpeedDown; // THÊM
+    delete btnSpeedUp;   // THÊM
 }
 
 void SLLScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
@@ -72,7 +80,10 @@ void SLLScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
         app->changeState(new MainMenu(app)); 
         return;
     }
-    
+    // 3. Trong SLLScreen::handleEvent
+    // ... (sau đoạn if btnBackToMenu)
+    if (btnSpeedDown->isClicked(event, mousePos)) sll->decreaseSpeed();
+    if (btnSpeedUp->isClicked(event, mousePos)) sll->increaseSpeed();
     inputVal->handleEvent(event, mousePos); 
     playbackController->handleEvent(event, mousePos);
 
@@ -94,7 +105,7 @@ void SLLScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
                 inputVal->clear();
             } catch (const std::exception& e) {
                 inputVal->clear();
-            }        
+            }         
         }
     }
 }
@@ -106,7 +117,10 @@ void SLLScreen::update(float deltaTime, sf::RenderWindow& window) {
     btnInsert->update(mousePos);
     btnSearch->update(mousePos);
     btnDelete->update(mousePos);
+// 4. Trong SLLScreen::update
     btnInit->update(mousePos);
+    btnSpeedDown->update(mousePos); // THÊM
+    btnSpeedUp->update(mousePos);   // THÊM
 
     playbackController->update(mousePos);
 
@@ -132,7 +146,10 @@ void SLLScreen::draw(sf::RenderWindow& window) {
     btnInsert->draw(window);
     btnSearch->draw(window);
     btnDelete->draw(window);
+// 5. Trong SLLScreen::draw (Ở BƯỚC 2: GỠ CAMERA RA)
     btnInit->draw(window);
+    btnSpeedDown->draw(window); // THÊM
+    btnSpeedUp->draw(window);   // THÊM
     
     playbackController->draw(window);
 }

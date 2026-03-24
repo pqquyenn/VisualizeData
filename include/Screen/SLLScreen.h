@@ -7,6 +7,7 @@
 
 class App;
 
+
 class SLLScreen : public State {
 private:
     Button* btnBackToMenu;
@@ -15,6 +16,11 @@ private:
     Button* btnDelete;
     Button* btnInit;
 
+    // THÊM 2 BIẾN NÀY:
+    Button* btnSpeedDown; 
+    Button* btnSpeedUp;
+
+    // ... (phần còn lại giữ nguyên)
     InputBox* inputVal;
     SinglyLinkedList* sll;
     PlaybackController* playbackController;
