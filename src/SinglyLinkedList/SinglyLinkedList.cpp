@@ -1,13 +1,13 @@
 #include "SinglyLinkedList.h"
-#include <cstdlib> // for rand()
-#include <ctime>   // for time()
+#include <cstdlib> 
+#include <ctime>   
+#include <cmath>
 
 SinglyLinkedList::SinglyLinkedList(sf::Font& font) : font(font) {
     head = nullptr;
-    // ... init existing states ...
     timer = 0.f;
     delay = 0.8f; 
-    std::srand(std::time(0)); // seed random
+    std::srand(std::time(0)); 
 }
 
 SinglyLinkedList::~SinglyLinkedList() {
@@ -27,42 +27,31 @@ void SinglyLinkedList::clear() {
 void SinglyLinkedList::initList(int n) {
     if (n <= 0) return;
     clear();
-    resetColors();
-
     for (int i = 0; i < n; ++i) {
-        int val = std::rand() % 100 + 1; // 1 to 100
+        int val = std::rand() % 100 + 1; 
         insertNodeNoAnimation(val);
     }
+    resetColors();
 }
-void SinglyLinkedList::updateLayout() {
-    ListNode* curr = head;
-    int index = 0;
-    while (curr != nullptr) {
-        // Cập nhật vị trí đích (targetPos) cho từng node để nó tự động di chuyển tới
-        curr->targetPos = sf::Vector2f(startX + (index * nodeSpacing), startY);
-        curr = curr->next;
-        index++;
-    }
-}
+
 void SinglyLinkedList::insertNodeNoAnimation(int val) {
     ListNode* newNode = new ListNode(val, font);
-    if (head == nullptr) {
-        head = newNode;
-    } else {
+    if (head == nullptr) head = newNode;
+    else {
         ListNode* curr = head;
         while (curr->next != nullptr) curr = curr->next;
         curr->next = newNode;
     }
-    resetColors();
     updateLayout();
-    // Override falling animation
     ListNode* curr = head;
     int index = 0;
     while (curr != nullptr) {
         curr->currentPos = sf::Vector2f(startX + (index * nodeSpacing), startY);
+        curr->targetPos = curr->currentPos;
         curr = curr->next;
         index++;
     }
+    resetColors();
 }
 
 void SinglyLinkedList::insertNode(int val) {
@@ -73,145 +62,160 @@ void SinglyLinkedList::insertNode(int val) {
         int count = 1;
         while (curr->next != nullptr) { curr = curr->next; count++; }
         curr->next = newNode;
-        newNode->currentPos = sf::Vector2f(startX + count * nodeSpacing, startY - 200.f); // Falling from top
+        newNode->currentPos = sf::Vector2f(startX + count * nodeSpacing, startY - 200.f); 
     }
-    resetColors();
     updateLayout(); 
+    resetColors();
+}
+
+// ---------------------------------------------------------
+// KIẾN TRÚC PLAYBACK MỚI (CHỐNG LỖI NHẢY LUNG TUNG)
+// ---------------------------------------------------------
+
+void SinglyLinkedList::startSearch(int val) {
+    if (head == nullptr) return;
+    currentMode = AnimMode::SEARCH;
+    targetValue = val;
+    currentStep = 1; // Bắt đầu ở node đầu tiên
+    timer = 0.0f;
+    nodeWasFound = false;
+
+    // Tính toán trước tổng số bước cần đi
+    totalSteps = 0;
+    ListNode* curr = head;
+    while(curr) {
+        totalSteps++;
+        if (curr->value == val) { nodeWasFound = true; break; }
+        curr = curr->next;
+    }
+    applyColorsByStep();
 }
 
 void SinglyLinkedList::startDelete(int val) {
     if (head == nullptr) return;
-    resetColors();
-    isDeleting = true;
-    deleteValue = val;
-    currentDeleteNode = head;
-    previousDeleteNode = nullptr;
-    isConfirmingDeletion = false;
-    animationStepCount = 0;
+    currentMode = AnimMode::DELETE;
+    targetValue = val;
+    currentStep = 1; 
     timer = 0.0f;
-    currentDeleteNode->setColor(sf::Color(255, 165, 0)); // Start with head as Orange (checking)
-}
+    nodeWasFound = false;
 
-void SinglyLinkedList::startSearch(int val) {
-    if (head == nullptr) return;
-    resetColors();
-    isSearching = true;
-    searchValue = val;
-    currentSearchNode = head;
-    animationStepCount = 0;
-    timer = 0.0f;
-    currentSearchNode->setColor(sf::Color(255, 165, 0)); 
+    totalSteps = 0;
+    ListNode* curr = head;
+    while(curr) {
+        totalSteps++;
+        if (curr->value == val) { nodeWasFound = true; break; }
+        curr = curr->next;
+    }
+    applyColorsByStep();
 }
 
 void SinglyLinkedList::resetColors() {
-    isSearching = false;
-    isDeleting = false;
-    isConfirmingDeletion = false;
+    currentMode = AnimMode::NONE; // Tắt chế độ hoạt ảnh
+    applyColorsByStep(); // Áp dụng => tất cả về xanh Blue
+}
+
+// Hàm trái tim của Playback: Tô màu lại chính xác dựa vào số currentStep
+void SinglyLinkedList::applyColorsByStep() {
+    // 1. Reset toàn bộ danh sách về xanh Default trước
     ListNode* curr = head;
-    while (curr != nullptr) {
-        curr->setColor(sf::Color(70, 130, 180)); // Steel blue
+    while (curr) {
+        curr->setColor(sf::Color(70, 130, 180)); 
         curr = curr->next;
     }
-}
 
-void SinglyLinkedList::resetColorsToStep() {
-    ListNode* curr = head;
-    size_t step = 0;
-    while(curr != nullptr && step < animationStepCount) {
-        if (isDeleting) curr->setColor(sf::Color::Red); 
-        else if (isSearching) curr->setColor(sf::Color(169, 169, 169)); // <-- Fix màu ở đây
+    // Nếu bước 0 (về vạch xuất phát) thì dừng ở màu xanh
+    if (currentStep == 0 || currentMode == AnimMode::NONE) return;
+
+    // 2. Bắt đầu tô màu theo số bước hiện tại
+    curr = head;
+    size_t stepCounter = 1;
+
+    while (curr != nullptr && stepCounter <= currentStep) {
+        if (stepCounter == currentStep) {
+            // ĐÂY LÀ NODE ĐANG ĐƯỢC XÉT
+            if (currentMode == AnimMode::SEARCH) {
+                if (curr->value == targetValue) curr->setColor(sf::Color(50, 205, 50)); // Tìm thấy -> Xanh lá
+                else curr->setColor(sf::Color(255, 165, 0)); // Đang quét -> Cam
+            } else if (currentMode == AnimMode::DELETE) {
+                if (curr->value == targetValue) curr->setColor(sf::Color(139, 0, 0)); // Sắp bị xoá -> Đỏ Đậm
+                else curr->setColor(sf::Color(255, 165, 0)); // Đang quét -> Cam
+            }
+        } else {
+            // CÁC NODE ĐÃ ĐI QUA (VISITED)
+            if (currentMode == AnimMode::SEARCH) curr->setColor(sf::Color(169, 169, 169)); // Xám
+            else if (currentMode == AnimMode::DELETE) curr->setColor(sf::Color(255, 0, 0)); // Đỏ
+        }
         curr = curr->next;
-        step++;
-    }
-    if (isSearching) {
-        if (previousSearchNode) previousSearchNode->setColor(sf::Color(255, 165, 0)); 
-        if (currentSearchNode) currentSearchNode->setColor(sf::Color(169, 169, 169)); // <-- Fix màu ở đây
-    } else if (isDeleting) {
-        if (previousDeleteNode) previousDeleteNode->setColor(sf::Color(255, 165, 0));
-        if (currentDeleteNode) currentDeleteNode->setColor(sf::Color::Red);
+        stepCounter++;
     }
 }
 
-ListNode* SinglyLinkedList::getNodeAt(ListNode* h, size_t index) {
-    ListNode* curr = h;
-    for (size_t i = 0; i < index && curr != nullptr; ++i) curr = curr->next;
-    return curr;
-}
-
-// Logic separation for step commands
-void SinglyLinkedList::handleSearchStep() {
-    if (currentSearchNode == nullptr) { isSearching = false; resetColors(); return; }
-    
-    animationStepCount++;
-    if (currentSearchNode->value == searchValue) {
-        currentSearchNode->setColor(sf::Color(50, 205, 50)); 
-        isSearching = false;
-        return;
+// Xoá node vật lý thực sự ra khỏi danh sách liên kết
+void SinglyLinkedList::performPhysicalDelete() {
+    if (head == nullptr) return;
+    if (head->value == targetValue) {
+        ListNode* temp = head;
+        head = head->next;
+        delete temp;
+    } else {
+        ListNode* curr = head;
+        while (curr->next != nullptr && curr->next->value != targetValue) curr = curr->next;
+        if (curr->next != nullptr) {
+            ListNode* temp = curr->next;
+            curr->next = temp->next;
+            delete temp;
+        }
     }
-    currentSearchNode->setColor(sf::Color(169, 169, 169)); 
-    previousSearchNode = currentSearchNode; // <-- LƯU LẠI NODE TRƯỚC ĐÓ Ở ĐÂY
-    currentSearchNode = currentSearchNode->next;
-    
-    if (currentSearchNode != nullptr) currentSearchNode->setColor(sf::Color(255, 165, 0)); 
-    else { isSearching = false; }
-}
-
-void SinglyLinkedList::handleSearchBack() {
-    if (animationStepCount == 0) return;
-    animationStepCount--;
-    currentSearchNode = getNodeAt(head, animationStepCount);
-    // Tính lại previousSearchNode khi lui về
-    previousSearchNode = (animationStepCount > 0) ? getNodeAt(head, animationStepCount - 1) : nullptr;
-    resetColorsToStep(); 
-}
-
-void SinglyLinkedList::handleDeleteStep() {
-    if (currentDeleteNode == nullptr) { isDeleting = false; resetColors(); return; }
-    
-    animationStepCount++;
-    if (currentDeleteNode->value == deleteValue) {
-        currentDeleteNode->setColor(sf::Color::Red); 
-        isDeleting = false;
-        isConfirmingDeletion = true; // Enter deletion confirmation phase
-        timer = 0.0f; // start timer for confirm pause
-        return;
-    }
-    currentDeleteNode->setColor(sf::Color::Red); // Visited
-    previousDeleteNode = currentDeleteNode;
-    currentDeleteNode = currentDeleteNode->next;
-    if (currentDeleteNode != nullptr) currentDeleteNode->setColor(sf::Color(255, 165, 0)); // Checking
-    else { isDeleting = false; }
-}
-
-void SinglyLinkedList::handleDeleteBack() {
-    if (isConfirmingDeletion) { isConfirmingDeletion = false; isDeleting = true; } // reverse Phase 2
-    if (animationStepCount == 0) return;
-    animationStepCount--;
-    // Recalculate
-    currentDeleteNode = getNodeAt(head, animationStepCount);
-    previousDeleteNode = (animationStepCount > 0) ? getNodeAt(head, animationStepCount - 1) : nullptr;
-    resetColorsToStep();
+    updateLayout();
 }
 
 void SinglyLinkedList::stepForward() {
-    if (isSearching) handleSearchStep();
-    else if (isDeleting) handleDeleteStep();
-    else if (isConfirmingDeletion) {
-        // Step forward during confirm: delete the node immediately
-        ListNode* nodeToDelete = currentDeleteNode;
-        if (previousDeleteNode == nullptr) head = head->next;
-        else previousDeleteNode->next = currentDeleteNode->next;
-        delete nodeToDelete;
-        currentDeleteNode = nullptr;
-        isConfirmingDeletion = false;
-        updateLayout();
-        resetColors();
+    if (currentMode == AnimMode::NONE) return;
+
+    if (currentStep < totalSteps) {
+        currentStep++; // Tiến 1 bước
+        applyColorsByStep();
+    } else {
+        // Đã quét hết hoặc đã tìm thấy -> Kết thúc quy trình
+        if (currentMode == AnimMode::DELETE && nodeWasFound) {
+            performPhysicalDelete(); // Chỉ xóa thật khi chạy hết hoạt ảnh
+        }
+        currentMode = AnimMode::NONE;
+        applyColorsByStep(); // Trả về xanh
     }
 }
 
 void SinglyLinkedList::stepBackward() {
-    if (isSearching) handleSearchBack();
-    else if (isDeleting || isConfirmingDeletion) handleDeleteBack();
+    if (currentMode == AnimMode::NONE) return;
+    
+    // Lui về tối đa là 0 (Bước 0 = Chờ, tất cả xanh lam)
+    if (currentStep > 0) {
+        currentStep--; 
+        applyColorsByStep();
+    }
+}
+
+void SinglyLinkedList::updateAnimation(float deltaTime) {
+    if (isPaused || currentMode == AnimMode::NONE) return;
+
+    timer += deltaTime;
+    if (timer >= delay) {
+        timer = 0.0f;
+        stepForward(); // Auto chạy tới nếu không Pause
+    }
+}
+
+// ---------------------------------------------------------
+// DRAWING VÀ CẬP NHẬT GIAO DIỆN (Giữ nguyên)
+// ---------------------------------------------------------
+void SinglyLinkedList::updateLayout() {
+    ListNode* curr = head;
+    int index = 0;
+    while (curr != nullptr) {
+        curr->targetPos = sf::Vector2f(startX + (index * nodeSpacing), startY);
+        curr = curr->next;
+        index++;
+    }
 }
 
 void SinglyLinkedList::updatePosition(float deltaTime) {
@@ -219,61 +223,27 @@ void SinglyLinkedList::updatePosition(float deltaTime) {
     while (curr != nullptr) { curr->update(deltaTime); curr = curr->next; }
 }
 
-void SinglyLinkedList::updateAnimation(float deltaTime) {
-    if (isPaused) return;
-
-    // Search Animation
-    if (isSearching) {
-        timer += deltaTime;
-        if (timer >= delay) { timer = 0.0f; handleSearchStep(); }
-    }
-    
-    // Delete Animation
-    else if (isDeleting) {
-        timer += deltaTime;
-        if (timer >= delay) { timer = 0.0f; handleDeleteStep(); }
-    } 
-    // Delete Confirmation Phase (Phase 2): Target found, highlight red for a while
-    else if (isConfirmingDeletion) {
-        timer += deltaTime;
-        if (timer >= delay) {
-            timer = 0.0f;
-            // Finally delete the node
-            ListNode* nodeToDelete = currentDeleteNode;
-            if (previousDeleteNode == nullptr) head = head->next; // delete head
-            else previousDeleteNode->next = currentDeleteNode->next; // link over
-            delete nodeToDelete;
-            currentDeleteNode = nullptr; // important
-            isConfirmingDeletion = false; // exit Phase 2
-            updateLayout();
-            resetColors();
-        }
-    }
-}
-
-// ... unchanged drawing functions drawArrow(), draw() ...
-
 void SinglyLinkedList::drawArrow(sf::RenderWindow& window, sf::Vector2f start, sf::Vector2f end) {
-    // Chỉ vẽ đường thẳng đơn giản làm sợi dây liên kết
-    sf::Vertex line[] = {
-        sf::Vertex(start, sf::Color::White),
-        sf::Vertex(end, sf::Color::White)
-    };
+    sf::Vertex line[] = { sf::Vertex(start), sf::Vertex(end) };
     window.draw(line, 2, sf::Lines);
+    
+    float angle = atan2(end.y - start.y, end.x - start.x);
+    sf::CircleShape arrowHead(5, 3);
+    arrowHead.setFillColor(sf::Color::White);
+    arrowHead.setOrigin(5, 5);
+    arrowHead.setPosition(end);
+    arrowHead.setRotation(angle * 180 / 3.14159f + 90);
+    window.draw(arrowHead);
 }
 
 void SinglyLinkedList::draw(sf::RenderWindow& window) {
     ListNode* curr = head;
-    
-    // Vẽ đường nối
-    while (curr != nullptr && curr->next != nullptr) {
-        drawArrow(window, curr->currentPos, curr->next->currentPos);
-        curr = curr->next;
-    }
-
-    // Vẽ Node lên đè lên đường nối
-    curr = head;
     while (curr != nullptr) {
+        if (curr->next != nullptr) {
+            sf::Vector2f start(curr->currentPos.x + 30, curr->currentPos.y); 
+            sf::Vector2f end(curr->next->currentPos.x - 30, curr->next->currentPos.y);
+            drawArrow(window, start, end);
+        }
         curr->draw(window);
         curr = curr->next;
     }

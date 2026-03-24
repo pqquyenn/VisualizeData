@@ -1,7 +1,9 @@
 #pragma once
 #include "ListNode.h"
 #include <SFML/Graphics.hpp>
-#include <vector>
+
+// Định nghĩa chế độ hoạt ảnh đang chạy
+enum class AnimMode { NONE, SEARCH, DELETE };
 
 class SinglyLinkedList {
 private:
@@ -12,46 +14,34 @@ private:
     float startY = 350.f;
     float nodeSpacing = 110.f;
 
-    // Playback control states
+    // Các biến Playback Timer
     bool isPaused = false;
-    size_t animationStepCount = 0; // Current step count
     float timer = 0.0f;
     float delay = 0.8f; 
 
-// Search Animation specific
-    bool isSearching = false;
-    int searchValue = 0;
-    ListNode* currentSearchNode = nullptr;
-    ListNode* previousSearchNode = nullptr; // <--- THÊM DÒNG NÀY VÀO
+    // Quản lý Trạng thái Hoạt ảnh (Kiến trúc mới)
+    AnimMode currentMode = AnimMode::NONE;
+    int targetValue = 0;
+    size_t currentStep = 0;
+    size_t totalSteps = 0;
+    bool nodeWasFound = false;
 
-    // Delete Animation specific
-    bool isDeleting = false;
-    bool isConfirmingDeletion = false; // Phase to show found node as red
-    int deleteValue = 0;
-    ListNode* currentDeleteNode = nullptr;
-    ListNode* previousDeleteNode = nullptr;
-
+    // Các hàm nội bộ
     void updateLayout();
     void drawArrow(sf::RenderWindow& window, sf::Vector2f start, sf::Vector2f end);
     void resetColors();
-    void resetColorsToStep(); // Re-apply colors based on step count for backtracking
-    ListNode* getNodeAt(ListNode* h, size_t index);
-
-    // Step logic functions
-    void handleSearchStep();
-    void handleSearchBack();
-    void handleDeleteStep();
-    void handleDeleteBack();
+    void applyColorsByStep(); // Hàm render màu theo bước cực chuẩn
+    void performPhysicalDelete();
 
 public:
     SinglyLinkedList(sf::Font& font);
     ~SinglyLinkedList();
 
-    void clear(); // Helper to remove all nodes
-    void initList(int n); // Bulk random initialization
+    void clear(); 
+    void initList(int n); 
 
-    void insertNode(int val); // Falling animation
-    void insertNodeNoAnimation(int val); // Direct final position
+    void insertNode(int val); 
+    void insertNodeNoAnimation(int val); 
 
     void startDelete(int val);
     void startSearch(int val);
