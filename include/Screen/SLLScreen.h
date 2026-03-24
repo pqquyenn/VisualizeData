@@ -3,17 +3,21 @@
 #include "Button.h"
 #include "InputBox.h"
 #include "SinglyLinkedList.h"
+#include "PlaybackController.h"
 
 class App;
 
 class SLLScreen : public State {
 private:
-    Button* btnBack;
+    Button* btnBackToMenu;
     Button* btnInsert;
     Button* btnSearch;
     Button* btnDelete;
+    Button* btnInit;
+
     InputBox* inputVal;
     SinglyLinkedList* sll;
+    PlaybackController* playbackController; // Thêm controller mới
 
 public:
     SLLScreen(App* app);

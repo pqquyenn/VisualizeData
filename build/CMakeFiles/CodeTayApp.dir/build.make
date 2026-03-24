@@ -191,11 +191,26 @@ CMakeFiles/CodeTayApp.dir/src/UI/InputBox.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CodeTayApp.dir/src/UI/InputBox.cpp.s"
 	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\LENOVO\Desktop\Codetay\src\UI\InputBox.cpp -o CMakeFiles\CodeTayApp.dir\src\UI\InputBox.cpp.s
 
+CMakeFiles/CodeTayApp.dir/src/UI/PlaybackController.cpp.obj: CMakeFiles/CodeTayApp.dir/flags.make
+CMakeFiles/CodeTayApp.dir/src/UI/PlaybackController.cpp.obj: CMakeFiles/CodeTayApp.dir/includes_CXX.rsp
+CMakeFiles/CodeTayApp.dir/src/UI/PlaybackController.cpp.obj: C:/Users/LENOVO/Desktop/Codetay/src/UI/PlaybackController.cpp
+CMakeFiles/CodeTayApp.dir/src/UI/PlaybackController.cpp.obj: CMakeFiles/CodeTayApp.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\LENOVO\Desktop\Codetay\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/CodeTayApp.dir/src/UI/PlaybackController.cpp.obj"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CodeTayApp.dir/src/UI/PlaybackController.cpp.obj -MF CMakeFiles\CodeTayApp.dir\src\UI\PlaybackController.cpp.obj.d -o CMakeFiles\CodeTayApp.dir\src\UI\PlaybackController.cpp.obj -c C:\Users\LENOVO\Desktop\Codetay\src\UI\PlaybackController.cpp
+
+CMakeFiles/CodeTayApp.dir/src/UI/PlaybackController.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/CodeTayApp.dir/src/UI/PlaybackController.cpp.i"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\LENOVO\Desktop\Codetay\src\UI\PlaybackController.cpp > CMakeFiles\CodeTayApp.dir\src\UI\PlaybackController.cpp.i
+
+CMakeFiles/CodeTayApp.dir/src/UI/PlaybackController.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/CodeTayApp.dir/src/UI/PlaybackController.cpp.s"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\LENOVO\Desktop\Codetay\src\UI\PlaybackController.cpp -o CMakeFiles\CodeTayApp.dir\src\UI\PlaybackController.cpp.s
+
 CMakeFiles/CodeTayApp.dir/src/main.cpp.obj: CMakeFiles/CodeTayApp.dir/flags.make
 CMakeFiles/CodeTayApp.dir/src/main.cpp.obj: CMakeFiles/CodeTayApp.dir/includes_CXX.rsp
 CMakeFiles/CodeTayApp.dir/src/main.cpp.obj: C:/Users/LENOVO/Desktop/Codetay/src/main.cpp
 CMakeFiles/CodeTayApp.dir/src/main.cpp.obj: CMakeFiles/CodeTayApp.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\LENOVO\Desktop\Codetay\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/CodeTayApp.dir/src/main.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\LENOVO\Desktop\Codetay\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/CodeTayApp.dir/src/main.cpp.obj"
 	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/CodeTayApp.dir/src/main.cpp.obj -MF CMakeFiles\CodeTayApp.dir\src\main.cpp.obj.d -o CMakeFiles\CodeTayApp.dir\src\main.cpp.obj -c C:\Users\LENOVO\Desktop\Codetay\src\main.cpp
 
 CMakeFiles/CodeTayApp.dir/src/main.cpp.i: cmake_force
@@ -216,6 +231,7 @@ CodeTayApp_OBJECTS = \
 "CMakeFiles/CodeTayApp.dir/src/SinglyLinkedList/SinglyLinkedList.cpp.obj" \
 "CMakeFiles/CodeTayApp.dir/src/UI/Button.cpp.obj" \
 "CMakeFiles/CodeTayApp.dir/src/UI/InputBox.cpp.obj" \
+"CMakeFiles/CodeTayApp.dir/src/UI/PlaybackController.cpp.obj" \
 "CMakeFiles/CodeTayApp.dir/src/main.cpp.obj"
 
 # External object files for target CodeTayApp
@@ -229,6 +245,7 @@ CodeTayApp.exe: CMakeFiles/CodeTayApp.dir/src/SinglyLinkedList/ListNode.cpp.obj
 CodeTayApp.exe: CMakeFiles/CodeTayApp.dir/src/SinglyLinkedList/SinglyLinkedList.cpp.obj
 CodeTayApp.exe: CMakeFiles/CodeTayApp.dir/src/UI/Button.cpp.obj
 CodeTayApp.exe: CMakeFiles/CodeTayApp.dir/src/UI/InputBox.cpp.obj
+CodeTayApp.exe: CMakeFiles/CodeTayApp.dir/src/UI/PlaybackController.cpp.obj
 CodeTayApp.exe: CMakeFiles/CodeTayApp.dir/src/main.cpp.obj
 CodeTayApp.exe: CMakeFiles/CodeTayApp.dir/build.make
 CodeTayApp.exe: C:/msys64/ucrt64/lib/libsfml-graphics-s.a
@@ -246,7 +263,7 @@ CodeTayApp.exe: C:/msys64/ucrt64/lib/libFLAC.dll.a
 CodeTayApp.exe: CMakeFiles/CodeTayApp.dir/linkLibs.rsp
 CodeTayApp.exe: CMakeFiles/CodeTayApp.dir/objects1.rsp
 CodeTayApp.exe: CMakeFiles/CodeTayApp.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\LENOVO\Desktop\Codetay\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable CodeTayApp.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\LENOVO\Desktop\Codetay\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable CodeTayApp.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\CodeTayApp.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

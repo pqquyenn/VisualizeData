@@ -1,7 +1,6 @@
-CMakeFiles/CodeTayApp.dir/src/Screen/SLLScreen.cpp.obj: \
- C:\Users\LENOVO\Desktop\Codetay\src\Screen\SLLScreen.cpp \
- C:/Users/LENOVO/Desktop/Codetay/include/Screen/SLLScreen.h \
- C:/Users/LENOVO/Desktop/Codetay/include/Core/State.h \
+CMakeFiles/CodeTayApp.dir/src/UI/PlaybackController.cpp.obj: \
+ C:\Users\LENOVO\Desktop\Codetay\src\UI\PlaybackController.cpp \
+ C:/Users/LENOVO/Desktop/Codetay/include/UI/PlaybackController.h \
  C:/msys64/ucrt64/include/SFML/Graphics.hpp \
  C:/msys64/ucrt64/include/SFML/Window.hpp \
  C:/msys64/ucrt64/include/SFML/System.hpp \
@@ -247,9 +246,5 @@ CMakeFiles/CodeTayApp.dir/src/Screen/SLLScreen.cpp.obj: \
  C:/msys64/ucrt64/include/SFML/Graphics/Text.hpp \
  C:/msys64/ucrt64/include/SFML/Graphics/VertexBuffer.hpp \
  C:/Users/LENOVO/Desktop/Codetay/include/UI/Button.h \
- C:/Users/LENOVO/Desktop/Codetay/include/UI/InputBox.h \
  C:/Users/LENOVO/Desktop/Codetay/include/SinglyLinkedList/SinglyLinkedList.h \
- C:/Users/LENOVO/Desktop/Codetay/include/SinglyLinkedList/ListNode.h \
- C:/Users/LENOVO/Desktop/Codetay/include/UI/PlaybackController.h \
- C:/Users/LENOVO/Desktop/Codetay/include/Core/App.h \
- C:/Users/LENOVO/Desktop/Codetay/include/Screen/MainMenu.h
+ C:/Users/LENOVO/Desktop/Codetay/include/SinglyLinkedList/ListNode.h

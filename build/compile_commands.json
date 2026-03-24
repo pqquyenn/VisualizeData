@@ -49,6 +49,12 @@
 },
 {
   "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\UI\\PlaybackController.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\UI\\PlaybackController.cpp",
+  "file": "C:/Users/LENOVO/Desktop/Codetay/src/UI/PlaybackController.cpp",
+  "output": "CMakeFiles/CodeTayApp.dir/src/UI/PlaybackController.cpp.obj"
+},
+{
+  "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
   "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\main.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\main.cpp",
   "file": "C:/Users/LENOVO/Desktop/Codetay/src/main.cpp",
   "output": "CMakeFiles/CodeTayApp.dir/src/main.cpp.obj"
