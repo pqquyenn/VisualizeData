@@ -1,6 +1,7 @@
 #include "MainMenu.h"
 #include "App.h"
 #include "SLLScreen.h"
+#include "AVLScreen.h"
 
 MainMenu::MainMenu(App* app) : State(app) {
     // Tạo nút bấm đi tới Singly Linked List (app->font là lấy font từ class App)
@@ -22,7 +23,7 @@ void MainMenu::handleEvent(sf::Event& event, sf::RenderWindow& window) {
         app->changeState(new SLLScreen(app)); 
     }
     if (btnAVL->isClicked(event, mousePos)) {
-        app->changeState(new SLLScreen(app)); 
+        app->changeState(new AVLScreen(app)); 
     }
 }
 

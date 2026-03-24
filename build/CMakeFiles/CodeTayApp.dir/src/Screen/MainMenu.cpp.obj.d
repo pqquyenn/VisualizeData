@@ -252,4 +252,7 @@ CMakeFiles/CodeTayApp.dir/src/Screen/MainMenu.cpp.obj: \
  C:/Users/LENOVO/Desktop/Codetay/include/UI/InputBox.h \
  C:/Users/LENOVO/Desktop/Codetay/include/SinglyLinkedList/SinglyLinkedList.h \
  C:/Users/LENOVO/Desktop/Codetay/include/SinglyLinkedList/ListNode.h \
- C:/Users/LENOVO/Desktop/Codetay/include/UI/PlaybackController.h
+ C:/Users/LENOVO/Desktop/Codetay/include/UI/PlaybackController.h \
+ C:/Users/LENOVO/Desktop/Codetay/include/Screen/AVLScreen.h \
+ C:/Users/LENOVO/Desktop/Codetay/include/AVLTree/AVLTree.h \
+ C:/Users/LENOVO/Desktop/Codetay/include/AVLTree/AVLNode.h

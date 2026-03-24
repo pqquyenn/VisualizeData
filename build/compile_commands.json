@@ -1,6 +1,18 @@
 [
 {
   "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\AVLTree\\AVLNode.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\AVLTree\\AVLNode.cpp",
+  "file": "C:/Users/LENOVO/Desktop/Codetay/src/AVLTree/AVLNode.cpp",
+  "output": "CMakeFiles/CodeTayApp.dir/src/AVLTree/AVLNode.cpp.obj"
+},
+{
+  "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\AVLTree\\AVLTree.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\AVLTree\\AVLTree.cpp",
+  "file": "C:/Users/LENOVO/Desktop/Codetay/src/AVLTree/AVLTree.cpp",
+  "output": "CMakeFiles/CodeTayApp.dir/src/AVLTree/AVLTree.cpp.obj"
+},
+{
+  "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
   "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\Core\\App.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\Core\\App.cpp",
   "file": "C:/Users/LENOVO/Desktop/Codetay/src/Core/App.cpp",
   "output": "CMakeFiles/CodeTayApp.dir/src/Core/App.cpp.obj"
@@ -10,6 +22,12 @@
   "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\Core\\State.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\Core\\State.cpp",
   "file": "C:/Users/LENOVO/Desktop/Codetay/src/Core/State.cpp",
   "output": "CMakeFiles/CodeTayApp.dir/src/Core/State.cpp.obj"
+},
+{
+  "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\Screen\\AVLScreen.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\Screen\\AVLScreen.cpp",
+  "file": "C:/Users/LENOVO/Desktop/Codetay/src/Screen/AVLScreen.cpp",
+  "output": "CMakeFiles/CodeTayApp.dir/src/Screen/AVLScreen.cpp.obj"
 },
 {
   "directory": "C:/Users/LENOVO/Desktop/Codetay/build",

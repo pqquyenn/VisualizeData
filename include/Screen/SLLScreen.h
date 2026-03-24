@@ -17,9 +17,16 @@ private:
 
     InputBox* inputVal;
     SinglyLinkedList* sll;
-    PlaybackController* playbackController; // Thêm controller mới
+    PlaybackController* playbackController;
+
+    // --- THÊM 4 BIẾN NÀY CHO TÍNH NĂNG CAMERA ---
+    sf::View listView;           // Camera để soi danh sách
+    bool isPanning = false;      // Đang giữ chuột để kéo hay không?
+    sf::Vector2i oldMousePos;    // Lưu vị trí chuột cũ để tính khoảng cách kéo
+    bool isViewInitialized = false; // Đảm bảo Camera chỉ khởi tạo 1 lần
 
 public:
+    // ... (Giữ nguyên phần public)
     SLLScreen(App* app);
     ~SLLScreen();
 

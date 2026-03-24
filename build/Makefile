@@ -128,6 +128,54 @@ CodeTayApp/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/build
 .PHONY : CodeTayApp/fast
 
+src/AVLTree/AVLNode.obj: src/AVLTree/AVLNode.cpp.obj
+.PHONY : src/AVLTree/AVLNode.obj
+
+# target to build an object file
+src/AVLTree/AVLNode.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/AVLTree/AVLNode.cpp.obj
+.PHONY : src/AVLTree/AVLNode.cpp.obj
+
+src/AVLTree/AVLNode.i: src/AVLTree/AVLNode.cpp.i
+.PHONY : src/AVLTree/AVLNode.i
+
+# target to preprocess a source file
+src/AVLTree/AVLNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/AVLTree/AVLNode.cpp.i
+.PHONY : src/AVLTree/AVLNode.cpp.i
+
+src/AVLTree/AVLNode.s: src/AVLTree/AVLNode.cpp.s
+.PHONY : src/AVLTree/AVLNode.s
+
+# target to generate assembly for a file
+src/AVLTree/AVLNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/AVLTree/AVLNode.cpp.s
+.PHONY : src/AVLTree/AVLNode.cpp.s
+
+src/AVLTree/AVLTree.obj: src/AVLTree/AVLTree.cpp.obj
+.PHONY : src/AVLTree/AVLTree.obj
+
+# target to build an object file
+src/AVLTree/AVLTree.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/AVLTree/AVLTree.cpp.obj
+.PHONY : src/AVLTree/AVLTree.cpp.obj
+
+src/AVLTree/AVLTree.i: src/AVLTree/AVLTree.cpp.i
+.PHONY : src/AVLTree/AVLTree.i
+
+# target to preprocess a source file
+src/AVLTree/AVLTree.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/AVLTree/AVLTree.cpp.i
+.PHONY : src/AVLTree/AVLTree.cpp.i
+
+src/AVLTree/AVLTree.s: src/AVLTree/AVLTree.cpp.s
+.PHONY : src/AVLTree/AVLTree.s
+
+# target to generate assembly for a file
+src/AVLTree/AVLTree.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/AVLTree/AVLTree.cpp.s
+.PHONY : src/AVLTree/AVLTree.cpp.s
+
 src/Core/App.obj: src/Core/App.cpp.obj
 .PHONY : src/Core/App.obj
 
@@ -175,6 +223,30 @@ src/Core/State.s: src/Core/State.cpp.s
 src/Core/State.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Core/State.cpp.s
 .PHONY : src/Core/State.cpp.s
+
+src/Screen/AVLScreen.obj: src/Screen/AVLScreen.cpp.obj
+.PHONY : src/Screen/AVLScreen.obj
+
+# target to build an object file
+src/Screen/AVLScreen.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Screen/AVLScreen.cpp.obj
+.PHONY : src/Screen/AVLScreen.cpp.obj
+
+src/Screen/AVLScreen.i: src/Screen/AVLScreen.cpp.i
+.PHONY : src/Screen/AVLScreen.i
+
+# target to preprocess a source file
+src/Screen/AVLScreen.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Screen/AVLScreen.cpp.i
+.PHONY : src/Screen/AVLScreen.cpp.i
+
+src/Screen/AVLScreen.s: src/Screen/AVLScreen.cpp.s
+.PHONY : src/Screen/AVLScreen.s
+
+# target to generate assembly for a file
+src/Screen/AVLScreen.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Screen/AVLScreen.cpp.s
+.PHONY : src/Screen/AVLScreen.cpp.s
 
 src/Screen/MainMenu.obj: src/Screen/MainMenu.cpp.obj
 .PHONY : src/Screen/MainMenu.obj
@@ -377,12 +449,21 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... CodeTayApp
+	@echo ... src/AVLTree/AVLNode.obj
+	@echo ... src/AVLTree/AVLNode.i
+	@echo ... src/AVLTree/AVLNode.s
+	@echo ... src/AVLTree/AVLTree.obj
+	@echo ... src/AVLTree/AVLTree.i
+	@echo ... src/AVLTree/AVLTree.s
 	@echo ... src/Core/App.obj
 	@echo ... src/Core/App.i
 	@echo ... src/Core/App.s
 	@echo ... src/Core/State.obj
 	@echo ... src/Core/State.i
 	@echo ... src/Core/State.s
+	@echo ... src/Screen/AVLScreen.obj
+	@echo ... src/Screen/AVLScreen.i
+	@echo ... src/Screen/AVLScreen.s
 	@echo ... src/Screen/MainMenu.obj
 	@echo ... src/Screen/MainMenu.i
 	@echo ... src/Screen/MainMenu.s

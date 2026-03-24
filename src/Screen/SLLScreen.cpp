@@ -11,7 +11,7 @@ SLLScreen::SLLScreen(App* app) : State(app) {
     btnInsert = new Button(270, 80, 100, 40, app->font, "Insert");
     btnSearch = new Button(390, 80, 100, 40, app->font, "Search");
     btnDelete = new Button(510, 80, 100, 40, app->font, "Delete");
-    btnInit = new Button(630, 80, 100, 40, app->font, "Init Random");
+    btnInit = new Button(630, 80, 100, 40, app->font, "Init");
 
     sll = new SinglyLinkedList(app->font);
     
@@ -31,6 +31,41 @@ SLLScreen::~SLLScreen() {
 }
 
 void SLLScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
+    // 1. Khởi tạo Camera bằng kích thước cửa sổ ở khung hình đầu tiên
+    if (!isViewInitialized) {
+        listView = window.getDefaultView();
+        isViewInitialized = true;
+    }
+
+    // 2. Xử lý Zoom (Lăn chuột)
+    if (event.type == sf::Event::MouseWheelScrolled && event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel) {
+        if (event.mouseWheelScroll.delta > 0) {
+            listView.zoom(0.9f); // Lăn lên: Phóng to
+        } else if (event.mouseWheelScroll.delta < 0) {
+            listView.zoom(1.1f); // Lăn xuống: Thu nhỏ
+        }
+    }
+
+    // 3. Xử lý Kéo/Pan (Bấm giữ chuột trái và di chuyển)
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+        sf::Vector2i pixelPos = sf::Mouse::getPosition(window);
+        // Chỉ cho phép kéo thả nếu bấm ở khu vực trống bên dưới các nút UI (y > 200)
+        // để tránh việc vừa bấm nút vừa vô tình kéo màn hình.
+        if (pixelPos.y > 200) {
+            isPanning = true;
+            oldMousePos = pixelPos;
+        }
+    }
+    if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
+        isPanning = false; // Thả chuột ra thì ngừng kéo
+    }
+    if (event.type == sf::Event::MouseMoved && isPanning) {
+        sf::Vector2i newMousePos = sf::Mouse::getPosition(window);
+        // Tính khoảng cách chuột đã di chuyển và chuyển đổi sang toạ độ Camera
+        sf::Vector2f delta = window.mapPixelToCoords(oldMousePos, listView) - window.mapPixelToCoords(newMousePos, listView);
+        listView.move(delta); // Dịch chuyển Camera
+        oldMousePos = newMousePos; // Cập nhật lại vị trí chuột
+    }
     sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
     
     if (btnBackToMenu->isClicked(event, mousePos)) {
@@ -80,6 +115,18 @@ void SLLScreen::update(float deltaTime, sf::RenderWindow& window) {
 }
 
 void SLLScreen::draw(sf::RenderWindow& window) {
+    // === BƯỚC 1: LẮP CAMERA VÀO ĐỂ VẼ DANH SÁCH ===
+    if (isViewInitialized) {
+        window.setView(listView);
+    }
+    
+    // Chỉ vẽ SLL ở chế độ Camera này
+    sll->draw(window);
+
+    // === BƯỚC 2: GỠ CAMERA RA, TRẢ VỀ CỐ ĐỊNH ĐỂ VẼ GIAO DIỆN (UI) ===
+    window.setView(window.getDefaultView());
+
+    // Vẽ toàn bộ các nút bấm và ô nhập liệu (sẽ dính chặt vào màn hình)
     btnBackToMenu->draw(window);
     inputVal->draw(window); 
     btnInsert->draw(window);
@@ -88,5 +135,4 @@ void SLLScreen::draw(sf::RenderWindow& window) {
     btnInit->draw(window);
     
     playbackController->draw(window);
-    sll->draw(window);
 }

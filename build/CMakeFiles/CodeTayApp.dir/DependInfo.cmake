@@ -8,8 +8,11 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "C:/Users/LENOVO/Desktop/Codetay/src/AVLTree/AVLNode.cpp" "CMakeFiles/CodeTayApp.dir/src/AVLTree/AVLNode.cpp.obj" "gcc" "CMakeFiles/CodeTayApp.dir/src/AVLTree/AVLNode.cpp.obj.d"
+  "C:/Users/LENOVO/Desktop/Codetay/src/AVLTree/AVLTree.cpp" "CMakeFiles/CodeTayApp.dir/src/AVLTree/AVLTree.cpp.obj" "gcc" "CMakeFiles/CodeTayApp.dir/src/AVLTree/AVLTree.cpp.obj.d"
   "C:/Users/LENOVO/Desktop/Codetay/src/Core/App.cpp" "CMakeFiles/CodeTayApp.dir/src/Core/App.cpp.obj" "gcc" "CMakeFiles/CodeTayApp.dir/src/Core/App.cpp.obj.d"
   "C:/Users/LENOVO/Desktop/Codetay/src/Core/State.cpp" "CMakeFiles/CodeTayApp.dir/src/Core/State.cpp.obj" "gcc" "CMakeFiles/CodeTayApp.dir/src/Core/State.cpp.obj.d"
+  "C:/Users/LENOVO/Desktop/Codetay/src/Screen/AVLScreen.cpp" "CMakeFiles/CodeTayApp.dir/src/Screen/AVLScreen.cpp.obj" "gcc" "CMakeFiles/CodeTayApp.dir/src/Screen/AVLScreen.cpp.obj.d"
   "C:/Users/LENOVO/Desktop/Codetay/src/Screen/MainMenu.cpp" "CMakeFiles/CodeTayApp.dir/src/Screen/MainMenu.cpp.obj" "gcc" "CMakeFiles/CodeTayApp.dir/src/Screen/MainMenu.cpp.obj.d"
   "C:/Users/LENOVO/Desktop/Codetay/src/Screen/SLLScreen.cpp" "CMakeFiles/CodeTayApp.dir/src/Screen/SLLScreen.cpp.obj" "gcc" "CMakeFiles/CodeTayApp.dir/src/Screen/SLLScreen.cpp.obj.d"
   "C:/Users/LENOVO/Desktop/Codetay/src/SinglyLinkedList/ListNode.cpp" "CMakeFiles/CodeTayApp.dir/src/SinglyLinkedList/ListNode.cpp.obj" "gcc" "CMakeFiles/CodeTayApp.dir/src/SinglyLinkedList/ListNode.cpp.obj.d"
