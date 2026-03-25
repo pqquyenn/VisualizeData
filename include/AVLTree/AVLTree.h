@@ -80,4 +80,6 @@ public:
     void updatePosition(float deltaTime);
     void updateAnimation(float deltaTime);
     void draw(sf::RenderWindow& window);
+
+    void handleEvent(const sf::Event& event, const sf::RenderWindow& window, const sf::View& view);
 };

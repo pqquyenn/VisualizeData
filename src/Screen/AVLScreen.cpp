@@ -13,12 +13,13 @@ AVLScreen::AVLScreen(App* app) : State(app) {
     btnDelete = new Button(510, 80, 100, 40, app->font, "Delete");
     btnInit = new Button(630, 80, 100, 40, app->font, "Init");
 
-    // Playback Controls UI
-    btnStepBack = new Button(200, 140, 40, 40, app->font, "<");
-    btnPausePlay = new Button(250, 140, 120, 40, app->font, "Pause/Play");
-    btnStepForward = new Button(380, 140, 40, 40, app->font, ">");
-    btnSpeedDown = new Button(430, 140, 50, 40, app->font, "<<");
-    btnSpeedUp = new Button(490, 140, 50, 40, app->font, ">>");
+    // --- Đã sửa: Sắp xếp lại thứ tự và căn lề hoàn hảo cho các nút Playback ---
+    // Khối nút trải dài từ X = 250 đến 630, cách nhau 15 pixel
+    btnSpeedDown   = new Button(250, 140, 50, 40, app->font, "<<");
+    btnStepBack    = new Button(315, 140, 50, 40, app->font, "<");
+    btnPausePlay   = new Button(380, 140, 120, 40, app->font, "Pause/Play");
+    btnStepForward = new Button(515, 140, 50, 40, app->font, ">");
+    btnSpeedUp     = new Button(580, 140, 50, 40, app->font, ">>");
 
     avlTree = new AVLTree(app->font);
 }
@@ -48,13 +49,18 @@ void AVLScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
         if (pixelPos.y > 200) { isPanning = true; oldMousePos = pixelPos; } // Tránh kéo nhầm nút bấm UI
     }
     if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) isPanning = false;
-    
+    // --- THÊM: Chuyển tiếp sự kiện kéo thả cho cây, sử dụng treeView ---
+
     if (event.type == sf::Event::MouseMoved && isPanning) {
         sf::Vector2i newMousePos = sf::Mouse::getPosition(window);
         sf::Vector2f delta = window.mapPixelToCoords(oldMousePos, treeView) - window.mapPixelToCoords(newMousePos, treeView);
         treeView.move(delta);
         oldMousePos = newMousePos;
     }
+
+    // --- THÊM: Chuyển tiếp sự kiện kéo thả cho cây, sử dụng treeView ---
+    avlTree->handleEvent(event, window, treeView);
+
 
     sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
     

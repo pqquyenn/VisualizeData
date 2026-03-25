@@ -285,3 +285,13 @@ void AVLTree::draw(sf::RenderWindow& window) {
     for (auto& pair : visualNodes) pair.second->drawArrows(window, visualNodes);
     for (auto& pair : visualNodes) pair.second->draw(window);
 }
+
+void AVLTree::handleEvent(const sf::Event& event, const sf::RenderWindow& window, const sf::View& view) {
+    // Chỉ cho phép kéo thả nếu không đang chạy hoạt ảnh
+    // (hoặc hoạt ảnh đã tạm dừng)
+    if (!isPaused && !snapshots.empty() && currentStep < snapshots.size() - 1) return;
+
+    for (auto& pair : visualNodes) {
+        pair.second->handleEvent(event, window, view);
+    }
+}

@@ -224,6 +224,54 @@ src/Core/State.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Core/State.cpp.s
 .PHONY : src/Core/State.cpp.s
 
+src/Heap/HeapNode.obj: src/Heap/HeapNode.cpp.obj
+.PHONY : src/Heap/HeapNode.obj
+
+# target to build an object file
+src/Heap/HeapNode.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Heap/HeapNode.cpp.obj
+.PHONY : src/Heap/HeapNode.cpp.obj
+
+src/Heap/HeapNode.i: src/Heap/HeapNode.cpp.i
+.PHONY : src/Heap/HeapNode.i
+
+# target to preprocess a source file
+src/Heap/HeapNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Heap/HeapNode.cpp.i
+.PHONY : src/Heap/HeapNode.cpp.i
+
+src/Heap/HeapNode.s: src/Heap/HeapNode.cpp.s
+.PHONY : src/Heap/HeapNode.s
+
+# target to generate assembly for a file
+src/Heap/HeapNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Heap/HeapNode.cpp.s
+.PHONY : src/Heap/HeapNode.cpp.s
+
+src/Heap/HeapTree.obj: src/Heap/HeapTree.cpp.obj
+.PHONY : src/Heap/HeapTree.obj
+
+# target to build an object file
+src/Heap/HeapTree.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Heap/HeapTree.cpp.obj
+.PHONY : src/Heap/HeapTree.cpp.obj
+
+src/Heap/HeapTree.i: src/Heap/HeapTree.cpp.i
+.PHONY : src/Heap/HeapTree.i
+
+# target to preprocess a source file
+src/Heap/HeapTree.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Heap/HeapTree.cpp.i
+.PHONY : src/Heap/HeapTree.cpp.i
+
+src/Heap/HeapTree.s: src/Heap/HeapTree.cpp.s
+.PHONY : src/Heap/HeapTree.s
+
+# target to generate assembly for a file
+src/Heap/HeapTree.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Heap/HeapTree.cpp.s
+.PHONY : src/Heap/HeapTree.cpp.s
+
 src/Screen/AVLScreen.obj: src/Screen/AVLScreen.cpp.obj
 .PHONY : src/Screen/AVLScreen.obj
 
@@ -247,6 +295,30 @@ src/Screen/AVLScreen.s: src/Screen/AVLScreen.cpp.s
 src/Screen/AVLScreen.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Screen/AVLScreen.cpp.s
 .PHONY : src/Screen/AVLScreen.cpp.s
+
+src/Screen/HeapScreen.obj: src/Screen/HeapScreen.cpp.obj
+.PHONY : src/Screen/HeapScreen.obj
+
+# target to build an object file
+src/Screen/HeapScreen.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Screen/HeapScreen.cpp.obj
+.PHONY : src/Screen/HeapScreen.cpp.obj
+
+src/Screen/HeapScreen.i: src/Screen/HeapScreen.cpp.i
+.PHONY : src/Screen/HeapScreen.i
+
+# target to preprocess a source file
+src/Screen/HeapScreen.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Screen/HeapScreen.cpp.i
+.PHONY : src/Screen/HeapScreen.cpp.i
+
+src/Screen/HeapScreen.s: src/Screen/HeapScreen.cpp.s
+.PHONY : src/Screen/HeapScreen.s
+
+# target to generate assembly for a file
+src/Screen/HeapScreen.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Screen/HeapScreen.cpp.s
+.PHONY : src/Screen/HeapScreen.cpp.s
 
 src/Screen/MainMenu.obj: src/Screen/MainMenu.cpp.obj
 .PHONY : src/Screen/MainMenu.obj
@@ -461,9 +533,18 @@ help:
 	@echo ... src/Core/State.obj
 	@echo ... src/Core/State.i
 	@echo ... src/Core/State.s
+	@echo ... src/Heap/HeapNode.obj
+	@echo ... src/Heap/HeapNode.i
+	@echo ... src/Heap/HeapNode.s
+	@echo ... src/Heap/HeapTree.obj
+	@echo ... src/Heap/HeapTree.i
+	@echo ... src/Heap/HeapTree.s
 	@echo ... src/Screen/AVLScreen.obj
 	@echo ... src/Screen/AVLScreen.i
 	@echo ... src/Screen/AVLScreen.s
+	@echo ... src/Screen/HeapScreen.obj
+	@echo ... src/Screen/HeapScreen.i
+	@echo ... src/Screen/HeapScreen.s
 	@echo ... src/Screen/MainMenu.obj
 	@echo ... src/Screen/MainMenu.i
 	@echo ... src/Screen/MainMenu.s

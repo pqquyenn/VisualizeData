@@ -18,8 +18,15 @@ public:
     sf::Color currentColor;
     sf::Color targetColor;
 
+    // --- THÊM: Biến trạng thái kéo thả ---
+    bool isDragging; 
+    sf::Vector2f dragOffset; // Khoảng cách từ chuột đến tâm node khi bắt đầu kéo
+
     AVLNode(int val, sf::Font& font);
     void update(float dt);
     void draw(sf::RenderWindow& window);
     void drawArrows(sf::RenderWindow& window, std::map<int, AVLNode*>& allNodes);
+
+    // --- THÊM: Hàm xử lý sự kiện kéo thả ---
+    void handleEvent(const sf::Event& event, const sf::RenderWindow& window, const sf::View& view);
 };

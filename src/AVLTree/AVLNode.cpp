@@ -1,6 +1,7 @@
 #include "AVLNode.h"
+#include <cmath>
 
-AVLNode::AVLNode(int val, sf::Font& font) : value(val), isActive(false), leftVal(-1), rightVal(-1) {
+AVLNode::AVLNode(int val, sf::Font& font) : value(val), isActive(false), leftVal(-1), rightVal(-1), isDragging(false) { // Initialize isDragging
     shape.setRadius(22.f);
     shape.setOrigin(22.f, 22.f);
     shape.setOutlineThickness(3.f);
@@ -17,10 +18,38 @@ AVLNode::AVLNode(int val, sf::Font& font) : value(val), isActive(false), leftVal
     text.setOrigin(bounds.left + bounds.width / 2.0f, bounds.top + bounds.height / 2.0f);
 }
 
+// --- THÊM: Xử lý sự kiện kéo thả ---
+void AVLNode::handleEvent(const sf::Event& event, const sf::RenderWindow& window, const sf::View& view) {
+    if (!isActive) return;
+
+    // Chuyển đổi vị trí chuột sang toạ độ thế giới (coords) bằng cách sử dụng view
+    sf::Vector2f mouseCoords = window.mapPixelToCoords(sf::Mouse::getPosition(window), view);
+
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+        // Kiểm tra xem chuột có nằm trong naode không
+        if (shape.getGlobalBounds().contains(mouseCoords)) {
+            isDragging = true;
+            dragOffset = shape.getPosition() - mouseCoords;
+        }
+    } else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
+        isDragging = false;
+    } else if (event.type == sf::Event::MouseMoved) {
+        if (isDragging) {
+            // Cập nhật vị trí node ngay lập tức theo chuột
+            currentPos = mouseCoords + dragOffset;
+            targetPos = currentPos; // Cập nhật targetPos để node không quay lại vị trí cũ
+        }
+    }
+}
+
 void AVLNode::update(float dt) {
     if (!isActive) return;
-    // Nội suy (Lerp) di chuyển mượt mà
-    currentPos += (targetPos - currentPos) * 6.0f * dt;
+
+    // --- SỬA: Bỏ qua nội suy khi đang kéo thả để di chuyển tức thời ---
+    if (!isDragging) {
+        currentPos += (targetPos - currentPos) * 6.0f * dt;
+    }
+
     shape.setPosition(currentPos);
     text.setPosition(currentPos);
 

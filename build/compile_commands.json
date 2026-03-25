@@ -25,9 +25,27 @@
 },
 {
   "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\Heap\\HeapNode.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\Heap\\HeapNode.cpp",
+  "file": "C:/Users/LENOVO/Desktop/Codetay/src/Heap/HeapNode.cpp",
+  "output": "CMakeFiles/CodeTayApp.dir/src/Heap/HeapNode.cpp.obj"
+},
+{
+  "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\Heap\\HeapTree.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\Heap\\HeapTree.cpp",
+  "file": "C:/Users/LENOVO/Desktop/Codetay/src/Heap/HeapTree.cpp",
+  "output": "CMakeFiles/CodeTayApp.dir/src/Heap/HeapTree.cpp.obj"
+},
+{
+  "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
   "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\Screen\\AVLScreen.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\Screen\\AVLScreen.cpp",
   "file": "C:/Users/LENOVO/Desktop/Codetay/src/Screen/AVLScreen.cpp",
   "output": "CMakeFiles/CodeTayApp.dir/src/Screen/AVLScreen.cpp.obj"
+},
+{
+  "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\Screen\\HeapScreen.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\Screen\\HeapScreen.cpp",
+  "file": "C:/Users/LENOVO/Desktop/Codetay/src/Screen/HeapScreen.cpp",
+  "output": "CMakeFiles/CodeTayApp.dir/src/Screen/HeapScreen.cpp.obj"
 },
 {
   "directory": "C:/Users/LENOVO/Desktop/Codetay/build",

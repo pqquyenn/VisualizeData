@@ -28,6 +28,7 @@ target_include_directories(CodeTayApp PRIVATE
     ${CMAKE_SOURCE_DIR}/include/SinglyLinkedList
     ${CMAKE_SOURCE_DIR}/include/UI
     ${CMAKE_SOURCE_DIR}/include/AVLTree
+    ${CMAKE_SOURCE_DIR}/include/Heap
 )
 
 # 6. Định nghĩa SFML_STATIC để mã nguồn hiểu là đang dùng bản tĩnh
