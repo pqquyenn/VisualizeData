@@ -19,18 +19,14 @@ HeapScreen::HeapScreen(App* app) : State(app), isPanning(false), isViewInitializ
     btnInsert = new Button(270, 80, 100, 40, app->font, "Insert");
     btnSearch = new Button(390, 80, 100, 40, app->font, "Search");
     btnDeleteMax = new Button(510, 80, 100, 40, app->font, "Delete");
-    btnInit = new Button(630, 80, 100, 40, app->font, "Init");
-
+    btnInit= new Button(630, 80, 100, 40, app->font, "Init");
+    btnInitFromFile = new Button(750, 80, 100, 40, app->font, "Init File");
     btnSpeedDown   = new Button(250, 140, 50, 40, app->font, "<<");
     btnStepBack    = new Button(315, 140, 50, 40, app->font, "<");
     btnPausePlay   = new Button(380, 140, 120, 40, app->font, "Pause/Play");
     btnStepForward = new Button(515, 140, 50, 40, app->font, ">");
     btnSpeedUp     = new Button(580, 140, 50, 40, app->font, ">>");
 
-    btnInit = new Button(510, 80, 100, 40, app->font, "Init");
-    
-    // 1. Khởi tạo nút Init File (nằm bên phải nút Init)
-    btnInitFromFile = new Button(630, 80, 100, 40, app->font, "Init File");
 
     treeView.setSize(1280, 720); 
     uiView.setSize(1280, 720);   

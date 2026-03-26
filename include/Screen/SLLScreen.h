@@ -14,8 +14,8 @@ private:
     Button* btnSearch;
     Button* btnDelete;
     Button* btnInit;
+    Button* btnInitFile; // Thêm nút Init File
 
-    // Tích hợp trực tiếp Playback Buttons (Không dùng PlaybackController)
     Button* btnStepBack;
     Button* btnPausePlay;
     Button* btnStepForward;

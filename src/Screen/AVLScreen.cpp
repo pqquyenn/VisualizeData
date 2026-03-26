@@ -35,34 +35,47 @@ AVLScreen::~AVLScreen() {
 }
 
 void AVLScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
-    if (!isViewInitialized) {
+if (!isViewInitialized) {
         treeView = window.getDefaultView();
         isViewInitialized = true;
     }
 
-    // Camera Panning & Zooming
+    // Zoom Camera
     if (event.type == sf::Event::MouseWheelScrolled && event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel) {
         if (event.mouseWheelScroll.delta > 0) treeView.zoom(0.9f);
         else if (event.mouseWheelScroll.delta < 0) treeView.zoom(1.1f);
     }
-    // ... (Phần camera panning và input cũ giữ nguyên) ...
 
+    // --- 1. CHUYỂN TIẾP SỰ KIỆN CHO CÂY XỬ LÝ TRƯỚC ---
+    // Phải setView thành treeView để toạ độ chuột ánh xạ đúng vào cây
+    window.setView(treeView);
+    avlTree->handleEvent(event, window, treeView);
+
+    // --- 2. XỬ LÝ KÉO CAMERA (PANNING) ---
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
         sf::Vector2i pixelPos = sf::Mouse::getPosition(window);
-        if (pixelPos.y > 200) { isPanning = true; oldMousePos = pixelPos; } // Tránh kéo nhầm nút bấm UI
+        
+        // CHỈ pan camera khi:
+        // 1. Click chuột dưới vùng UI (y > 200)
+        // 2. KHÔNG có Node nào đang bị kéo (!avlTree->isDraggingNode())
+        if (pixelPos.y > 200 && !avlTree->isDraggingNode()) { 
+            isPanning = true; 
+            oldMousePos = pixelPos; 
+        }
     }
-    if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) isPanning = false;
-    // --- THÊM: Chuyển tiếp sự kiện kéo thả cho cây, sử dụng treeView ---
-
-    if (event.type == sf::Event::MouseMoved && isPanning) {
+    else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
+        isPanning = false;
+    }
+    else if (event.type == sf::Event::MouseMoved && isPanning) {
         sf::Vector2i newMousePos = sf::Mouse::getPosition(window);
         sf::Vector2f delta = window.mapPixelToCoords(oldMousePos, treeView) - window.mapPixelToCoords(newMousePos, treeView);
         treeView.move(delta);
         oldMousePos = newMousePos;
     }
 
-    // --- THÊM: Chuyển tiếp sự kiện kéo thả cho cây, sử dụng treeView ---
-    avlTree->handleEvent(event, window, treeView);
+    // Trả lại View mặc định để xử lý click cho UI Buttons
+    window.setView(window.getDefaultView());
+    // avlTree->handleEvent(event, window, treeView);
 
 
     sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
@@ -155,25 +168,37 @@ void AVLScreen::drawCodeBlock(sf::RenderWindow& window) {
 
     int activeLine = avlTree->getCurrentActiveLine();
 
-    // Khung nền
-    sf::RectangleShape bg(sf::Vector2f(400, codePtr->size() * 25 + 20));
-    bg.setPosition(window.getSize().x - 420, window.getSize().y - bg.getSize().y - 20);
-    bg.setFillColor(sf::Color(255, 250, 205, 230)); // Vàng nhạt giống trang web VisuAlgo
-    bg.setOutlineThickness(2);
-    bg.setOutlineColor(sf::Color(100, 100, 100));
+    // Thông số khung nền màu be (giống hệt Max Heap)
+    float boxX = 850.0f;
+    float boxY = 400.0f;
+    float boxWidth = 380.0f;
+    float boxHeight = codePtr->size() * 30.0f + 20.0f;
+
+    sf::RectangleShape bg(sf::Vector2f(boxWidth, boxHeight));
+    bg.setPosition(boxX, boxY);
+    bg.setFillColor(sf::Color(253, 246, 227)); // Màu nền sáng
+    bg.setOutlineThickness(2.0f);
+    bg.setOutlineColor(sf::Color(200, 200, 200));
     window.draw(bg);
 
-    // Vẽ từng dòng text
+    // Vẽ từng dòng chữ
     for (size_t i = 0; i < codePtr->size(); ++i) {
+        float lineY = boxY + 10.0f + i * 30.0f;
+
+        // Nếu là dòng đang chạy (activeLine), vẽ dải màu vàng làm highlight
         if ((int)i == activeLine) {
-            sf::RectangleShape highlight(sf::Vector2f(390, 25));
-            highlight.setPosition(bg.getPosition().x + 5, bg.getPosition().y + 10 + i * 25);
-            highlight.setFillColor(sf::Color(0, 0, 0, 40));
+            sf::RectangleShape highlight(sf::Vector2f(boxWidth, 30.0f));
+            highlight.setPosition(boxX, lineY - 5.0f);
+            highlight.setFillColor(sf::Color(255, 228, 181)); // Màu vàng highlight
             window.draw(highlight);
         }
-        sf::Text text((*codePtr)[i], app->font, 16);
-        text.setPosition(bg.getPosition().x + 10, bg.getPosition().y + 12 + i * 25);
+
+        sf::Text text;
+        text.setFont(app->font); 
+        text.setString((*codePtr)[i]);
+        text.setCharacterSize(16);
         text.setFillColor(sf::Color::Black);
+        text.setPosition(boxX + 15.0f, lineY);
         window.draw(text);
     }
 }

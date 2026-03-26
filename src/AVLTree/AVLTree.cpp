@@ -44,11 +44,19 @@ void AVLTree::calculateLayout(LogicalNode* node, float x, float y, float hGap, s
 
 void AVLTree::saveSnapshot(int line) {
     StepSnapshot snap;
-    calculateLayout(root, 600.f, 150.f, 250.f, snap.nodes);
-    snap.operation = currentOpName; // Tự động lấy "Insert", "Delete" hoặc "Search"
-    snap.activeLine = line;
+    
+    // 1. PHẦN NÀY LÀ CODE GỐC CỦA BẠN (BẮT BUỘC PHẢI GIỮ LẠI ĐỂ VẼ CÂY)
+    // Nó thường là hàm calculateLayout hoặc vòng lặp để đưa node vào snap.nodes
+    // Ví dụ:
+    calculateLayout(root, 600.f, 150.f, 250.f, snap.nodes); 
+    
+    // 2. PHẦN MỚI THÊM ĐỂ HIỆN KHUNG CODE VÀNG
+    snap.operation = currentOpName; 
+    snap.activeLine = line;         
+    
     snapshots.push_back(snap);
 }
+
 
 // 2. Thêm hàm initFromFile (đặt dưới hàm initTree)
 void AVLTree::initFromFile(const std::vector<int>& data) {
@@ -234,22 +242,23 @@ void AVLTree::deleteVal(int val) {
 // --- SEARCH ---
 void AVLTree::searchRecursive(LogicalNode* node, int key) {
     if (node == nullptr) {
-        saveSnapshot(0); // Line 0: NOT_FOUND
+        saveSnapshot(0); // Dòng 0: if (node == NULL) return NOT_FOUND
         return;
     }
-    node->color = sf::Color(255, 165, 0);
-
+    
+    node->color = sf::Color(255, 165, 0); // Đang duyệt -> Tô màu Cam
+    
     if (node->value == key) {
-        node->color = sf::Color(50, 205, 50);
-        saveSnapshot(1); // Line 1: FOUND
+        node->color = sf::Color(50, 205, 50); // Tìm thấy -> Tô màu Xanh lá
+        saveSnapshot(1); // Dòng 1: if (node->key == key) return FOUND
         return;
     }
     
     if (key < node->value) {
-        saveSnapshot(2); // Line 2: search(left)
+        saveSnapshot(2); // Dòng 2: search(node->left, key)
         searchRecursive(node->left, key);
     } else {
-        saveSnapshot(3); // Line 3: search(right)
+        saveSnapshot(3); // Dòng 3: search(node->right, key)
         searchRecursive(node->right, key);
     }
 }
@@ -257,7 +266,7 @@ void AVLTree::searchRecursive(LogicalNode* node, int key) {
 void AVLTree::searchVal(int val) {
     snapshots.clear();
     currentStep = 0;
-    currentOpName = "Search"; // Đánh dấu bắt đầu Search
+    currentOpName = "Search"; // <--- BÁO HIỆU TƯƠNG TỰ
     resetColors(root);
     saveSnapshot(-1);
     searchRecursive(root, val);
@@ -331,4 +340,13 @@ void AVLTree::handleEvent(const sf::Event& event, const sf::RenderWindow& window
     for (auto& pair : visualNodes) {
         pair.second->handleEvent(event, window, view);
     }
+}
+
+bool AVLTree::isDraggingNode() const {
+    for (const auto& pair : visualNodes) {
+        if (pair.second->isActive && pair.second->isDragging) {
+            return true;
+        }
+    }
+    return false;
 }

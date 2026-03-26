@@ -40,6 +40,11 @@ private:
     float delay;
     bool isPaused;
 
+    // ... các biến khác giữ nguyên
+    std::string currentOpName; // Biến này để cây nhớ nó đang làm gì
+
+    // Cập nhật hàm saveSnapshot để nhận thêm số dòng code
+    void saveSnapshot(int line = -1);
     // Các hàm Helper Tree Logic (Dùng reference pointer để cập nhật trực tiếp)
     int height(LogicalNode* n);
     int getBalance(LogicalNode* n);
@@ -58,10 +63,8 @@ private:
     
     // Core Animation Builder
     void calculateLayout(LogicalNode* node, float x, float y, float hGap, std::vector<NodeInfo>& snapshotNodes);
-    std::string currentOpName; // THÊM BIẾN NÀY ĐỂ TỰ ĐỘNG NHỚ THAO TÁC
 
     // Sửa lại hàm saveSnapshot chỉ nhận 1 tham số dòng code:
-    void saveSnapshot(int line = -1);
     void applyStep(size_t stepIndex);
 
 public:
@@ -76,16 +79,16 @@ public:
     void clear();
     // THÊM 2 HÀM LẤY THÔNG TIN ĐỂ VẼ KHUNG CODE
 // ... (các hàm cũ giữ nguyên)
+// Đảm bảo 2 hàm này tồn tại để AVLScreen lấy dữ liệu:
     std::string getCurrentOperation() {
-        if (snapshots.empty() || currentStep >= snapshots.size()) return "";
+        if (snapshots.empty() || currentStep >= (int)snapshots.size()) return "";
         return snapshots[currentStep].operation;
     }
     
     int getCurrentActiveLine() {
-        if (snapshots.empty() || currentStep >= snapshots.size()) return -1;
+        if (snapshots.empty() || currentStep >= (int)snapshots.size()) return -1;
         return snapshots[currentStep].activeLine;
     }
-
     // ... (Kéo xuống phần private và sửa lại hàm saveSnapshot) ...
     // Playback Controls
     void togglePause() { isPaused = !isPaused; }
@@ -98,5 +101,9 @@ public:
     void updateAnimation(float deltaTime);
     void draw(sf::RenderWindow& window);
 
+    // ... các hàm cũ ...
     void handleEvent(const sf::Event& event, const sf::RenderWindow& window, const sf::View& view);
+    
+    // THÊM HÀM NÀY VÀO:
+    bool isDraggingNode() const;
 };
