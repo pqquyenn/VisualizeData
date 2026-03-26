@@ -6,14 +6,13 @@
 SinglyLinkedList::SinglyLinkedList(sf::Font& font) : head(nullptr), idCounter(0), font(font), currentStep(0), timer(0), delay(0.8f), isPaused(false) {
     std::srand(std::time(0));
 
-    // Khởi tạo giao diện Box Code
-    codeBox.setSize(sf::Vector2f(350.f, 250.f));
-    codeBox.setFillColor(sf::Color(30, 30, 30, 200));
-    codeBox.setOutlineThickness(2.f);
-    codeBox.setOutlineColor(sf::Color::White);
+    codeBox.setFillColor(sf::Color(253, 246, 227)); // Màu be sáng
+    codeBox.setOutlineThickness(1.f);
+    codeBox.setOutlineColor(sf::Color::Black);
 
     codeText.setFont(font);
-    codeText.setCharacterSize(16);
+    codeText.setCharacterSize(15);
+    codeText.setFillColor(sf::Color::Black);
     currentHighlight = -1;
 }
 
@@ -24,6 +23,7 @@ void SinglyLinkedList::clear() {
     for (auto& pair : visualNodes) delete pair.second;
     visualNodes.clear();
     snapshots.clear();
+    currentCode.clear(); 
 }
 
 void SinglyLinkedList::clearLogical() {
@@ -44,7 +44,6 @@ void SinglyLinkedList::resetColors() {
     }
 }
 
-// Chụp lại toàn bộ trạng thái toạ độ, màu sắc và Code
 void SinglyLinkedList::saveSnapshot(const std::vector<std::string>& code, int line) {
     SLLStepSnapshot snap;
     snap.codeLines = code;
@@ -91,19 +90,25 @@ void SinglyLinkedList::initList(int n) {
     clear();
     std::vector<std::string> code = {
         "Initialize list with random values",
-        "for(int i = 0; i < n; i++)",
-        "  Insert(random_val);"
+        "for (int i = 0; i < n; i++)",
+        "    Insert(random_val);"
     };
+    saveSnapshot(code, 0);
 
     for (int i = 0; i < n; i++) {
+        saveSnapshot(code, 1);
         int val = std::rand() % 100 + 1;
         LogicalNode* newNode = new LogicalNode(idCounter++, val);
+        newNode->color = sf::Color(50, 205, 50);
+
         if (!head) head = newNode;
         else {
             LogicalNode* curr = head;
             while (curr->next) curr = curr->next;
             curr->next = newNode;
         }
+        saveSnapshot(code, 2);
+        resetColors();
     }
     saveSnapshot(code, -1);
     currentStep = 0;
@@ -112,28 +117,34 @@ void SinglyLinkedList::initList(int n) {
 
 void SinglyLinkedList::initFromFile(const std::string& filename) {
     std::ifstream file(filename);
-    if (!file.is_open()) return; // Thoát nếu không tìm thấy file
+    if (!file.is_open()) return; 
     
     clear();
     std::vector<std::string> code = {
         "Read from file: " + filename,
         "while(file >> val) {",
-        "   Insert(val);",
+        "    Insert(val);",
         "}"
     };
+    saveSnapshot(code, 0);
     
     int val;
     while (file >> val) {
+        saveSnapshot(code, 1);
         LogicalNode* newNode = new LogicalNode(idCounter++, val);
+        newNode->color = sf::Color(50, 205, 50);
+
         if (!head) head = newNode;
         else {
             LogicalNode* curr = head;
             while (curr->next) curr = curr->next;
             curr->next = newNode;
         }
+        saveSnapshot(code, 2);
+        resetColors();
     }
     file.close();
-    saveSnapshot(code, 1);
+    saveSnapshot(code, -1);
     currentStep = 0;
     applyStep(0);
 }
@@ -141,12 +152,12 @@ void SinglyLinkedList::initFromFile(const std::string& filename) {
 void SinglyLinkedList::insertNode(int val) {
     std::vector<std::string> code = {
         "Node* newNode = new Node(v);",
-        "if (head == null) head = newNode;",
+        "if (head == NULL) head = newNode;",
         "else {",
-        "  Node* curr = head;",
-        "  while(curr->next != null)",
-        "    curr = curr->next;",
-        "  curr->next = newNode;",
+        "    Node* curr = head;",
+        "    while (curr->next != NULL)",
+        "        curr = curr->next;",
+        "    curr->next = newNode;",
         "}"
     };
     snapshots.clear(); currentStep = 0;
@@ -191,9 +202,9 @@ void SinglyLinkedList::startSearch(int val) {
     if (!head) return;
     std::vector<std::string> code = {
         "Node* curr = head;",
-        "while (curr != null) {",
-        "  if (curr->value == val) return true;",
-        "  curr = curr->next;",
+        "while (curr != NULL) {",
+        "    if (curr->value == val) return true;",
+        "    curr = curr->next;",
         "}",
         "return false;"
     };
@@ -228,15 +239,15 @@ void SinglyLinkedList::startSearch(int val) {
 void SinglyLinkedList::startDelete(int val) {
     if (!head) return;
     std::vector<std::string> code = {
-        "Node* curr = head, *prev = null;",
-        "while (curr != null && curr->value != val) {",
-        "  prev = curr;",
-        "  curr = curr->next;",
+        "Node* curr = head, *prev = NULL;",
+        "while (curr != NULL && curr->value != val) {",
+        "    prev = curr;",
+        "    curr = curr->next;",
         "}",
-        "if (curr != null) {",
-        "  if (prev == null) head = head->next;",
-        "  else prev->next = curr->next;",
-        "  delete curr;",
+        "if (curr != NULL) {",
+        "    if (prev == NULL) head = head->next;",
+        "    else prev->next = curr->next;",
+        "    delete curr;",
         "}"
     };
 
@@ -259,7 +270,7 @@ void SinglyLinkedList::startDelete(int val) {
         saveSnapshot(code, 3);
     }
 
-    saveSnapshot(code, 1); // Thoát vòng lặp
+    saveSnapshot(code, 1); 
 
     if (curr) { 
         saveSnapshot(code, 5);
@@ -321,25 +332,36 @@ void SinglyLinkedList::draw(sf::RenderWindow& window) {
     for (auto& pair : visualNodes) pair.second->draw(window);
 }
 
-// Vẽ UI Box hiển thị Pseudo-code
 void SinglyLinkedList::drawCode(sf::RenderWindow& window) {
-    if (!currentCode.empty()) {
-        // Đặt Box góc phải dưới
-        float boxX = window.getSize().x - 380.f;
-        float boxY = window.getSize().y - 280.f;
-        codeBox.setPosition(boxX, boxY);
-        window.draw(codeBox);
+    if (currentCode.empty()) return;
 
-        for (size_t i = 0; i < currentCode.size(); ++i) {
-            codeText.setString(currentCode[i]);
-            codeText.setPosition(boxX + 15.f, boxY + 15.f + i * 22.f);
-            
-            if (static_cast<int>(i) == currentHighlight) {
-                codeText.setFillColor(sf::Color::Yellow); // Highlight màu vàng
-            } else {
-                codeText.setFillColor(sf::Color::White);
-            }
-            window.draw(codeText);
+    float boxWidth = 380.f;
+    float lineHeight = 24.f;
+    float boxHeight = currentCode.size() * lineHeight + 15.f; 
+    
+    // Đã thay đổi: Dùng View ảo (getDefaultView) thay vì Kích thước Cửa Sổ vật lý
+    // Lệnh này đảm bảo CodeBox luôn bám đúng vào góc phải bất kể bạn Maximize hay Resize
+    sf::Vector2f viewSize = window.getDefaultView().getSize();
+    float boxX = viewSize.x - boxWidth - 30.f;
+    float boxY = viewSize.y - boxHeight - 30.f;
+
+    codeBox.setSize(sf::Vector2f(boxWidth, boxHeight));
+    codeBox.setPosition(boxX, boxY);
+    window.draw(codeBox); 
+
+    for (size_t i = 0; i < currentCode.size(); ++i) {
+        float lineY = boxY + 7.f + i * lineHeight;
+
+        if (static_cast<int>(i) == currentHighlight) {
+            sf::RectangleShape highlightRect;
+            highlightRect.setSize(sf::Vector2f(boxWidth, lineHeight));
+            highlightRect.setPosition(boxX, lineY);
+            highlightRect.setFillColor(sf::Color(255, 228, 181)); 
+            window.draw(highlightRect);
         }
+
+        codeText.setString(currentCode[i]);
+        codeText.setPosition(boxX + 15.f, lineY + 2.f);
+        window.draw(codeText);
     }
 }

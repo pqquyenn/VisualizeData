@@ -20,12 +20,10 @@ ListNode::ListNode(int id, int val, sf::Font& font) : id(id), value(val), isActi
 
 void ListNode::update(float dt) {
     if (!isActive) return;
-    // Nội suy (Lerp) di chuyển mượt mà
     currentPos += (targetPos - currentPos) * 6.0f * dt;
     shape.setPosition(currentPos);
     text.setPosition(currentPos);
 
-    // Nội suy màu sắc mượt mà
     int r = currentColor.r + (targetColor.r - currentColor.r) * 5.0f * dt;
     int g = currentColor.g + (targetColor.g - currentColor.g) * 5.0f * dt;
     int b = currentColor.b + (targetColor.b - currentColor.b) * 5.0f * dt;
@@ -46,10 +44,8 @@ void ListNode::drawArrow(sf::RenderWindow& window, std::map<int, ListNode*>& all
     sf::Vector2f start = currentPos;
     sf::Vector2f end = allNodes[nextId]->currentPos;
 
-    // Chỉ vẽ nếu khoảng cách đủ xa (tránh mũi tên đè lên nhau khi đang spawn)
     float dist = std::sqrt(std::pow(end.x - start.x, 2) + std::pow(end.y - start.y, 2));
     if (dist > 50.f) {
-        // Lùi lại một chút so với tâm đường tròn
         sf::Vector2f dir = (end - start) / dist;
         sf::Vector2f adjustedStart = start + dir * 22.f; 
         sf::Vector2f adjustedEnd = end - dir * 25.f; 
@@ -57,7 +53,6 @@ void ListNode::drawArrow(sf::RenderWindow& window, std::map<int, ListNode*>& all
         sf::Vertex line[] = { sf::Vertex(adjustedStart, sf::Color::White), sf::Vertex(adjustedEnd, sf::Color::White) };
         window.draw(line, 2, sf::Lines);
         
-        // Vẽ đầu mũi tên
         float angle = std::atan2(end.y - start.y, end.x - start.x);
         sf::CircleShape arrowHead(5, 3);
         arrowHead.setFillColor(sf::Color::White);

@@ -8,7 +8,7 @@ public:
     int id;
     int value;
     bool isActive; 
-    int nextId; // Giữ ID của node tiếp theo để vẽ mũi tên (-1 nếu là tail)
+    int nextId;
 
     sf::CircleShape shape;
     sf::Text text;

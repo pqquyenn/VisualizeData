@@ -14,7 +14,7 @@ private:
     Button* btnSearch;
     Button* btnDelete;
     Button* btnInit;
-    Button* btnInitFile; // Thêm nút Init File
+    Button* btnInitFile;
 
     Button* btnStepBack;
     Button* btnPausePlay;

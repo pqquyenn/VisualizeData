@@ -13,7 +13,6 @@ struct SLLNodeInfo {
     int nextId;
 };
 
-// Lưu giữ khoảnh khắc trạng thái của Nodes và Line code đang chạy
 struct SLLStepSnapshot {
     std::vector<SLLNodeInfo> nodes;
     std::vector<std::string> codeLines; 
@@ -45,7 +44,6 @@ private:
     float startY = 350.f;
     float nodeSpacing = 110.f;
 
-    // Các thành phần UI vẽ Box Code
     sf::RectangleShape codeBox;
     sf::Text codeText;
     std::vector<std::string> currentCode;
@@ -61,7 +59,7 @@ public:
     ~SinglyLinkedList();
 
     void initList(int n);
-    void initFromFile(const std::string& filename); // Thêm đọc file
+    void initFromFile(const std::string& filename);
     void insertNode(int val);
     void startSearch(int val);
     void startDelete(int val);
@@ -76,5 +74,5 @@ public:
     void updatePosition(float deltaTime);
     void updateAnimation(float deltaTime); 
     void draw(sf::RenderWindow& window);
-    void drawCode(sf::RenderWindow& window); // Hàm tĩnh để vẽ UI code
+    void drawCode(sf::RenderWindow& window); 
 };

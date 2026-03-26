@@ -12,9 +12,8 @@ SLLScreen::SLLScreen(App* app) : State(app) {
     btnSearch = new Button(390, 80, 100, 40, app->font, "Search");
     btnDelete = new Button(510, 80, 100, 40, app->font, "Delete");
     btnInit = new Button(630, 80, 100, 40, app->font, "Init");
-    btnInitFile = new Button(750, 80, 100, 40, app->font, "Init File"); // Khởi tạo UI
+    btnInitFile = new Button(750, 80, 100, 40, app->font, "Init File");
 
-    // Playback Controls
     btnStepBack = new Button(200, 140, 40, 40, app->font, "<");
     btnPausePlay = new Button(250, 140, 120, 40, app->font, "Pause/Play");
     btnStepForward = new Button(380, 140, 40, 40, app->font, ">");
@@ -29,7 +28,7 @@ SLLScreen::~SLLScreen() {
     delete btnDelete; delete btnInit; delete btnInitFile; delete inputVal;
     delete btnStepBack; delete btnPausePlay; delete btnStepForward;
     delete btnSpeedDown; delete btnSpeedUp;
-    delete sll; 
+    delete sll;
 }
 
 void SLLScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
@@ -71,9 +70,8 @@ void SLLScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
     if (btnSpeedDown->isClicked(event, mousePos)) sll->decreaseSpeed();
     if (btnSpeedUp->isClicked(event, mousePos)) sll->increaseSpeed();
 
-    // Xử lý Init File (đọc file có tên là input.txt)
     if (btnInitFile->isClicked(event, mousePos)) {
-        sll->initFromFile("input.txt"); // Mặc định dùng file input.txt
+        sll->initFromFile("input.txt"); 
         inputVal->clear();
     }
 
@@ -111,13 +109,11 @@ void SLLScreen::update(float deltaTime, sf::RenderWindow& window) {
 
 void SLLScreen::draw(sf::RenderWindow& window) {
     if (isViewInitialized) window.setView(listView);
-    
     sll->draw(window);
 
-    // Reset view để vẽ UI (nút bấm, code text) cố định trên màn hình
+    // Bắt buộc reset View về Default để UI & CodeBox không bị trôi
     window.setView(window.getDefaultView()); 
-    
-    sll->drawCode(window); // Vẽ hộp thoại hiển thị Code
+    sll->drawCode(window); 
 
     btnBackToMenu->draw(window); inputVal->draw(window); 
     btnInsert->draw(window); btnSearch->draw(window); btnDelete->draw(window); 
