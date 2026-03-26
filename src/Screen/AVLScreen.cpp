@@ -12,6 +12,7 @@ AVLScreen::AVLScreen(App* app) : State(app) {
     btnSearch = new Button(390, 80, 100, 40, app->font, "Search");
     btnDelete = new Button(510, 80, 100, 40, app->font, "Delete");
     btnInit = new Button(630, 80, 100, 40, app->font, "Init");
+    btnInitFromFile = new Button(750, 80, 100, 40, app->font, "Init File");
 
     // --- Đã sửa: Sắp xếp lại thứ tự và căn lề hoàn hảo cho các nút Playback ---
     // Khối nút trải dài từ X = 250 đến 630, cách nhau 15 pixel
@@ -30,6 +31,7 @@ AVLScreen::~AVLScreen() {
     delete btnStepBack; delete btnPausePlay; delete btnStepForward;
     delete btnSpeedDown; delete btnSpeedUp;
     delete avlTree;
+    delete btnInitFromFile; // Nhớ xóa vùng nhớ
 }
 
 void AVLScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
@@ -43,6 +45,7 @@ void AVLScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
         if (event.mouseWheelScroll.delta > 0) treeView.zoom(0.9f);
         else if (event.mouseWheelScroll.delta < 0) treeView.zoom(1.1f);
     }
+    // ... (Phần camera panning và input cũ giữ nguyên) ...
 
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
         sf::Vector2i pixelPos = sf::Mouse::getPosition(window);
@@ -63,6 +66,20 @@ void AVLScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
 
 
     sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+    
+    // Đọc File
+    if (btnInitFromFile->isClicked(event, mousePos)) {
+        std::ifstream file("input.txt");
+        if (!file.is_open()) file.open("../input.txt"); // Tìm thư mục cha nếu đang chạy trong build/
+
+        if (file.is_open()) {
+            std::vector<int> data;
+            int val;
+            while (file >> val) data.push_back(val);
+            file.close();
+            if (!data.empty()) avlTree->initFromFile(data);
+        }
+    }
     
     if (btnBackToMenu->isClicked(event, mousePos)) {
         app->changeState(new MainMenu(app)); 
@@ -108,17 +125,55 @@ void AVLScreen::update(float deltaTime, sf::RenderWindow& window) {
 
     avlTree->updateAnimation(deltaTime);
     avlTree->updatePosition(deltaTime);
+    btnInitFromFile->update(mousePos);
 }
 
 void AVLScreen::draw(sf::RenderWindow& window) {
-    if (isViewInitialized) window.setView(treeView);
-    
+if (isViewInitialized) window.setView(treeView);
     avlTree->draw(window);
 
     window.setView(window.getDefaultView()); // Trả lại Camera góc cố định để vẽ UI
 
     btnBackToMenu->draw(window); inputVal->draw(window); 
-    btnInsert->draw(window); btnSearch->draw(window); btnDelete->draw(window); btnInit->draw(window);
+    btnInsert->draw(window); btnSearch->draw(window); btnDelete->draw(window); 
+    btnInit->draw(window); btnInitFromFile->draw(window); // Vẽ Init File
+    // ... Vẽ các nút Playback ...
+    
+    drawCodeBlock(window); // Vẽ khung pseudo-code
     btnStepBack->draw(window); btnPausePlay->draw(window); btnStepForward->draw(window);
     btnSpeedDown->draw(window); btnSpeedUp->draw(window);
+}
+
+// 5. THÊM HÀM VẼ KHUNG CODE XUỐNG DƯỚI CÙNG
+void AVLScreen::drawCodeBlock(sf::RenderWindow& window) {
+    std::string op = avlTree->getCurrentOperation();
+    if (op != "Insert" && op != "Delete" && op != "Search") return;
+
+    const std::vector<std::string>* codePtr = &codeInsert;
+    if (op == "Delete") codePtr = &codeDelete;
+    else if (op == "Search") codePtr = &codeSearch;
+
+    int activeLine = avlTree->getCurrentActiveLine();
+
+    // Khung nền
+    sf::RectangleShape bg(sf::Vector2f(400, codePtr->size() * 25 + 20));
+    bg.setPosition(window.getSize().x - 420, window.getSize().y - bg.getSize().y - 20);
+    bg.setFillColor(sf::Color(255, 250, 205, 230)); // Vàng nhạt giống trang web VisuAlgo
+    bg.setOutlineThickness(2);
+    bg.setOutlineColor(sf::Color(100, 100, 100));
+    window.draw(bg);
+
+    // Vẽ từng dòng text
+    for (size_t i = 0; i < codePtr->size(); ++i) {
+        if ((int)i == activeLine) {
+            sf::RectangleShape highlight(sf::Vector2f(390, 25));
+            highlight.setPosition(bg.getPosition().x + 5, bg.getPosition().y + 10 + i * 25);
+            highlight.setFillColor(sf::Color(0, 0, 0, 40));
+            window.draw(highlight);
+        }
+        sf::Text text((*codePtr)[i], app->font, 16);
+        text.setPosition(bg.getPosition().x + 10, bg.getPosition().y + 12 + i * 25);
+        text.setFillColor(sf::Color::Black);
+        window.draw(text);
+    }
 }

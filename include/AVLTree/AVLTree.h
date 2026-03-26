@@ -13,11 +13,12 @@ struct NodeInfo {
     int rightVal;
 };
 
-// Lưu trữ toàn bộ khung hình của 1 bước hoạt ảnh
+// Tìm struct StepSnapshot và sửa lại thành:
 struct StepSnapshot {
     std::vector<NodeInfo> nodes;
+    std::string operation; // Thêm tên thao tác (Insert, Search, Delete)
+    int activeLine;        // Thêm dòng code đang chạy
 };
-
 class AVLTree {
 private:
     struct LogicalNode {
@@ -57,7 +58,10 @@ private:
     
     // Core Animation Builder
     void calculateLayout(LogicalNode* node, float x, float y, float hGap, std::vector<NodeInfo>& snapshotNodes);
-    void saveSnapshot();
+    std::string currentOpName; // THÊM BIẾN NÀY ĐỂ TỰ ĐỘNG NHỚ THAO TÁC
+
+    // Sửa lại hàm saveSnapshot chỉ nhận 1 tham số dòng code:
+    void saveSnapshot(int line = -1);
     void applyStep(size_t stepIndex);
 
 public:
@@ -65,11 +69,24 @@ public:
     ~AVLTree();
 
     void initTree(int n);
+    void initFromFile(const std::vector<int>& data); // THÊM HÀM NÀY
     void insertVal(int val);
     void deleteVal(int val);
     void searchVal(int val);
     void clear();
+    // THÊM 2 HÀM LẤY THÔNG TIN ĐỂ VẼ KHUNG CODE
+// ... (các hàm cũ giữ nguyên)
+    std::string getCurrentOperation() {
+        if (snapshots.empty() || currentStep >= snapshots.size()) return "";
+        return snapshots[currentStep].operation;
+    }
+    
+    int getCurrentActiveLine() {
+        if (snapshots.empty() || currentStep >= snapshots.size()) return -1;
+        return snapshots[currentStep].activeLine;
+    }
 
+    // ... (Kéo xuống phần private và sửa lại hàm saveSnapshot) ...
     // Playback Controls
     void togglePause() { isPaused = !isPaused; }
     void stepForward();

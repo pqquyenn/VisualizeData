@@ -1,7 +1,6 @@
 CMakeFiles/CodeTayApp.dir/src/Heap/HeapTree.cpp.obj: \
  C:\Users\LENOVO\Desktop\Codetay\src\Heap\HeapTree.cpp \
  C:/Users/LENOVO/Desktop/Codetay/include/Heap/HeapTree.h \
- C:/Users/LENOVO/Desktop/Codetay/include/Heap/HeapNode.h \
  C:/msys64/ucrt64/include/SFML/Graphics.hpp \
  C:/msys64/ucrt64/include/SFML/Window.hpp \
  C:/msys64/ucrt64/include/SFML/System.hpp \
@@ -246,6 +245,7 @@ CMakeFiles/CodeTayApp.dir/src/Heap/HeapTree.cpp.obj: \
  C:/msys64/ucrt64/include/SFML/Graphics/Sprite.hpp \
  C:/msys64/ucrt64/include/SFML/Graphics/Text.hpp \
  C:/msys64/ucrt64/include/SFML/Graphics/VertexBuffer.hpp \
+ C:/Users/LENOVO/Desktop/Codetay/include/Heap/HeapNode.h \
  C:/msys64/ucrt64/include/c++/15.2.0/cmath \
  C:/msys64/ucrt64/include/math.h \
  C:/msys64/ucrt64/include/c++/15.2.0/bits/specfun.h \

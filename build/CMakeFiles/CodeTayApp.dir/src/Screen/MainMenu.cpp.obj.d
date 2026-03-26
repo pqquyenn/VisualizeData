@@ -255,6 +255,12 @@ CMakeFiles/CodeTayApp.dir/src/Screen/MainMenu.cpp.obj: \
  C:/Users/LENOVO/Desktop/Codetay/include/Screen/AVLScreen.h \
  C:/Users/LENOVO/Desktop/Codetay/include/AVLTree/AVLTree.h \
  C:/Users/LENOVO/Desktop/Codetay/include/AVLTree/AVLNode.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/fstream \
+ C:/msys64/ucrt64/include/c++/15.2.0/istream \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/istream.tcc \
+ C:/msys64/ucrt64/include/c++/15.2.0/x86_64-w64-mingw32/bits/basic_file.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/x86_64-w64-mingw32/bits/c++io.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/fstream.tcc \
  C:/Users/LENOVO/Desktop/Codetay/include/Screen/HeapScreen.h \
  C:/Users/LENOVO/Desktop/Codetay/include/Heap/HeapTree.h \
  C:/Users/LENOVO/Desktop/Codetay/include/Heap/HeapNode.h

@@ -1,73 +1,78 @@
 #pragma once
-#include "Heap/HeapNode.h"
-#include <vector>
 #include <SFML/Graphics.hpp>
+#include <vector>
+#include "HeapNode.h"
 
-// --- FILE: include/Heap/HeapTree.h ---
-
-// Lưu trữ trạng thái hiển thị của một node tại một thời điểm
+// Cấu trúc lưu thông tin 1 node tại 1 thời điểm (để làm animation)
 struct HeapNodeInfo {
     int value;
     sf::Vector2f pos;
     sf::Color color;
 };
 
-// Lưu trữ toàn bộ khung hình của 1 bước hoạt ảnh
+// Cấu trúc lưu trạng thái toàn bộ cây tại 1 bước
 struct HeapSnapshot {
     std::vector<HeapNodeInfo> nodes;
+    std::string operation; // Tên thao tác: "Insert", "Delete", "Init"
+    int activeLine;        // Dòng code đang được highlight (bắt đầu từ 0)
 };
 
 class HeapTree {
 private:
-    std::vector<int> heapData;          // Mảng dữ liệu Max Heap thực sự
+    std::vector<int> heapData;                 // Mảng dữ liệu thực tế của Heap
+    std::vector<HeapNode*> visualNodes;        // Các node để vẽ lên màn hình
+    std::vector<HeapSnapshot> snapshots;       // Các bước hoạt ảnh
+    
     sf::Font& font;
-    std::vector<HeapNode*> visualNodes; // Quản lý object SFML qua mảng vector
-
-    // Animation & Playback
-    std::vector<HeapSnapshot> snapshots;
     size_t currentStep;
     float timer;
-    float delay;       // Tốc độ hoạt ảnh (delay càng thấp, tốc độ càng nhanh)
+    float delay;
     bool isPaused;
-
-    // Các hàm Helper Heap Logic (Tạo hoạt ảnh)
-    void heapifyUp(int index);   // Thêm node: So sánh & swap lên
-    void heapifyDown(int index); // Xóa gốc: So sánh & swap xuống
-    void buildHeap();            // Xây dựng heap O(N) từ mảng ngẫu nhiên
-
-    // Core Animation Builder
-    // Tính toán layout cây nhị phân hoàn chỉnh từ mảng
-    void calculateLayout(std::vector<HeapNodeInfo>& snapshotNodes);
     
-    // Lưu các snapshot khác nhau cho hoạt ảnh
-    void saveSnapshot(); 
-    void saveSnapshotCompare(int idx1, int idx2); // Snapshot: 2 node so sánh màu vàng
-    void saveSnapshotSwap(int idx1, int idx2);    // Snapshot: Sau khi swap dữ liệu, visual nodes di chuyển
+    HeapNode* draggedNode; // Con trỏ lưu Node đang bị kéo thả
 
+    void calculateLayout(std::vector<HeapNodeInfo>& snapshotNodes);
+    // 2. Sửa lại tham số của các hàm lưu Snapshot
+    void saveSnapshot(std::string op = "", int line = -1);
+    void saveSnapshotCompare(int idx1, int idx2, std::string op = "", int line = -1);
+    void saveSnapshotSwap(int idx1, int idx2, std::string op = "", int line = -1);
+    void buildHeap();
+    void heapifyUp(int index);
+    void heapifyDown(int index);
     void applyStep(size_t stepIndex);
 
+
 public:
-    HeapTree(sf::Font& font);
+    HeapTree(sf::Font& f);
     ~HeapTree();
 
-    // --- SỬA: Chức năng Init theo số lượng N nhập vào ---
-    void initTree(int n); // Xóa cây, tạo n node ngẫu nhiên, build heap
-
-    void insertVal(int val); // Insert val -> heapifyUp animation
-    void deleteMax(); // Xóa gốc -> swap node cuối -> heapifyDown animation
     void clear();
+    void initTree(int n);
+    void insertVal(int val);
+    void deleteMax();
 
-    // Playback Controls
-    void togglePause() { isPaused = !isPaused; }
+    // Các tính năng điều khiển Playback
     void stepForward();
     void stepBackward();
-    void increaseSpeed(); // Tăng tốc độ bằng cách giảm delay
-    void decreaseSpeed(); // Giảm tốc độ bằng cách tăng delay
+    void increaseSpeed();
+    void decreaseSpeed();
+    void togglePause() { isPaused = !isPaused; }
 
-    void updatePosition(float deltaTime);  // Cập nhật vị trí mượt của các Node
-    void updateAnimation(float deltaTime); // Chuyển step tự động theo delay
+    // Xử lý đồ họa & Event
+    void updateAnimation(float deltaTime);
+    void updatePosition(float deltaTime);
     void draw(sf::RenderWindow& window);
-
-    // Chuyển sự kiện cho cây (kéo node)
+    
     void handleEvent(const sf::Event& event, const sf::RenderWindow& window, const sf::View& view);
+    bool isDraggingNode() const; // Kiểm tra xem có node nào đang bị kéo không
+
+    // 3. Thêm hàm khởi tạo từ file
+    void initFromFile(const std::vector<int>& data);
+
+    // 4. Thêm getter để lấy thông tin code vẽ ra màn hình
+    std::string getCurrentOperation() const;
+    int getCurrentActiveLine() const;
+
+    // Thêm hàm Search
+    void searchVal(int val);
 };

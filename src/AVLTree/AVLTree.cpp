@@ -42,13 +42,24 @@ void AVLTree::calculateLayout(LogicalNode* node, float x, float y, float hGap, s
     calculateLayout(node->right, x + hGap, y + 80.f, hGap / 2.0f, snapshotNodes);
 }
 
-void AVLTree::saveSnapshot() {
+void AVLTree::saveSnapshot(int line) {
     StepSnapshot snap;
-    // Khởi tạo layout từ giữa màn hình, toạ độ x=600, y=100, khoảng cách gốc = 250
     calculateLayout(root, 600.f, 150.f, 250.f, snap.nodes);
+    snap.operation = currentOpName; // Tự động lấy "Insert", "Delete" hoặc "Search"
+    snap.activeLine = line;
     snapshots.push_back(snap);
 }
 
+// 2. Thêm hàm initFromFile (đặt dưới hàm initTree)
+void AVLTree::initFromFile(const std::vector<int>& data) {
+    clear();
+    for (int val : data) {
+        insertVal(val);
+        currentStep = snapshots.size() - 1; 
+        applyStep(currentStep);
+    }
+    resetColors(root);
+}
 // Hàm đẩy cấu hình Step hiện tại ra màn hình
 void AVLTree::applyStep(size_t stepIndex) {
     if (stepIndex >= snapshots.size()) return;
@@ -94,47 +105,58 @@ void AVLTree::insertRecursive(LogicalNode*& node, int key) {
     if (node == nullptr) {
         node = new LogicalNode(key);
         node->color = sf::Color(50, 205, 50); // Mới thêm -> Xanh lá
-        saveSnapshot();
+        saveSnapshot(0); // Line 0: if (node == NULL)...
         return;
     }
     
     node->color = sf::Color(255, 165, 0); // Đang duyệt -> Cam
-    saveSnapshot();
-
-    if (key < node->value) insertRecursive(node->left, key);
-    else if (key > node->value) insertRecursive(node->right, key);
-    else return;
+    if (key < node->value) {
+        saveSnapshot(1); // Line 1: insert(left)
+        insertRecursive(node->left, key);
+    } else if (key > node->value) {
+        saveSnapshot(2); // Line 2: insert(right)
+        insertRecursive(node->right, key);
+    } else return;
 
     updateHeight(node);
     int balance = getBalance(node);
+    saveSnapshot(3); // Line 3: update height & balance
 
     if (balance > 1 || balance < -1) {
         node->color = sf::Color(139, 0, 0); // Mất cân bằng -> Đỏ
-        saveSnapshot();
-
-        if (balance > 1 && key < node->left->value) rightRotate(node);
-        else if (balance < -1 && key > node->right->value) leftRotate(node);
-        else if (balance > 1 && key > node->left->value) { leftRotate(node->left); rightRotate(node); }
-        else if (balance < -1 && key < node->right->value) { rightRotate(node->right); leftRotate(node); }
         
-        saveSnapshot(); // Chụp lại sau khi xoay
+        if (balance > 1 && key < node->left->value) {
+            saveSnapshot(4); // Line 4: LL Case
+            rightRotate(node);
+        } else if (balance < -1 && key > node->right->value) {
+            saveSnapshot(5); // Line 5: RR Case
+            leftRotate(node);
+        } else if (balance > 1 && key > node->left->value) {
+            saveSnapshot(6); // Line 6: LR Case
+            leftRotate(node->left); 
+            rightRotate(node);
+        } else if (balance < -1 && key < node->right->value) {
+            saveSnapshot(7); // Line 7: RL Case
+            rightRotate(node->right); 
+            leftRotate(node);
+        }
+        saveSnapshot(-1); // Xong xoay
     }
 }
 
+// ==================== INSERT ====================
 void AVLTree::insertVal(int val) {
     snapshots.clear();
     currentStep = 0;
+    currentOpName = "Insert"; // Đánh dấu bắt đầu Insert
     resetColors(root);
-    saveSnapshot(); // Bắt đầu
-
+    saveSnapshot(-1); 
     insertRecursive(root, val);
-
     resetColors(root);
-    saveSnapshot(); // Kết thúc
+    saveSnapshot(-1); 
     applyStep(0);
     isPaused = false;
 }
-
 // --- DELETION ---
 AVLTree::LogicalNode* AVLTree::minValueNode(LogicalNode* node) {
     LogicalNode* current = node;
@@ -143,33 +165,30 @@ AVLTree::LogicalNode* AVLTree::minValueNode(LogicalNode* node) {
 }
 
 void AVLTree::deleteRecursive(LogicalNode*& node, int key) {
-    if (node == nullptr) return;
+    if (node == nullptr) {
+        saveSnapshot(0);
+        return;
+    }
 
     node->color = sf::Color(255, 165, 0);
-    saveSnapshot();
-
-    if (key < node->value) deleteRecursive(node->left, key);
-    else if (key > node->value) deleteRecursive(node->right, key);
-    else {
-        node->color = sf::Color(139, 0, 0); // Tìm thấy node xoá -> Đỏ
-        saveSnapshot();
+    if (key < node->value) {
+        saveSnapshot(1);
+        deleteRecursive(node->left, key);
+    } else if (key > node->value) {
+        saveSnapshot(2);
+        deleteRecursive(node->right, key);
+    } else {
+        node->color = sf::Color(139, 0, 0); 
+        saveSnapshot(3); // Line 3: delete current node
 
         if ((node->left == nullptr) || (node->right == nullptr)) {
             LogicalNode* temp = node->left ? node->left : node->right;
-            if (temp == nullptr) {
-                temp = node;
-                node = nullptr;
-            } else {
-                LogicalNode* oldNode = node;
-                node = temp; // Nối tắt
-                temp = oldNode;
-            }
+            if (temp == nullptr) { temp = node; node = nullptr; } 
+            else { LogicalNode* oldNode = node; node = temp; temp = oldNode; }
             delete temp;
-            saveSnapshot();
         } else {
             LogicalNode* temp = minValueNode(node->right);
-            node->value = temp->value; // Copy giá trị
-            saveSnapshot();
+            node->value = temp->value; 
             deleteRecursive(node->right, temp->value);
         }
     }
@@ -178,51 +197,69 @@ void AVLTree::deleteRecursive(LogicalNode*& node, int key) {
 
     updateHeight(node);
     int balance = getBalance(node);
+    saveSnapshot(4); // Line 4: update height & balance
 
     if (balance > 1 || balance < -1) {
-        node->color = sf::Color(139, 0, 0); // Unbalanced node
-        saveSnapshot();
-
-        if (balance > 1 && getBalance(node->left) >= 0) rightRotate(node);
-        else if (balance > 1 && getBalance(node->left) < 0) { leftRotate(node->left); rightRotate(node); }
-        else if (balance < -1 && getBalance(node->right) <= 0) leftRotate(node);
-        else if (balance < -1 && getBalance(node->right) > 0) { rightRotate(node->right); leftRotate(node); }
-        saveSnapshot();
+        node->color = sf::Color(139, 0, 0);
+        if (balance > 1 && getBalance(node->left) >= 0) {
+            saveSnapshot(5); // LL
+            rightRotate(node);
+        } else if (balance < -1 && getBalance(node->right) <= 0) {
+            saveSnapshot(6); // RR
+            leftRotate(node);
+        } else if (balance > 1 && getBalance(node->left) < 0) {
+            saveSnapshot(7); // LR
+            leftRotate(node->left); rightRotate(node);
+        } else if (balance < -1 && getBalance(node->right) > 0) {
+            saveSnapshot(8); // RL
+            rightRotate(node->right); leftRotate(node);
+        }
+        saveSnapshot(-1);
     }
 }
 
 void AVLTree::deleteVal(int val) {
     snapshots.clear();
     currentStep = 0;
+    currentOpName = "Delete"; // Đánh dấu bắt đầu Delete
     resetColors(root);
-    saveSnapshot();
+    saveSnapshot(-1);
     deleteRecursive(root, val);
     resetColors(root);
-    saveSnapshot();
+    saveSnapshot(-1);
     applyStep(0);
     isPaused = false;
 }
 
 // --- SEARCH ---
 void AVLTree::searchRecursive(LogicalNode* node, int key) {
-    if (node == nullptr) return;
-    node->color = sf::Color(255, 165, 0);
-    saveSnapshot();
-
-    if (node->value == key) {
-        node->color = sf::Color(50, 205, 50); // Found
-        saveSnapshot();
+    if (node == nullptr) {
+        saveSnapshot(0); // Line 0: NOT_FOUND
         return;
     }
-    if (key < node->value) searchRecursive(node->left, key);
-    else searchRecursive(node->right, key);
+    node->color = sf::Color(255, 165, 0);
+
+    if (node->value == key) {
+        node->color = sf::Color(50, 205, 50);
+        saveSnapshot(1); // Line 1: FOUND
+        return;
+    }
+    
+    if (key < node->value) {
+        saveSnapshot(2); // Line 2: search(left)
+        searchRecursive(node->left, key);
+    } else {
+        saveSnapshot(3); // Line 3: search(right)
+        searchRecursive(node->right, key);
+    }
 }
 
 void AVLTree::searchVal(int val) {
     snapshots.clear();
     currentStep = 0;
+    currentOpName = "Search"; // Đánh dấu bắt đầu Search
     resetColors(root);
-    saveSnapshot();
+    saveSnapshot(-1);
     searchRecursive(root, val);
     applyStep(0);
     isPaused = false;
