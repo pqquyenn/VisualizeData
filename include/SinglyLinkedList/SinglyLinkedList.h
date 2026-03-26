@@ -2,6 +2,7 @@
 #include "ListNode.h"
 #include <vector>
 #include <map>
+#include <string>
 #include <SFML/Graphics.hpp>
 
 struct SLLNodeInfo {
@@ -12,8 +13,11 @@ struct SLLNodeInfo {
     int nextId;
 };
 
+// Lưu giữ khoảnh khắc trạng thái của Nodes và Line code đang chạy
 struct SLLStepSnapshot {
     std::vector<SLLNodeInfo> nodes;
+    std::vector<std::string> codeLines; 
+    int highlightLine;                  
 };
 
 class SinglyLinkedList {
@@ -27,7 +31,7 @@ private:
     };
 
     LogicalNode* head;
-    int idCounter; // Định danh độc nhất cho mỗi node, chống lỗi khi nhập trùng value
+    int idCounter; 
     sf::Font& font;
     std::map<int, ListNode*> visualNodes;
 
@@ -41,7 +45,13 @@ private:
     float startY = 350.f;
     float nodeSpacing = 110.f;
 
-    void saveSnapshot();
+    // Các thành phần UI vẽ Box Code
+    sf::RectangleShape codeBox;
+    sf::Text codeText;
+    std::vector<std::string> currentCode;
+    int currentHighlight;
+
+    void saveSnapshot(const std::vector<std::string>& code = {}, int line = -1);
     void applyStep(size_t stepIndex);
     void resetColors();
     void clearLogical();
@@ -51,12 +61,12 @@ public:
     ~SinglyLinkedList();
 
     void initList(int n);
+    void initFromFile(const std::string& filename); // Thêm đọc file
     void insertNode(int val);
     void startSearch(int val);
     void startDelete(int val);
     void clear();
 
-    // Playback control
     void togglePause() { isPaused = !isPaused; }
     void stepForward();
     void stepBackward();
@@ -66,4 +76,5 @@ public:
     void updatePosition(float deltaTime);
     void updateAnimation(float deltaTime); 
     void draw(sf::RenderWindow& window);
+    void drawCode(sf::RenderWindow& window); // Hàm tĩnh để vẽ UI code
 };

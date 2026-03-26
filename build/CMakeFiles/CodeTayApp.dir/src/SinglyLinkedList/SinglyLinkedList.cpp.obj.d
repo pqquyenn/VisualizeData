@@ -245,4 +245,10 @@ CMakeFiles/CodeTayApp.dir/src/SinglyLinkedList/SinglyLinkedList.cpp.obj: \
  C:/msys64/ucrt64/include/SFML/Graphics/Glsl.inl \
  C:/msys64/ucrt64/include/SFML/Graphics/Sprite.hpp \
  C:/msys64/ucrt64/include/SFML/Graphics/Text.hpp \
- C:/msys64/ucrt64/include/SFML/Graphics/VertexBuffer.hpp
+ C:/msys64/ucrt64/include/SFML/Graphics/VertexBuffer.hpp \
+ C:/msys64/ucrt64/include/c++/15.2.0/fstream \
+ C:/msys64/ucrt64/include/c++/15.2.0/istream \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/istream.tcc \
+ C:/msys64/ucrt64/include/c++/15.2.0/x86_64-w64-mingw32/bits/basic_file.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/x86_64-w64-mingw32/bits/c++io.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/fstream.tcc

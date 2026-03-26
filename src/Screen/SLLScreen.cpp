@@ -12,6 +12,7 @@ SLLScreen::SLLScreen(App* app) : State(app) {
     btnSearch = new Button(390, 80, 100, 40, app->font, "Search");
     btnDelete = new Button(510, 80, 100, 40, app->font, "Delete");
     btnInit = new Button(630, 80, 100, 40, app->font, "Init");
+    btnInitFile = new Button(750, 80, 100, 40, app->font, "Init File"); // Khởi tạo UI
 
     // Playback Controls
     btnStepBack = new Button(200, 140, 40, 40, app->font, "<");
@@ -25,10 +26,10 @@ SLLScreen::SLLScreen(App* app) : State(app) {
 
 SLLScreen::~SLLScreen() {
     delete btnBackToMenu; delete btnInsert; delete btnSearch; 
-    delete btnDelete; delete btnInit; delete inputVal;
+    delete btnDelete; delete btnInit; delete btnInitFile; delete inputVal;
     delete btnStepBack; delete btnPausePlay; delete btnStepForward;
     delete btnSpeedDown; delete btnSpeedUp;
-    delete sll; // Xoá an toàn, ngăn chặn memory leak gây đứng hình
+    delete sll; 
 }
 
 void SLLScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
@@ -59,7 +60,7 @@ void SLLScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
     
     if (btnBackToMenu->isClicked(event, mousePos)) {
         app->changeState(new MainMenu(app)); 
-        return; // Đảm bảo gọi return để vòng lặp không quét tiếp các nút đã bị huỷ
+        return; 
     }
     
     inputVal->handleEvent(event, mousePos); 
@@ -69,6 +70,12 @@ void SLLScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
     if (btnStepForward->isClicked(event, mousePos)) sll->stepForward();
     if (btnSpeedDown->isClicked(event, mousePos)) sll->decreaseSpeed();
     if (btnSpeedUp->isClicked(event, mousePos)) sll->increaseSpeed();
+
+    // Xử lý Init File (đọc file có tên là input.txt)
+    if (btnInitFile->isClicked(event, mousePos)) {
+        sll->initFromFile("input.txt"); // Mặc định dùng file input.txt
+        inputVal->clear();
+    }
 
     if (btnInsert->isClicked(event, mousePos) || btnSearch->isClicked(event, mousePos) || 
         btnDelete->isClicked(event, mousePos) || btnInit->isClicked(event, mousePos)) {
@@ -93,7 +100,8 @@ void SLLScreen::update(float deltaTime, sf::RenderWindow& window) {
     sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
     
     btnBackToMenu->update(mousePos); btnInsert->update(mousePos);
-    btnSearch->update(mousePos); btnDelete->update(mousePos); btnInit->update(mousePos);
+    btnSearch->update(mousePos); btnDelete->update(mousePos); 
+    btnInit->update(mousePos); btnInitFile->update(mousePos);
     btnStepBack->update(mousePos); btnPausePlay->update(mousePos); btnStepForward->update(mousePos);
     btnSpeedDown->update(mousePos); btnSpeedUp->update(mousePos);
 
@@ -106,10 +114,14 @@ void SLLScreen::draw(sf::RenderWindow& window) {
     
     sll->draw(window);
 
+    // Reset view để vẽ UI (nút bấm, code text) cố định trên màn hình
     window.setView(window.getDefaultView()); 
+    
+    sll->drawCode(window); // Vẽ hộp thoại hiển thị Code
 
     btnBackToMenu->draw(window); inputVal->draw(window); 
-    btnInsert->draw(window); btnSearch->draw(window); btnDelete->draw(window); btnInit->draw(window);
+    btnInsert->draw(window); btnSearch->draw(window); btnDelete->draw(window); 
+    btnInit->draw(window); btnInitFile->draw(window);
     btnStepBack->draw(window); btnPausePlay->draw(window); btnStepForward->draw(window);
     btnSpeedDown->draw(window); btnSpeedUp->draw(window);
 }
