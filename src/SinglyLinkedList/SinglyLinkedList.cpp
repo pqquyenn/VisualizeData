@@ -294,6 +294,95 @@ void SinglyLinkedList::startDelete(int val) {
     isPaused = false;
 }
 
+// THÊM CODE NÀY VÀO TRONG FILE SinglyLinkedList.cpp
+void SinglyLinkedList::insertAtHead(int val) {
+    std::vector<std::string> code = {
+        "Node* newNode = new Node(v);",
+        "newNode->next = head;",
+        "head = newNode;"
+    };
+    snapshots.clear(); currentStep = 0;
+    resetColors(); saveSnapshot(code, -1); 
+
+    // Bước 0: Khởi tạo Node mới
+    LogicalNode* newNode = new LogicalNode(idCounter++, val);
+    newNode->color = sf::Color(50, 205, 50); // Màu xanh lá mới
+    saveSnapshot(code, 0);
+
+    // Bước 1: Trỏ next của newNode vào head cũ
+    newNode->next = head;
+    saveSnapshot(code, 1);
+
+    // Bước 2: Cập nhật head
+    head = newNode;
+    saveSnapshot(code, 2);
+
+    // Kết thúc
+    resetColors();
+    saveSnapshot(code, -1); 
+
+    applyStep(0);
+    isPaused = false;
+}
+
+void SinglyLinkedList::insertAtIndex(int val, int index) {
+    if (index <= 0) { insertAtHead(val); return; } // Nếu index = 0 thì tương tự Ins Head
+
+    std::vector<std::string> code = {
+        "Node* newNode = new Node(v);",
+        "Node* curr = head;",
+        "for (int i = 0; i < index - 1 && curr != NULL; i++)",
+        "    curr = curr->next;",
+        "if (curr == NULL) return;",
+        "newNode->next = curr->next;",
+        "curr->next = newNode;"
+    };
+    snapshots.clear(); currentStep = 0;
+    resetColors(); saveSnapshot(code, -1);
+
+    LogicalNode* newNode = new LogicalNode(idCounter++, val);
+    newNode->color = sf::Color(50, 205, 50);
+    saveSnapshot(code, 0);
+
+    LogicalNode* curr = head;
+    saveSnapshot(code, 1);
+
+    // Lặp tìm vị trí index - 1
+    for (int i = 0; i < index - 1 && curr != nullptr; i++) {
+        curr->color = sf::Color(255, 165, 0); // Đổi cam
+        saveSnapshot(code, 2);
+        
+        curr->color = sf::Color(169, 169, 169); // Node đã qua màu xám
+        curr = curr->next;
+        saveSnapshot(code, 3);
+    }
+
+    if (curr == nullptr) {
+        // Out of bounds (Index lớn hơn size list), huỷ newNode
+        saveSnapshot(code, 4);
+        delete newNode;
+        applyStep(0);
+        isPaused = false;
+        return;
+    }
+
+    curr->color = sf::Color(255, 165, 0); // Highlight node tại index-1
+    saveSnapshot(code, 2);
+
+    // Trỏ next của newNode
+    newNode->next = curr->next;
+    saveSnapshot(code, 5);
+
+    // Nối Node cũ vào newNode
+    curr->next = newNode;
+    saveSnapshot(code, 6);
+
+    resetColors();
+    saveSnapshot(code, -1);
+    applyStep(0);
+    isPaused = false;
+}
+
 void SinglyLinkedList::stepForward() {
     if (snapshots.empty()) return;
     if (currentStep < snapshots.size() - 1) {
@@ -331,6 +420,8 @@ void SinglyLinkedList::draw(sf::RenderWindow& window) {
     for (auto& pair : visualNodes) pair.second->drawArrow(window, visualNodes);
     for (auto& pair : visualNodes) pair.second->draw(window);
 }
+
+
 
 void SinglyLinkedList::drawCode(sf::RenderWindow& window) {
     if (currentCode.empty()) return;

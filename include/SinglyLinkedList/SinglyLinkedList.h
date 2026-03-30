@@ -61,6 +61,7 @@ public:
     void initList(int n);
     void initFromFile(const std::string& filename);
     void insertNode(int val);
+
     void startSearch(int val);
     void startDelete(int val);
     void clear();
@@ -75,4 +76,8 @@ public:
     void updateAnimation(float deltaTime); 
     void draw(sf::RenderWindow& window);
     void drawCode(sf::RenderWindow& window); 
+
+    // Tìm đến block public trong class SinglyLinkedList và thêm vào 2 dòng sau:
+    void insertAtHead(int val);
+    void insertAtIndex(int val, int index);
 };

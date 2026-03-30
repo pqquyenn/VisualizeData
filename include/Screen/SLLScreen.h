@@ -10,11 +10,18 @@ class App;
 class SLLScreen : public State {
 private:
     Button* btnBackToMenu;
-    Button* btnInsert;
+    Button* btnInsert;      // (Insert Tail)
     Button* btnSearch;
     Button* btnDelete;
     Button* btnInit;
     Button* btnInitFile;
+
+    // --- CÁC NÚT MỚI ---
+    Button* btnInsertHead;
+    Button* btnInsertIndex;
+    InputBox* inputIndex;      // Ô nhập vị trí (Index)
+    Button* btnGoInsertIndex;  // Nút Go
+    bool showIndexInput = false; // Trạng thái ẩn/hiện ô nhập Index
 
     Button* btnStepBack;
     Button* btnPausePlay;
