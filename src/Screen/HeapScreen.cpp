@@ -21,11 +21,11 @@ HeapScreen::HeapScreen(App* app) : State(app), isPanning(false), isViewInitializ
     btnDeleteMax = new Button(510, 80, 100, 40, app->font, "Delete");
     btnInit= new Button(630, 80, 100, 40, app->font, "Init");
     btnInitFromFile = new Button(750, 80, 100, 40, app->font, "Init File");
-    btnSpeedDown   = new Button(250, 140, 50, 40, app->font, "<<");
-    btnStepBack    = new Button(315, 140, 50, 40, app->font, "<");
-    btnPausePlay   = new Button(380, 140, 120, 40, app->font, "Pause/Play");
-    btnStepForward = new Button(515, 140, 50, 40, app->font, ">");
-    btnSpeedUp     = new Button(580, 140, 50, 40, app->font, ">>");
+    btnStepBack = new Button(200, 140, 40, 40, app->font, "<");
+    btnPausePlay = new Button(250, 140, 120, 40, app->font, "Pause/Play");
+    btnStepForward = new Button(380, 140, 40, 40, app->font, ">");
+    btnSpeedDown = new Button(430, 140, 50, 40, app->font, "<<");
+    btnSpeedUp = new Button(490, 140, 50, 40, app->font, ">>");
 
 
     treeView.setSize(1280, 720); 

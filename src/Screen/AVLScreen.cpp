@@ -16,12 +16,18 @@ AVLScreen::AVLScreen(App* app) : State(app) {
 
     // --- Đã sửa: Sắp xếp lại thứ tự và căn lề hoàn hảo cho các nút Playback ---
     // Khối nút trải dài từ X = 250 đến 630, cách nhau 15 pixel
-    btnSpeedDown   = new Button(250, 140, 50, 40, app->font, "<<");
-    btnStepBack    = new Button(315, 140, 50, 40, app->font, "<");
-    btnPausePlay   = new Button(380, 140, 120, 40, app->font, "Pause/Play");
-    btnStepForward = new Button(515, 140, 50, 40, app->font, ">");
-    btnSpeedUp     = new Button(580, 140, 50, 40, app->font, ">>");
+    // btnSpeedDown   = new Button(250, 140, 50, 40, app->font, "<<");
+    // btnStepBack    = new Button(315, 140, 50, 40, app->font, "<");
+    // btnPausePlay   = new Button(380, 140, 120, 40, app->font, "Pause/Play");
+    // btnStepForward = new Button(515, 140, 50, 40, app->font, ">");
+    // btnSpeedUp     = new Button(580, 140, 50, 40, app->font, ">>");
 
+
+    btnStepBack = new Button(200, 140, 40, 40, app->font, "<");
+    btnPausePlay = new Button(250, 140, 120, 40, app->font, "Pause/Play");
+    btnStepForward = new Button(380, 140, 40, 40, app->font, ">");
+    btnSpeedDown = new Button(430, 140, 50, 40, app->font, "<<");
+    btnSpeedUp = new Button(490, 140, 50, 40, app->font, ">>");
     avlTree = new AVLTree(app->font);
 }
 
