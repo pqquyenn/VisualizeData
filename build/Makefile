@@ -128,6 +128,54 @@ CodeTayApp/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/build
 .PHONY : CodeTayApp/fast
 
+src/AATree/AANode.obj: src/AATree/AANode.cpp.obj
+.PHONY : src/AATree/AANode.obj
+
+# target to build an object file
+src/AATree/AANode.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/AATree/AANode.cpp.obj
+.PHONY : src/AATree/AANode.cpp.obj
+
+src/AATree/AANode.i: src/AATree/AANode.cpp.i
+.PHONY : src/AATree/AANode.i
+
+# target to preprocess a source file
+src/AATree/AANode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/AATree/AANode.cpp.i
+.PHONY : src/AATree/AANode.cpp.i
+
+src/AATree/AANode.s: src/AATree/AANode.cpp.s
+.PHONY : src/AATree/AANode.s
+
+# target to generate assembly for a file
+src/AATree/AANode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/AATree/AANode.cpp.s
+.PHONY : src/AATree/AANode.cpp.s
+
+src/AATree/AATree.obj: src/AATree/AATree.cpp.obj
+.PHONY : src/AATree/AATree.obj
+
+# target to build an object file
+src/AATree/AATree.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/AATree/AATree.cpp.obj
+.PHONY : src/AATree/AATree.cpp.obj
+
+src/AATree/AATree.i: src/AATree/AATree.cpp.i
+.PHONY : src/AATree/AATree.i
+
+# target to preprocess a source file
+src/AATree/AATree.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/AATree/AATree.cpp.i
+.PHONY : src/AATree/AATree.cpp.i
+
+src/AATree/AATree.s: src/AATree/AATree.cpp.s
+.PHONY : src/AATree/AATree.s
+
+# target to generate assembly for a file
+src/AATree/AATree.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/AATree/AATree.cpp.s
+.PHONY : src/AATree/AATree.cpp.s
+
 src/AVLTree/AVLNode.obj: src/AVLTree/AVLNode.cpp.obj
 .PHONY : src/AVLTree/AVLNode.obj
 
@@ -271,6 +319,30 @@ src/Heap/HeapTree.s: src/Heap/HeapTree.cpp.s
 src/Heap/HeapTree.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Heap/HeapTree.cpp.s
 .PHONY : src/Heap/HeapTree.cpp.s
+
+src/Screen/AAScreen.obj: src/Screen/AAScreen.cpp.obj
+.PHONY : src/Screen/AAScreen.obj
+
+# target to build an object file
+src/Screen/AAScreen.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Screen/AAScreen.cpp.obj
+.PHONY : src/Screen/AAScreen.cpp.obj
+
+src/Screen/AAScreen.i: src/Screen/AAScreen.cpp.i
+.PHONY : src/Screen/AAScreen.i
+
+# target to preprocess a source file
+src/Screen/AAScreen.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Screen/AAScreen.cpp.i
+.PHONY : src/Screen/AAScreen.cpp.i
+
+src/Screen/AAScreen.s: src/Screen/AAScreen.cpp.s
+.PHONY : src/Screen/AAScreen.s
+
+# target to generate assembly for a file
+src/Screen/AAScreen.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Screen/AAScreen.cpp.s
+.PHONY : src/Screen/AAScreen.cpp.s
 
 src/Screen/AVLScreen.obj: src/Screen/AVLScreen.cpp.obj
 .PHONY : src/Screen/AVLScreen.obj
@@ -521,6 +593,12 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... CodeTayApp
+	@echo ... src/AATree/AANode.obj
+	@echo ... src/AATree/AANode.i
+	@echo ... src/AATree/AANode.s
+	@echo ... src/AATree/AATree.obj
+	@echo ... src/AATree/AATree.i
+	@echo ... src/AATree/AATree.s
 	@echo ... src/AVLTree/AVLNode.obj
 	@echo ... src/AVLTree/AVLNode.i
 	@echo ... src/AVLTree/AVLNode.s
@@ -539,6 +617,9 @@ help:
 	@echo ... src/Heap/HeapTree.obj
 	@echo ... src/Heap/HeapTree.i
 	@echo ... src/Heap/HeapTree.s
+	@echo ... src/Screen/AAScreen.obj
+	@echo ... src/Screen/AAScreen.i
+	@echo ... src/Screen/AAScreen.s
 	@echo ... src/Screen/AVLScreen.obj
 	@echo ... src/Screen/AVLScreen.i
 	@echo ... src/Screen/AVLScreen.s

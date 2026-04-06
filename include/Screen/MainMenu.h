@@ -7,6 +7,7 @@ private:
     Button* btnSLL;
     Button* btnAVL;
     Button* btnHeap;
+    Button* btnAA;
 public:
     MainMenu(App* app);
     ~MainMenu();

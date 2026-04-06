@@ -263,4 +263,7 @@ CMakeFiles/CodeTayApp.dir/src/Screen/MainMenu.cpp.obj: \
  C:/msys64/ucrt64/include/c++/15.2.0/bits/fstream.tcc \
  C:/Users/LENOVO/Desktop/Codetay/include/Screen/HeapScreen.h \
  C:/Users/LENOVO/Desktop/Codetay/include/Heap/HeapTree.h \
- C:/Users/LENOVO/Desktop/Codetay/include/Heap/HeapNode.h
+ C:/Users/LENOVO/Desktop/Codetay/include/Heap/HeapNode.h \
+ C:/Users/LENOVO/Desktop/Codetay/include/Screen/AAScreen.h \
+ C:/Users/LENOVO/Desktop/Codetay/include/AATree/AATree.h \
+ C:/Users/LENOVO/Desktop/Codetay/include/AATree/AANode.h

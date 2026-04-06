@@ -3,6 +3,7 @@
 #include "SLLScreen.h"
 #include "AVLScreen.h"
 #include "HeapScreen.h"
+#include "AAScreen.h"
 
 MainMenu::MainMenu(App* app) : State(app) {
     // Tạo nút bấm đi tới Singly Linked List (app->font là lấy font từ class App)
@@ -11,12 +12,15 @@ MainMenu::MainMenu(App* app) : State(app) {
     btnAVL = new Button(540, 400, 200, 50, app->font, "AVL tree");
     // Tao data structure heap
     btnHeap = new Button(540, 500, 200, 50, app->font, "Max Heap");
+    // tao data structure AAtree
+    btnAA = new Button(540, 600, 200, 50, app->font, "AA Tree");
 }
 
 MainMenu::~MainMenu() {
     delete btnSLL;
     delete btnAVL;
     delete btnHeap;
+    delete btnAA;
 }
 
 void MainMenu::handleEvent(sf::Event& event, sf::RenderWindow& window) {
@@ -32,6 +36,9 @@ void MainMenu::handleEvent(sf::Event& event, sf::RenderWindow& window) {
     if (btnHeap->isClicked(event, mousePos)){
         app->changeState(new HeapScreen(app));
     }
+    if (btnAA->isClicked(event, mousePos)){
+        app->changeState(new AAScreen(app));
+    }
 }
 
 void MainMenu::update(float deltaTime, sf::RenderWindow& window) {
@@ -39,10 +46,12 @@ void MainMenu::update(float deltaTime, sf::RenderWindow& window) {
     btnSLL->update(mousePos); // Để nút đổi màu khi hover
     btnAVL->update(mousePos);
     btnHeap->update(mousePos);
+    btnAA->update(mousePos);
 }
 
 void MainMenu::draw(sf::RenderWindow& window) {
     btnSLL->draw(window);
     btnAVL->draw(window);
     btnHeap->draw(window);
+    btnAA->draw(window);
 }

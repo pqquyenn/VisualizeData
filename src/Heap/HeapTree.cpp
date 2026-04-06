@@ -68,26 +68,56 @@ void HeapTree::saveSnapshotSwap(int idx1, int idx2, std::string op, int line) {
 }
 
 // 2. Cài đặt hàm initFromFile
+// 1. Sửa lại hàm initFromFile
 void HeapTree::initFromFile(const std::vector<int>& data) {
-    clear();
-    heapData = data;
-    buildHeap();
-    saveSnapshot("Init", -1); 
-    isPaused = true; 
-    applyStep(0);   
-}
+    clear(); // Xóa dữ liệu cũ
+    snapshots.clear(); // Xóa sạch lịch sử hoạt ảnh
+    currentStep = 0;
+    timer = 0;
 
-void HeapTree::initTree(int n) {
-    clear(); 
-    for (int i = 0; i < n; i++) {
-        heapData.push_back(std::rand() % 100 + 1);
+    // Thay vì gọi buildHeap() một lần, ta lặp qua từng phần tử và lưu snapshot
+    for (int val : data) {
+        saveSnapshot("Insert", 0); // Dòng 0: heap.push_back(val)
+        heapData.push_back(val);
+        
+        saveSnapshot("Insert", 1); // Dòng 1: index = heap.size() - 1
+        
+        if (heapData.size() > 1) {
+            // Hàm heapifyUp đã có sẵn lệnh lưu snapshot bên trong
+            heapifyUp(heapData.size() - 1);
+        }
     }
-    buildHeap();
-    saveSnapshot(); 
-    isPaused = true; 
-    applyStep(0);   
+    
+    // Bắt đầu phát hoạt ảnh từ bước đầu tiên
+    applyStep(0); 
+    isPaused = false; 
 }
 
+// 2. Sửa lại hàm initTree
+void HeapTree::initTree(int n) {
+    clear(); // Xóa dữ liệu cũ
+    snapshots.clear(); // Xóa sạch lịch sử hoạt ảnh
+    currentStep = 0;
+    timer = 0;
+
+    // Tương tự, tạo random và chèn từng Node vào cây
+    for (int i = 0; i < n; i++) {
+        int val = std::rand() % 100 + 1;
+        
+        saveSnapshot("Insert", 0); // Dòng 0: heap.push_back(val)
+        heapData.push_back(val);
+        
+        saveSnapshot("Insert", 1); // Dòng 1: index = heap.size() - 1
+        
+        if (heapData.size() > 1) {
+            heapifyUp(heapData.size() - 1);
+        }
+    }
+    
+    // Bắt đầu phát hoạt ảnh từ bước đầu tiên
+    applyStep(0); 
+    isPaused = false; 
+}
 void HeapTree::buildHeap() {
     int n = heapData.size();
     for (int i = n / 2 - 1; i >= 0; i--) {

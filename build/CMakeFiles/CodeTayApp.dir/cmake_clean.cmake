@@ -1,4 +1,8 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/CodeTayApp.dir/src/AATree/AANode.cpp.obj"
+  "CMakeFiles/CodeTayApp.dir/src/AATree/AANode.cpp.obj.d"
+  "CMakeFiles/CodeTayApp.dir/src/AATree/AATree.cpp.obj"
+  "CMakeFiles/CodeTayApp.dir/src/AATree/AATree.cpp.obj.d"
   "CMakeFiles/CodeTayApp.dir/src/AVLTree/AVLNode.cpp.obj"
   "CMakeFiles/CodeTayApp.dir/src/AVLTree/AVLNode.cpp.obj.d"
   "CMakeFiles/CodeTayApp.dir/src/AVLTree/AVLTree.cpp.obj"
@@ -11,6 +15,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/CodeTayApp.dir/src/Heap/HeapNode.cpp.obj.d"
   "CMakeFiles/CodeTayApp.dir/src/Heap/HeapTree.cpp.obj"
   "CMakeFiles/CodeTayApp.dir/src/Heap/HeapTree.cpp.obj.d"
+  "CMakeFiles/CodeTayApp.dir/src/Screen/AAScreen.cpp.obj"
+  "CMakeFiles/CodeTayApp.dir/src/Screen/AAScreen.cpp.obj.d"
   "CMakeFiles/CodeTayApp.dir/src/Screen/AVLScreen.cpp.obj"
   "CMakeFiles/CodeTayApp.dir/src/Screen/AVLScreen.cpp.obj.d"
   "CMakeFiles/CodeTayApp.dir/src/Screen/HeapScreen.cpp.obj"
