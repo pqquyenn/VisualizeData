@@ -59,14 +59,29 @@ void AVLTree::saveSnapshot(int line) {
 
 
 // 2. Thêm hàm initFromFile (đặt dưới hàm initTree)
+// Sửa lại hàm initFromFile
 void AVLTree::initFromFile(const std::vector<int>& data) {
-    clear();
+    clear(); // Xóa cây cũ
+    snapshots.clear(); // Làm sạch lịch sử hoạt ảnh
+    currentStep = 0;
+    
+    // Đặt tên thao tác là "Insert" để màn hình hiện khung code màu vàng của Insert
+    currentOpName = "Insert"; 
+
     for (int val : data) {
-        insertVal(val);
-        currentStep = snapshots.size() - 1; 
-        applyStep(currentStep);
+        resetColors(root);
+        saveSnapshot(-1); // Lưu trạng thái trước khi thêm node
+        
+        // Gọi hàm đệ quy trực tiếp thay vì gọi insertVal() để không bị clear() snapshot
+        insertRecursive(root, val); 
+        
+        resetColors(root);
+        saveSnapshot(-1); // Lưu trạng thái sau khi thêm node xong
     }
-    resetColors(root);
+    
+    // Bắt đầu chạy hoạt ảnh từ đầu (node đầu tiên trong file)
+    applyStep(0);
+    isPaused = false; 
 }
 // Hàm đẩy cấu hình Step hiện tại ra màn hình
 void AVLTree::applyStep(size_t stepIndex) {
@@ -275,14 +290,29 @@ void AVLTree::searchVal(int val) {
 }
 
 void AVLTree::initTree(int n) {
-    clear();
+    clear(); // Xóa cây cũ
+    snapshots.clear(); // Làm sạch lịch sử hoạt ảnh
+    currentStep = 0;
+    
+    // Đặt tên thao tác là "Insert" để màn hình hiện khung code màu vàng
+    currentOpName = "Insert";
+
     for (int i = 0; i < n; i++) {
-        int val = std::rand() % 100 + 1;
-        insertVal(val);
-        currentStep = snapshots.size() - 1; // Nhảy thẳng đến cuối
-        applyStep(currentStep);
+        int val = std::rand() % 100 + 1; // Random giá trị
+        
+        resetColors(root);
+        saveSnapshot(-1);
+        
+        // Gọi hàm đệ quy trực tiếp
+        insertRecursive(root, val);
+        
+        resetColors(root);
+        saveSnapshot(-1);
     }
-    resetColors(root);
+    
+    // Bắt đầu chạy hoạt ảnh từ node đầu tiên
+    applyStep(0);
+    isPaused = false;
 }
 
 void AVLTree::resetColors(LogicalNode* node) {
