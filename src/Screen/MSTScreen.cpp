@@ -148,9 +148,9 @@ void MSTScreen::draw(sf::RenderWindow& window) {
         
         sf::Text hint; hint.setFont(app->font); hint.setCharacterSize(14); hint.setFillColor(sf::Color::White);
         hint.setPosition(150, 350); // Dời Hint xuống dưới khung text box
-        if (selectedInputType == 1) hint.setString("Format: u v weight (e.g. 0 1 5)");
-        else if (selectedInputType == 2) hint.setString("Format: N x N grid numbers");
-        else if (selectedInputType == 3) hint.setString("Format: u numEdges v1 w1 v2 w2...");
+       if (selectedInputType == 1) hint.setString("Format: u v weight (e.g. 1 2 99)");
+        else if (selectedInputType == 2) hint.setString("Format: N x N grid (0-based indexing)");
+        else if (selectedInputType == 3) hint.setString("Format: u v1 w1 v2 w2... (e.g. 4 2 99 3 4)");
         window.draw(hint);
     } 
     else if (currentMode == UI_Mode::RANDOM_GRAPH) {

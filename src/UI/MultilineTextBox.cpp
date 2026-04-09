@@ -38,26 +38,30 @@ void MultilineTextBox::handleEvent(sf::Event& event, sf::Vector2f mousePos) {
         else if (unicode == 13) { // Phím Enter (xuống dòng)
             inputString += '\n';
         }
-        else if (unicode == 32) { // Phím Space (khoảng trắng)
+        else if (unicode == 32) { // Phím Space
             inputString += ' ';
         }
         else if (unicode >= '0' && unicode <= '9') { // Chỉ cho phép nhập số
             inputString += static_cast<char>(unicode);
         }
-        
-        text.setString(inputString);
     }
 }
 
 void MultilineTextBox::draw(sf::RenderWindow& window) {
     window.draw(box);
+    
+    // XỬ LÝ CON TRỎ NHẤP NHÁY
+    std::string displayText = inputString;
+    if (isSelected) {
+        // Cứ mỗi nửa giây (500ms) thì hiện dấu '|'
+        if (cursorClock.getElapsedTime().asMilliseconds() % 1000 < 500) {
+            displayText += "|"; 
+        }
+    }
+    
+    text.setString(displayText);
     window.draw(text);
 }
 
-std::string MultilineTextBox::getText() const { 
-    return inputString; 
-}
-void MultilineTextBox::clear() { 
-    inputString = ""; 
-    text.setString(""); 
-}
+std::string MultilineTextBox::getText() const { return inputString; }
+void MultilineTextBox::clear() { inputString = ""; text.setString(""); }

@@ -38,11 +38,19 @@ void MSTGraph::arrangeCircularLayout() {
 bool MSTGraph::buildFromEdgeList(const std::string& input) {
     clear();
     std::stringstream ss(input);
-    int u, v, w;
-    // Format mong đợi: u v weight
-    while (ss >> u >> v >> w) {
-        addNode(u); addNode(v);
-        edges.push_back({u, v, w});
+    std::string line;
+    
+    // Đọc từng dòng
+    while (std::getline(ss, line)) {
+        std::stringstream lineStream(line);
+        int u, v, w;
+        
+        // Chỉ nhận khi dòng đó có ĐÚNG 3 thông số (u, v, w)
+        // Nếu dòng đầu là V E (ví dụ "5 7"), nó sẽ lướt qua để không bị lỗi.
+        if (lineStream >> u >> v >> w) {
+            addNode(u); addNode(v);
+            edges.push_back({u, v, w});
+        }
     }
     arrangeCircularLayout();
     return true;
@@ -50,41 +58,71 @@ bool MSTGraph::buildFromEdgeList(const std::string& input) {
 
 bool MSTGraph::buildFromAdjMatrix(const std::string& input, int numVertices) {
     clear();
+    
+    // 1. TẠO ĐỈNH TỪ 0 ĐẾN numVertices - 1
     for (int i = 0; i < numVertices; i++) addNode(i);
     
     std::stringstream ss(input);
-    int w;
+    std::vector<int> tokens;
+    int temp;
+    
+    // Đọc toàn bộ các số có trong khung nhập liệu
+    while (ss >> temp) {
+        tokens.push_back(temp);
+    }
+    
+    // 2. LỌC SỐ ĐỈNH 'N' Ở ĐẦU (ví dụ như số 5 ở dòng đầu tiên trong hình của bạn)
+    int startIndex = 0;
+    // Nếu tổng các số đọc được đúng bằng N*N + 1, nghĩa là số đầu tiên là số lượng đỉnh -> Cần bỏ qua
+    if (tokens.size() == numVertices * numVertices + 1) {
+        startIndex = 1; 
+    } 
+    // Nếu dư dả gì đó, ta cố gắng lùi lại lấy đúng N*N phần tử ở cuối
+    else if (tokens.size() > numVertices * numVertices) {
+        startIndex = tokens.size() - (numVertices * numVertices);
+    }
+
+    // 3. TIẾN HÀNH ĐỌC MA TRẬN KỀ
+    int tokenIdx = startIndex;
     for (int i = 0; i < numVertices; i++) {
         for (int j = 0; j < numVertices; j++) {
-            if (ss >> w) {
-                if (w != 0 && i < j) { // Đồ thị vô hướng, chỉ lấy nửa trên
+            if (tokenIdx < tokens.size()) {
+                int w = tokens[tokenIdx++];
+                // Nếu trọng số w != 0 nghĩa là có cạnh.
+                // i < j để chỉ lấy nửa trên của ma trận (vì là đồ thị vô hướng, tránh vẽ 2 cạnh đè lên nhau)
+                if (w != 0 && i < j) { 
                     edges.push_back({i, j, w});
                 }
             }
         }
     }
+    
     arrangeCircularLayout();
     return true;
 }
-
 bool MSTGraph::buildFromAdjList(const std::string& input) {
     clear();
     std::stringstream ss(input);
-    int u, numEdges, v, w;
-    // Format giả định: đỉnh_u số_lượng_cạnh đỉnh_v1 trọng_số_w1 ...
-    while (ss >> u >> numEdges) {
-        addNode(u);
-        for (int i = 0; i < numEdges; i++) {
-            if (ss >> v >> w) {
+    std::string line;
+    
+    // Đọc từng dòng
+    while (std::getline(ss, line)) {
+        std::stringstream lineStream(line);
+        int u;
+        // Số đầu tiên của dòng là đỉnh gốc U
+        if (lineStream >> u) {
+            addNode(u);
+            int v, w;
+            // Liên tục đọc các cặp V và Trọng lượng W đứng sau
+            while (lineStream >> v >> w) {
                 addNode(v);
-                if (u < v) edges.push_back({u, v, w}); // Tránh trùng lặp
+                if (u < v) edges.push_back({u, v, w}); // Thêm điều kiện để không tạo cạnh đôi
             }
         }
     }
     arrangeCircularLayout();
     return true;
 }
-
 void MSTGraph::generateRandomGraph(int vCount, int eCount) {
     clear();
     if (vCount <= 0) return;
