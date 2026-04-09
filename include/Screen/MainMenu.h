@@ -1,6 +1,16 @@
 #pragma once
 #include "State.h"
 #include "Button.h"
+#include <vector>
+
+// Cấu trúc mô phỏng một chiếc lá
+struct Leaf {
+    sf::ConvexShape shape;
+    float speedY;         // Tốc độ rơi xuống
+    float baseSpeedX;     // Hướng gió thổi ngang cơ bản
+    float rotationSpeed;  // Tốc độ xoay của lá
+    float timeOffset;     // Dùng cho hàm sin() để tạo độ lượn sóng
+};
 
 class MainMenu : public State {
 private:
@@ -9,6 +19,11 @@ private:
     Button* btnHeap;
     Button* btnAA;
     Button* btnMST;
+
+    // Quản lý danh sách lá
+    std::vector<Leaf> leaves;
+    void initLeaves(int count);
+
 public:
     MainMenu(App* app);
     ~MainMenu();
