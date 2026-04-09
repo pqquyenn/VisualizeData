@@ -30,6 +30,7 @@ target_include_directories(CodeTayApp PRIVATE
     ${CMAKE_SOURCE_DIR}/include/AVLTree
     ${CMAKE_SOURCE_DIR}/include/Heap
     ${CMAKE_SOURCE_DIR}/include/AATree
+    ${CMAKE_SOURCE_DIR}/include/MinimumST
 )
 
 # 6. Định nghĩa SFML_STATIC để mã nguồn hiểu là đang dùng bản tĩnh

@@ -4,6 +4,7 @@
 #include "AVLScreen.h"
 #include "HeapScreen.h"
 #include "AAScreen.h"
+#include "MSTScreen.h"
 
 MainMenu::MainMenu(App* app) : State(app) {
     // Tạo nút bấm đi tới Singly Linked List (app->font là lấy font từ class App)
@@ -14,6 +15,8 @@ MainMenu::MainMenu(App* app) : State(app) {
     btnHeap = new Button(540, 500, 200, 50, app->font, "Max Heap");
     // tao data structure AAtree
     btnAA = new Button(540, 600, 200, 50, app->font, "AA Tree");
+    // tao data structure MST
+    btnMST = new Button(540, 600, 200, 50, app->font, "Kruskal");
 }
 
 MainMenu::~MainMenu() {
@@ -21,6 +24,7 @@ MainMenu::~MainMenu() {
     delete btnAVL;
     delete btnHeap;
     delete btnAA;
+    delete btnMST;
 }
 
 void MainMenu::handleEvent(sf::Event& event, sf::RenderWindow& window) {
@@ -39,6 +43,9 @@ void MainMenu::handleEvent(sf::Event& event, sf::RenderWindow& window) {
     if (btnAA->isClicked(event, mousePos)){
         app->changeState(new AAScreen(app));
     }
+    if (btnMST->isClicked(event, mousePos)){
+        app->changeState(new MSTScreen(app));
+    }
 }
 
 void MainMenu::update(float deltaTime, sf::RenderWindow& window) {
@@ -47,6 +54,7 @@ void MainMenu::update(float deltaTime, sf::RenderWindow& window) {
     btnAVL->update(mousePos);
     btnHeap->update(mousePos);
     btnAA->update(mousePos);
+    btnMST->update(mousePos);
 }
 
 void MainMenu::draw(sf::RenderWindow& window) {
@@ -54,4 +62,5 @@ void MainMenu::draw(sf::RenderWindow& window) {
     btnAVL->draw(window);
     btnHeap->draw(window);
     btnAA->draw(window);
+    btnMST->draw(window);
 }

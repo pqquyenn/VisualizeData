@@ -320,6 +320,54 @@ src/Heap/HeapTree.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Heap/HeapTree.cpp.s
 .PHONY : src/Heap/HeapTree.cpp.s
 
+src/MinimumST/MSTGraph.obj: src/MinimumST/MSTGraph.cpp.obj
+.PHONY : src/MinimumST/MSTGraph.obj
+
+# target to build an object file
+src/MinimumST/MSTGraph.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/MinimumST/MSTGraph.cpp.obj
+.PHONY : src/MinimumST/MSTGraph.cpp.obj
+
+src/MinimumST/MSTGraph.i: src/MinimumST/MSTGraph.cpp.i
+.PHONY : src/MinimumST/MSTGraph.i
+
+# target to preprocess a source file
+src/MinimumST/MSTGraph.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/MinimumST/MSTGraph.cpp.i
+.PHONY : src/MinimumST/MSTGraph.cpp.i
+
+src/MinimumST/MSTGraph.s: src/MinimumST/MSTGraph.cpp.s
+.PHONY : src/MinimumST/MSTGraph.s
+
+# target to generate assembly for a file
+src/MinimumST/MSTGraph.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/MinimumST/MSTGraph.cpp.s
+.PHONY : src/MinimumST/MSTGraph.cpp.s
+
+src/MinimumST/MSTNode.obj: src/MinimumST/MSTNode.cpp.obj
+.PHONY : src/MinimumST/MSTNode.obj
+
+# target to build an object file
+src/MinimumST/MSTNode.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/MinimumST/MSTNode.cpp.obj
+.PHONY : src/MinimumST/MSTNode.cpp.obj
+
+src/MinimumST/MSTNode.i: src/MinimumST/MSTNode.cpp.i
+.PHONY : src/MinimumST/MSTNode.i
+
+# target to preprocess a source file
+src/MinimumST/MSTNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/MinimumST/MSTNode.cpp.i
+.PHONY : src/MinimumST/MSTNode.cpp.i
+
+src/MinimumST/MSTNode.s: src/MinimumST/MSTNode.cpp.s
+.PHONY : src/MinimumST/MSTNode.s
+
+# target to generate assembly for a file
+src/MinimumST/MSTNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/MinimumST/MSTNode.cpp.s
+.PHONY : src/MinimumST/MSTNode.cpp.s
+
 src/Screen/AAScreen.obj: src/Screen/AAScreen.cpp.obj
 .PHONY : src/Screen/AAScreen.obj
 
@@ -391,6 +439,30 @@ src/Screen/HeapScreen.s: src/Screen/HeapScreen.cpp.s
 src/Screen/HeapScreen.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Screen/HeapScreen.cpp.s
 .PHONY : src/Screen/HeapScreen.cpp.s
+
+src/Screen/MSTScreen.obj: src/Screen/MSTScreen.cpp.obj
+.PHONY : src/Screen/MSTScreen.obj
+
+# target to build an object file
+src/Screen/MSTScreen.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Screen/MSTScreen.cpp.obj
+.PHONY : src/Screen/MSTScreen.cpp.obj
+
+src/Screen/MSTScreen.i: src/Screen/MSTScreen.cpp.i
+.PHONY : src/Screen/MSTScreen.i
+
+# target to preprocess a source file
+src/Screen/MSTScreen.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Screen/MSTScreen.cpp.i
+.PHONY : src/Screen/MSTScreen.cpp.i
+
+src/Screen/MSTScreen.s: src/Screen/MSTScreen.cpp.s
+.PHONY : src/Screen/MSTScreen.s
+
+# target to generate assembly for a file
+src/Screen/MSTScreen.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Screen/MSTScreen.cpp.s
+.PHONY : src/Screen/MSTScreen.cpp.s
 
 src/Screen/MainMenu.obj: src/Screen/MainMenu.cpp.obj
 .PHONY : src/Screen/MainMenu.obj
@@ -617,6 +689,12 @@ help:
 	@echo ... src/Heap/HeapTree.obj
 	@echo ... src/Heap/HeapTree.i
 	@echo ... src/Heap/HeapTree.s
+	@echo ... src/MinimumST/MSTGraph.obj
+	@echo ... src/MinimumST/MSTGraph.i
+	@echo ... src/MinimumST/MSTGraph.s
+	@echo ... src/MinimumST/MSTNode.obj
+	@echo ... src/MinimumST/MSTNode.i
+	@echo ... src/MinimumST/MSTNode.s
 	@echo ... src/Screen/AAScreen.obj
 	@echo ... src/Screen/AAScreen.i
 	@echo ... src/Screen/AAScreen.s
@@ -626,6 +704,9 @@ help:
 	@echo ... src/Screen/HeapScreen.obj
 	@echo ... src/Screen/HeapScreen.i
 	@echo ... src/Screen/HeapScreen.s
+	@echo ... src/Screen/MSTScreen.obj
+	@echo ... src/Screen/MSTScreen.i
+	@echo ... src/Screen/MSTScreen.s
 	@echo ... src/Screen/MainMenu.obj
 	@echo ... src/Screen/MainMenu.i
 	@echo ... src/Screen/MainMenu.s

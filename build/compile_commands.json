@@ -49,6 +49,18 @@
 },
 {
   "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\MinimumST\\MSTGraph.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\MinimumST\\MSTGraph.cpp",
+  "file": "C:/Users/LENOVO/Desktop/Codetay/src/MinimumST/MSTGraph.cpp",
+  "output": "CMakeFiles/CodeTayApp.dir/src/MinimumST/MSTGraph.cpp.obj"
+},
+{
+  "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\MinimumST\\MSTNode.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\MinimumST\\MSTNode.cpp",
+  "file": "C:/Users/LENOVO/Desktop/Codetay/src/MinimumST/MSTNode.cpp",
+  "output": "CMakeFiles/CodeTayApp.dir/src/MinimumST/MSTNode.cpp.obj"
+},
+{
+  "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
   "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\Screen\\AAScreen.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\Screen\\AAScreen.cpp",
   "file": "C:/Users/LENOVO/Desktop/Codetay/src/Screen/AAScreen.cpp",
   "output": "CMakeFiles/CodeTayApp.dir/src/Screen/AAScreen.cpp.obj"
@@ -64,6 +76,12 @@
   "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\Screen\\HeapScreen.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\Screen\\HeapScreen.cpp",
   "file": "C:/Users/LENOVO/Desktop/Codetay/src/Screen/HeapScreen.cpp",
   "output": "CMakeFiles/CodeTayApp.dir/src/Screen/HeapScreen.cpp.obj"
+},
+{
+  "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\Screen\\MSTScreen.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\Screen\\MSTScreen.cpp",
+  "file": "C:/Users/LENOVO/Desktop/Codetay/src/Screen/MSTScreen.cpp",
+  "output": "CMakeFiles/CodeTayApp.dir/src/Screen/MSTScreen.cpp.obj"
 },
 {
   "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
