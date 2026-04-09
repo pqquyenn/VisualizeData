@@ -608,6 +608,30 @@ src/UI/InputBox.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/UI/InputBox.cpp.s
 .PHONY : src/UI/InputBox.cpp.s
 
+src/UI/MultilineTextBox.obj: src/UI/MultilineTextBox.cpp.obj
+.PHONY : src/UI/MultilineTextBox.obj
+
+# target to build an object file
+src/UI/MultilineTextBox.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/UI/MultilineTextBox.cpp.obj
+.PHONY : src/UI/MultilineTextBox.cpp.obj
+
+src/UI/MultilineTextBox.i: src/UI/MultilineTextBox.cpp.i
+.PHONY : src/UI/MultilineTextBox.i
+
+# target to preprocess a source file
+src/UI/MultilineTextBox.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/UI/MultilineTextBox.cpp.i
+.PHONY : src/UI/MultilineTextBox.cpp.i
+
+src/UI/MultilineTextBox.s: src/UI/MultilineTextBox.cpp.s
+.PHONY : src/UI/MultilineTextBox.s
+
+# target to generate assembly for a file
+src/UI/MultilineTextBox.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/UI/MultilineTextBox.cpp.s
+.PHONY : src/UI/MultilineTextBox.cpp.s
+
 src/UI/PlaybackController.obj: src/UI/PlaybackController.cpp.obj
 .PHONY : src/UI/PlaybackController.obj
 
@@ -725,6 +749,9 @@ help:
 	@echo ... src/UI/InputBox.obj
 	@echo ... src/UI/InputBox.i
 	@echo ... src/UI/InputBox.s
+	@echo ... src/UI/MultilineTextBox.obj
+	@echo ... src/UI/MultilineTextBox.i
+	@echo ... src/UI/MultilineTextBox.s
 	@echo ... src/UI/PlaybackController.obj
 	@echo ... src/UI/PlaybackController.i
 	@echo ... src/UI/PlaybackController.s
