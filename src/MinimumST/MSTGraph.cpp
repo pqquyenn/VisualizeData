@@ -173,16 +173,28 @@ bool MSTGraph::isDraggingNode() const {
 
 
 void MSTGraph::draw(sf::RenderWindow& window) {
-    // Vẽ cạnh (Line)
+    // Vẽ cạnh (Line dày hơn)
     for (const auto& edge : edges) {
         sf::Vector2f posU = nodes[edge.u]->currentPos;
         sf::Vector2f posV = nodes[edge.v]->currentPos;
         
-        sf::Vertex line[] = {
-            sf::Vertex(posU, edge.color),
-            sf::Vertex(posV, edge.color)
-        };
-        window.draw(line, 2, sf::Lines);
+        // 1. Tính toán khoảng cách (độ dài cạnh) và góc xoay
+        float dx = posV.x - posU.x;
+        float dy = posV.y - posU.y;
+        float length = std::sqrt(dx * dx + dy * dy);
+        float angle = std::atan2(dy, dx) * 180.f / 3.14159265f; // Đổi từ radian sang độ
+
+        // 2. Tạo hình chữ nhật đại diện cho cạnh
+        float lineThickness = 4.0f; // TÙY CHỈNH ĐỘ DÀY Ở ĐÂY (4.0f là khá dễ nhìn)
+        sf::RectangleShape thickLine(sf::Vector2f(length, lineThickness));
+        
+        // 3. Đặt tâm xoay ở chính giữa điểm đầu (posU)
+        thickLine.setOrigin(0.f, lineThickness / 2.0f);
+        thickLine.setPosition(posU);
+        thickLine.setRotation(angle);
+        thickLine.setFillColor(edge.color);
+
+        window.draw(thickLine);
 
         // Vẽ trọng số (Weight)
         sf::Text weightText;
@@ -190,14 +202,13 @@ void MSTGraph::draw(sf::RenderWindow& window) {
         weightText.setString(std::to_string(edge.weight));
         weightText.setCharacterSize(16);
         weightText.setFillColor(sf::Color::Yellow); // Màu vàng cho nổi bật
-        weightText.setPosition((posU.x + posV.x) / 2.0f, (posU.y + posV.y) / 2.0f - 10.f);
+        weightText.setPosition((posU.x + posV.x) / 2.0f, (posU.y + posV.y) / 2.0f - 15.f); // Nhích lên chút để không đè vào cạnh dày
         window.draw(weightText);
     }
 
-    // Vẽ đỉnh
+    // Vẽ đỉnh (Vẽ sau để đỉnh đè lên trên các cạnh)
     for (auto& pair : nodes) pair.second->draw(window);
 }
-
 // Thêm vào cuối file MSTGraph.cpp của bạn
 
 void MSTGraph::startKruskal() {
