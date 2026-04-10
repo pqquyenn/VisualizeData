@@ -19,6 +19,14 @@ MSTScreen::MSTScreen(App* app) : State(app) {
     btnAdjList = new Button(570, 220, 120, 30, app->font, "Adj List");
     btnGoInput = new Button(700, 220, 60, 30, app->font, "Go");
 
+    // Đặt dưới đoạn khởi tạo btnKruskal
+    btnStepBack = new Button(200, 300, 40, 40, app->font, "<");
+    btnPausePlay = new Button(250, 300, 120, 40, app->font, "Pause/Play");
+    btnStepForward = new Button(380, 300, 40, 40, app->font, ">");
+    btnSpeedDown = new Button(430, 300, 50, 40, app->font, "<<");
+    btnSpeedUp = new Button(490, 300, 50, 40, app->font, ">>");
+// Bạn có thể chỉnh lại toạ độ Y (đang để 300) cho phù hợp với UI của bạn
+
     // UI Random hạ xuống Y = 140, fix toạ độ để không đè chữ V/E
     inputV = new InputBox(180, 140, 80, 40, app->font, 3); 
     inputE = new InputBox(310, 140, 80, 40, app->font, 3);
@@ -32,7 +40,10 @@ MSTScreen::~MSTScreen() {
     delete inputGraphData; delete btnEdgeList; delete btnAdjMatrix; delete btnAdjList; delete btnGoInput;
     delete inputV; delete inputE; delete btnGoRandom;
     delete graph;
-}
+
+    delete btnStepBack; delete btnPausePlay; delete btnStepForward;
+    delete btnSpeedDown; delete btnSpeedUp;
+    }
 
 void MSTScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
     if (!isViewInitialized) {
@@ -112,6 +123,18 @@ void MSTScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
             }
         }
     }
+
+        // Thêm đoạn này vào phần xử lý button (bên dưới đoạn kiểm tra các nút Input/Random)
+
+    if (btnKruskal->isClicked(event, mousePos)) {
+        graph->startKruskal();
+    }
+
+    if (btnPausePlay->isClicked(event, mousePos)) graph->togglePause();
+    if (btnStepBack->isClicked(event, mousePos)) graph->stepBackward();
+    if (btnStepForward->isClicked(event, mousePos)) graph->stepForward();
+    if (btnSpeedDown->isClicked(event, mousePos)) graph->decreaseSpeed();
+    if (btnSpeedUp->isClicked(event, mousePos)) graph->increaseSpeed();
 }
 
 void MSTScreen::update(float deltaTime, sf::RenderWindow& window) {
@@ -126,7 +149,8 @@ void MSTScreen::update(float deltaTime, sf::RenderWindow& window) {
     } else if (currentMode == UI_Mode::RANDOM_GRAPH) {
         btnGoRandom->update(mousePos);
     }
-
+    btnStepBack->update(mousePos); btnPausePlay->update(mousePos); 
+    btnStepForward->update(mousePos); btnSpeedDown->update(mousePos); btnSpeedUp->update(mousePos);
     graph->update(deltaTime);
 }
 
@@ -163,4 +187,6 @@ void MSTScreen::draw(sf::RenderWindow& window) {
         sf::Text labelE; labelE.setFont(app->font); labelE.setString("E:"); labelE.setCharacterSize(18); labelE.setPosition(280, 150);
         window.draw(labelV); window.draw(labelE);
     }
+        btnStepBack->draw(window); btnPausePlay->draw(window); 
+    btnStepForward->draw(window); btnSpeedDown->draw(window); btnSpeedUp->draw(window);
 }

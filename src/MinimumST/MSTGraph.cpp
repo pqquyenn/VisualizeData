@@ -164,9 +164,6 @@ bool MSTGraph::isDraggingNode() const {
     return false;
 }
 
-void MSTGraph::update(float dt) {
-    for (auto& pair : nodes) pair.second->update(dt);
-}
 
 void MSTGraph::draw(sf::RenderWindow& window) {
     // Vẽ cạnh (Line)
@@ -192,4 +189,105 @@ void MSTGraph::draw(sf::RenderWindow& window) {
 
     // Vẽ đỉnh
     for (auto& pair : nodes) pair.second->draw(window);
+}
+
+// Thêm vào cuối file MSTGraph.cpp của bạn
+
+void MSTGraph::startKruskal() {
+    if (edges.empty() || nodes.empty()) return;
+
+    // 1. Reset trạng thái
+    animationSteps.clear();
+    currentStep = 0;
+    timer = 0.0f;
+    isPaused = false;
+    isAnimating = true;
+
+    // Reset màu tất cả cạnh về xám
+    for (auto& e : edges) e.color = sf::Color(200, 200, 200);
+
+    // 2. Sắp xếp cạnh theo trọng số tăng dần (Cốt lõi của Kruskal)
+    std::sort(edges.begin(), edges.end(), [](const Edge& a, const Edge& b) {
+        return a.weight < b.weight;
+    });
+
+    // 3. Khởi tạo Union-Find
+    DisjointSet ds;
+    for (auto const& [id, node] : nodes) ds.makeSet(id);
+
+    // Lưu bước 0: Trạng thái ban đầu sau khi đã sort cạnh
+    std::vector<sf::Color> currentState(edges.size(), sf::Color(200, 200, 200));
+    animationSteps.push_back(currentState);
+
+    // 4. Chạy thuật toán và lưu từng bước
+    for (size_t i = 0; i < edges.size(); ++i) {
+        // Bước A: Đang xét cạnh này (Đổi màu Vàng)
+        currentState[i] = sf::Color::Yellow;
+        animationSteps.push_back(currentState);
+
+        int rootU = ds.find(edges[i].u);
+        int rootV = ds.find(edges[i].v);
+
+        if (rootU != rootV) {
+            // Bước B1: Không tạo chu trình -> Thêm vào MST (Đổi màu Xanh lá)
+            ds.unionSet(rootU, rootV);
+            currentState[i] = sf::Color::Green;
+        } else {
+            // Bước B2: Tạo chu trình -> Bỏ qua (Đổi màu Đỏ hoặc Xám đậm)
+            currentState[i] = sf::Color(100, 100, 100); // Xám đậm
+        }
+        animationSteps.push_back(currentState);
+    }
+}
+
+// --- CÁC HÀM ĐIỀU KHIỂN PLAYBACK ---
+void MSTGraph::togglePause() { isPaused = !isPaused; }
+
+void MSTGraph::stepForward() {
+    if (isAnimating && currentStep < animationSteps.size() - 1) {
+        currentStep++;
+        timer = 0; // Reset timer để chờ người dùng tự bấm tiếp
+    }
+}
+
+void MSTGraph::stepBackward() {
+    if (isAnimating && currentStep > 0) {
+        currentStep--;
+        timer = 0;
+    }
+}
+
+void MSTGraph::increaseSpeed() {
+    stepDuration = std::max(0.1f, stepDuration - 0.2f); // Nhanh nhất là 0.1s/bước
+}
+
+void MSTGraph::decreaseSpeed() {
+    stepDuration = std::min(3.0f, stepDuration + 0.2f); // Chậm nhất là 3s/bước
+}
+
+// --- CẬP NHẬT HÀM UPDATE ---
+void MSTGraph::update(float dt) {
+    for (auto& pair : nodes) pair.second->update(dt);
+
+    // Xử lý Animation
+    if (isAnimating && !isPaused) {
+        timer += dt;
+        if (timer >= stepDuration) {
+            timer = 0;
+            if (currentStep < animationSteps.size() - 1) {
+                currentStep++;
+            } else {
+                isAnimating = false; // Xong thuật toán
+            }
+        }
+    }
+
+    // Áp dụng màu sắc cho cạnh dựa trên bước hiện tại
+    if (isAnimating || currentStep == animationSteps.size() - 1) {
+        if (!animationSteps.empty() && currentStep < animationSteps.size()) {
+            for (size_t i = 0; i < edges.size(); ++i) {
+                edges[i].color = animationSteps[currentStep][i];
+            }
+        }
+    }
 }

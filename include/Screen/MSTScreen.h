@@ -22,6 +22,13 @@ private:
     Button* btnAdjMatrix;
     Button* btnAdjList;
     Button* btnGoInput;
+
+    // Thêm vào phần private của MSTScreen:
+    Button* btnStepBack;
+    Button* btnPausePlay;
+    Button* btnStepForward;
+    Button* btnSpeedDown;
+    Button* btnSpeedUp;
     int selectedInputType = 1;
 
     // UI Random Graph
