@@ -13,6 +13,13 @@ void MSTGraph::clear() {
     for (auto& pair : nodes) delete pair.second;
     nodes.clear();
     edges.clear();
+
+    // --- THÊM PHẦN NÀY ĐỂ RESET ANIMATION KHI TẠO ĐỒ THỊ MỚI ---
+    animationSteps.clear();
+    currentStep = 0;
+    timer = 0.0f;
+    isPaused = false;
+    isAnimating = false;
 }
 
 void MSTGraph::addNode(int id) {
@@ -241,19 +248,26 @@ void MSTGraph::startKruskal() {
 }
 
 // --- CÁC HÀM ĐIỀU KHIỂN PLAYBACK ---
-void MSTGraph::togglePause() { isPaused = !isPaused; }
+// --- CÁC HÀM ĐIỀU KHIỂN PLAYBACK ---
+void MSTGraph::togglePause() { 
+    isPaused = !isPaused; 
+}
 
 void MSTGraph::stepForward() {
-    if (isAnimating && currentStep < animationSteps.size() - 1) {
+    if (animationSteps.empty()) return;
+    if (currentStep < animationSteps.size() - 1) {
         currentStep++;
-        timer = 0; // Reset timer để chờ người dùng tự bấm tiếp
+        timer = 0; 
+        isPaused = true; // Tạm dừng auto-play khi người dùng tự tua
     }
 }
 
 void MSTGraph::stepBackward() {
-    if (isAnimating && currentStep > 0) {
+    if (animationSteps.empty()) return;
+    if (currentStep > 0) {
         currentStep--;
         timer = 0;
+        isPaused = true; // Tạm dừng auto-play khi người dùng tự tua
     }
 }
 
@@ -264,12 +278,12 @@ void MSTGraph::increaseSpeed() {
 void MSTGraph::decreaseSpeed() {
     stepDuration = std::min(3.0f, stepDuration + 0.2f); // Chậm nhất là 3s/bước
 }
-
+// --- CẬP NHẬT HÀM UPDATE ---
 // --- CẬP NHẬT HÀM UPDATE ---
 void MSTGraph::update(float dt) {
     for (auto& pair : nodes) pair.second->update(dt);
 
-    // Xử lý Animation
+    // Xử lý Auto-Animation (chạy tự động)
     if (isAnimating && !isPaused) {
         timer += dt;
         if (timer >= stepDuration) {
@@ -277,17 +291,16 @@ void MSTGraph::update(float dt) {
             if (currentStep < animationSteps.size() - 1) {
                 currentStep++;
             } else {
-                isAnimating = false; // Xong thuật toán
+                isAnimating = false; // Xong thuật toán thì tự dừng auto-play
             }
         }
     }
 
-    // Áp dụng màu sắc cho cạnh dựa trên bước hiện tại
-    if (isAnimating || currentStep == animationSteps.size() - 1) {
-        if (!animationSteps.empty() && currentStep < animationSteps.size()) {
-            for (size_t i = 0; i < edges.size(); ++i) {
-                edges[i].color = animationSteps[currentStep][i];
-            }
+    // LUÔN LUÔN áp dụng màu sắc cho cạnh dựa trên bước hiện tại (currentStep)
+    // Kể cả khi đã pause hoặc đã chạy xong thuật toán
+    if (!animationSteps.empty() && currentStep < animationSteps.size()) {
+        for (size_t i = 0; i < edges.size(); ++i) {
+            edges[i].color = animationSteps[currentStep][i];
         }
     }
 }
