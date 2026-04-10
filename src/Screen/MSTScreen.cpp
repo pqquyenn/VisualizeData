@@ -20,11 +20,12 @@ MSTScreen::MSTScreen(App* app) : State(app) {
     btnGoInput = new Button(700, 220, 60, 30, app->font, "Go");
 
     // Đặt dưới đoạn khởi tạo btnKruskal
-    btnStepBack = new Button(200, 300, 40, 40, app->font, "<");
-    btnPausePlay = new Button(250, 300, 120, 40, app->font, "Pause/Play");
-    btnStepForward = new Button(380, 300, 40, 40, app->font, ">");
-    btnSpeedDown = new Button(430, 300, 50, 40, app->font, "<<");
-    btnSpeedUp = new Button(490, 300, 50, 40, app->font, ">>");
+// Các nút Playback (Nối tiếp sau nút Kruskal)
+    btnStepBack    = new Button(530, 80, 40, 40, app->font, "<");           // 510 + 20 = 530
+    btnPausePlay   = new Button(590, 80, 120, 40, app->font, "Pause/Play"); // 570 + 20 = 590
+    btnStepForward = new Button(730, 80, 40, 40, app->font, ">");           // 710 + 20 = 730
+    btnSpeedDown   = new Button(790, 80, 50, 40, app->font, "<<");          // 770 + 20 = 790
+    btnSpeedUp     = new Button(860, 80, 50, 40, app->font, ">>");          // 840 + 20 = 860
 // Bạn có thể chỉnh lại toạ độ Y (đang để 300) cho phù hợp với UI của bạn
 
     // UI Random hạ xuống Y = 140, fix toạ độ để không đè chữ V/E
