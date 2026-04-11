@@ -251,6 +251,11 @@ void HeapTree::heapifyDown(int index) {
 
 void HeapTree::stepForward() {
     if (snapshots.empty()) return;
+    
+    // Tự động Pause thuật toán và reset lại bộ đếm thời gian
+    isPaused = true; 
+    timer = 0.0f;    
+    
     if (currentStep < snapshots.size() - 1) {
         currentStep++;
         applyStep(currentStep);
@@ -259,6 +264,11 @@ void HeapTree::stepForward() {
 
 void HeapTree::stepBackward() {
     if (snapshots.empty()) return;
+    
+    // Tự động Pause thuật toán và reset lại bộ đếm thời gian
+    isPaused = true; 
+    timer = 0.0f;    
+    
     if (currentStep > 0) {
         currentStep--;
         applyStep(currentStep);
@@ -273,8 +283,15 @@ void HeapTree::updateAnimation(float deltaTime) {
     timer += deltaTime;
     if (timer >= delay) {
         timer = 0.0f;
-        if (currentStep < snapshots.size() - 1) stepForward();
-        else isPaused = true;
+        if (currentStep < snapshots.size() - 1) {
+            // Chuyển bước trực tiếp thay vì gọi hàm stepForward() 
+            // để tránh kích hoạt tính năng tự động Pause ở trên
+            currentStep++;
+            applyStep(currentStep);
+        }
+        else {
+            isPaused = true; // Đạt đến bước cuối cùng thì dừng lại
+        }
     }
 }
 
