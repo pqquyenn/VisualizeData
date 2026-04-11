@@ -13,12 +13,32 @@ MainMenu::MainMenu(App* app) : State(app) {
     // Khởi tạo seed cho hàm random
     srand(static_cast<unsigned int>(time(NULL)));
 
-    // Tạo các nút bấm (đã sửa lại tọa độ Y của MST thành 700 để không đè lên AA)
-    btnSLL = new Button(540, 300, 200, 50, app->font, "Singly Linked List");
-    btnAVL = new Button(540, 400, 200, 50, app->font, "AVL tree");
-    btnHeap = new Button(540, 500, 200, 50, app->font, "Max Heap");
-    btnAA = new Button(540, 600, 200, 50, app->font, "AA Tree");
-    btnMST = new Button(540, 700, 200, 50, app->font, "Kruskal");
+    // --- CÀI ĐẶT TIÊU ĐỀ ---
+    titleText.setFont(app->font);
+    titleText.setString("Data Visualize");
+    titleText.setCharacterSize(80); // Kích thước chữ to, nổi bật
+    titleText.setFillColor(sf::Color::White); // Bạn có thể đổi màu tùy thích
+    titleText.setStyle(sf::Text::Bold);
+
+    // Căn giữa tiêu đề
+    sf::FloatRect textRect = titleText.getLocalBounds();
+    titleText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
+    titleText.setPosition(640.0f, 150.0f); // Căn giữa theo trục X (640), cách mép trên 150px
+
+
+    // --- CÀI ĐẶT CÁC NÚT (Lưới 3 cột x 2 hàng) ---
+    // Cột 1: X = 290 | Cột 2: X = 540 | Cột 3: X = 790
+    // Hàng 1: Y = 350 | Hàng 2: Y = 480
+
+    // Hàng 1
+    btnMST = new Button(290, 350, 200, 50, app->font, "Kruskal");
+    btnSLL = new Button(540, 350, 200, 50, app->font, "Singly Linked List");
+    btnAVL = new Button(790, 350, 200, 50, app->font, "AVL Tree");
+
+    // Hàng 2 (Sửa lại chính tả Dijkstra cho chuẩn nhé)
+    btnDjkstra = new Button(290, 480, 200, 50, app->font, "Dijkstra"); 
+    btnHeap    = new Button(540, 480, 200, 50, app->font, "Max Heap");
+    btnAA      = new Button(790, 480, 200, 50, app->font, "AA Tree");
 
     // Khởi tạo hiệu ứng lá rơi (ví dụ: 80 chiếc lá)
     initLeaves(80);
@@ -99,7 +119,7 @@ void MainMenu::update(float deltaTime, sf::RenderWindow& window) {
     btnHeap->update(mousePos);
     btnAA->update(mousePos);
     btnMST->update(mousePos);
-
+    btnDjkstra->update(mousePos);
     // Cập nhật hoạt ảnh cho từng chiếc lá
     for (auto& leaf : leaves) {
         leaf.timeOffset += deltaTime * 2.0f; // Nhịp độ đung đưa
@@ -125,10 +145,14 @@ void MainMenu::draw(sf::RenderWindow& window) {
         window.draw(leaf.shape);
     }
 
-    // 2. Vẽ các nút lên trên cùng (Foreground)
+    // 2. Vẽ Tiêu đề ở giữa
+    window.draw(titleText);
+
+    // 3. Vẽ các nút lên trên cùng (Foreground)
     btnSLL->draw(window);
     btnAVL->draw(window);
     btnHeap->draw(window);
     btnAA->draw(window);
     btnMST->draw(window);
+    btnDjkstra->draw(window);
 }

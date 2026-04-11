@@ -19,7 +19,9 @@ private:
     Button* btnHeap;
     Button* btnAA;
     Button* btnMST;
-
+    Button* btnDjkstra;
+    sf::Text titleText; // Thêm biến này để làm tiêu đề
+    // ... các biến khác giữ nguyên
     // Quản lý danh sách lá
     std::vector<Leaf> leaves;
     void initLeaves(int count);
