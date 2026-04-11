@@ -15,30 +15,40 @@ MainMenu::MainMenu(App* app) : State(app) {
 
     // --- CÀI ĐẶT TIÊU ĐỀ ---
     titleText.setFont(app->font);
-    titleText.setString("Data Visualize");
-    titleText.setCharacterSize(80); // Kích thước chữ to, nổi bật
-    titleText.setFillColor(sf::Color::White); // Bạn có thể đổi màu tùy thích
+    titleText.setString("Data Visualizer");
+    titleText.setCharacterSize(80); // Giữ size 80 cho cửa sổ 1280
+    titleText.setFillColor(sf::Color::White); 
     titleText.setStyle(sf::Text::Bold);
 
-    // Căn giữa tiêu đề
+    // Căn giữa tiêu đề theo trục X của màn hình 1280 (Tâm X = 640)
     sf::FloatRect textRect = titleText.getLocalBounds();
     titleText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-    titleText.setPosition(640.0f, 150.0f); // Căn giữa theo trục X (640), cách mép trên 150px
+    titleText.setPosition(640.0f, 150.0f);
 
 
-    // --- CÀI ĐẶT CÁC NÚT (Lưới 3 cột x 2 hàng) ---
-    // Cột 1: X = 290 | Cột 2: X = 540 | Cột 3: X = 790
-    // Hàng 1: Y = 350 | Hàng 2: Y = 480
+    // --- CÀI ĐẶT CÁC NÚT ---
+    // Kích thước nút lớn hơn cũ (200x50 -> 280x70) để nhìn cân đối hơn
+    float btnWidth = 280.0f;
+    float btnHeight = 70.0f;
+    
+    // Tọa độ X (căn giữa màn hình 1280, khoảng cách giữa các nút là 40px)
+    float col1_X = 180.0f;
+    float col2_X = 500.0f; // Tâm nút ở vị trí 500 + (280/2) = 640 (chính giữa)
+    float col3_X = 820.0f;
+
+    // Tọa độ Y
+    float row1_Y = 320.0f;
+    float row2_Y = 460.0f;
 
     // Hàng 1
-    btnMST = new Button(290, 350, 200, 50, app->font, "Kruskal");
-    btnSLL = new Button(540, 350, 200, 50, app->font, "Singly Linked List");
-    btnAVL = new Button(790, 350, 200, 50, app->font, "AVL Tree");
+    btnMST = new Button(col1_X, row1_Y + 50.f, btnWidth, btnHeight, app->font, "Kruskal");
+    btnSLL = new Button(col2_X , row1_Y + 50.f, btnWidth, btnHeight, app->font, "Singly Linked List");
+    btnAVL = new Button(col3_X, row1_Y+ 50.f, btnWidth, btnHeight, app->font, "AVL Tree");
 
-    // Hàng 2 (Sửa lại chính tả Dijkstra cho chuẩn nhé)
-    btnDjkstra = new Button(290, 480, 200, 50, app->font, "Dijkstra"); 
-    btnHeap    = new Button(540, 480, 200, 50, app->font, "Max Heap");
-    btnAA      = new Button(790, 480, 200, 50, app->font, "AA Tree");
+    // Hàng 2
+    btnDijkstra = new Button(col1_X, row2_Y+ 50.f, btnWidth, btnHeight, app->font, "Dijkstra"); 
+    btnHeap     = new Button(col2_X, row2_Y+ 50.f, btnWidth, btnHeight, app->font, "Max Heap");
+    btnAA       = new Button(col3_X, row2_Y+ 50.f, btnWidth, btnHeight, app->font, "AA Tree");
 
     // Khởi tạo hiệu ứng lá rơi (ví dụ: 80 chiếc lá)
     initLeaves(80);
@@ -119,7 +129,7 @@ void MainMenu::update(float deltaTime, sf::RenderWindow& window) {
     btnHeap->update(mousePos);
     btnAA->update(mousePos);
     btnMST->update(mousePos);
-    btnDjkstra->update(mousePos);
+    btnDijkstra->update(mousePos);
     // Cập nhật hoạt ảnh cho từng chiếc lá
     for (auto& leaf : leaves) {
         leaf.timeOffset += deltaTime * 2.0f; // Nhịp độ đung đưa
@@ -154,5 +164,5 @@ void MainMenu::draw(sf::RenderWindow& window) {
     btnHeap->draw(window);
     btnAA->draw(window);
     btnMST->draw(window);
-    btnDjkstra->draw(window);
+    btnDijkstra->draw(window);
 }

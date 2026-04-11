@@ -19,7 +19,7 @@ private:
     Button* btnHeap;
     Button* btnAA;
     Button* btnMST;
-    Button* btnDjkstra;
+    Button* btnDijkstra;
     sf::Text titleText; // Thêm biến này để làm tiêu đề
     // ... các biến khác giữ nguyên
     // Quản lý danh sách lá
