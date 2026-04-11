@@ -17,7 +17,7 @@ void MSTGraph::clear() {
     // --- THÊM PHẦN NÀY ĐỂ RESET ANIMATION KHI TẠO ĐỒ THỊ MỚI ---
     animationSteps.clear();
     currentStep = 0;
-    timer = 0.0f;
+    timer = 0.0f;   
     isPaused = false;
     isAnimating = false;
 }
@@ -266,22 +266,27 @@ void MSTGraph::togglePause() {
 
 void MSTGraph::stepForward() {
     if (animationSteps.empty()) return;
+    
+    // Tự động Pause và reset bộ đếm thời gian khi người dùng tự tua
+    isPaused = true; 
+    timer = 0.0f; 
+    
     if (currentStep < animationSteps.size() - 1) {
         currentStep++;
-        timer = 0; 
-        isPaused = true; // Tạm dừng auto-play khi người dùng tự tua
     }
 }
 
 void MSTGraph::stepBackward() {
     if (animationSteps.empty()) return;
+    
+    // Tự động Pause và reset bộ đếm thời gian khi người dùng tự tua
+    isPaused = true; 
+    timer = 0.0f;
+    
     if (currentStep > 0) {
         currentStep--;
-        timer = 0;
-        isPaused = true; // Tạm dừng auto-play khi người dùng tự tua
     }
 }
-
 void MSTGraph::increaseSpeed() {
     stepDuration = std::max(0.1f, stepDuration - 0.2f); // Nhanh nhất là 0.1s/bước
 }
@@ -291,6 +296,7 @@ void MSTGraph::decreaseSpeed() {
 }
 // --- CẬP NHẬT HÀM UPDATE ---
 // --- CẬP NHẬT HÀM UPDATE ---
+// --- CẬP NHẬT HÀM UPDATE ---
 void MSTGraph::update(float dt) {
     for (auto& pair : nodes) pair.second->update(dt);
 
@@ -298,11 +304,13 @@ void MSTGraph::update(float dt) {
     if (isAnimating && !isPaused) {
         timer += dt;
         if (timer >= stepDuration) {
-            timer = 0;
+            timer = 0.0f;
             if (currentStep < animationSteps.size() - 1) {
                 currentStep++;
             } else {
-                isAnimating = false; // Xong thuật toán thì tự dừng auto-play
+                // SỬA Ở ĐÂY: Dùng isPaused = true thay vì isAnimating = false
+                // Để nếu người dùng tua lại (stepBackward) và bấm Play, nó vẫn chạy tiếp được
+                isPaused = true; 
             }
         }
     }
