@@ -84,12 +84,12 @@ clean: CMakeFiles/CodeTayApp.dir/clean
 CMakeFiles/CodeTayApp.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\LENOVO\Desktop\Codetay\build\CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24 "Built target CodeTayApp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\LENOVO\Desktop\Codetay\build\CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 "Built target CodeTayApp"
 .PHONY : CMakeFiles/CodeTayApp.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/CodeTayApp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\LENOVO\Desktop\Codetay\build\CMakeFiles 24
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\LENOVO\Desktop\Codetay\build\CMakeFiles 23
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/CodeTayApp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\LENOVO\Desktop\Codetay\build\CMakeFiles 0
 .PHONY : CMakeFiles/CodeTayApp.dir/rule
@@ -101,7 +101,7 @@ CodeTayApp: CMakeFiles/CodeTayApp.dir/rule
 # codegen rule for target.
 CMakeFiles/CodeTayApp.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\LENOVO\Desktop\Codetay\build\CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24 "Finished codegen for target CodeTayApp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\LENOVO\Desktop\Codetay\build\CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 "Finished codegen for target CodeTayApp"
 .PHONY : CMakeFiles/CodeTayApp.dir/codegen
 
 # clean rule for target.

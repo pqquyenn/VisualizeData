@@ -41,8 +41,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/CodeTayApp.dir/src/UI/InputBox.cpp.obj.d"
   "CMakeFiles/CodeTayApp.dir/src/UI/MultilineTextBox.cpp.obj"
   "CMakeFiles/CodeTayApp.dir/src/UI/MultilineTextBox.cpp.obj.d"
-  "CMakeFiles/CodeTayApp.dir/src/UI/PlaybackController.cpp.obj"
-  "CMakeFiles/CodeTayApp.dir/src/UI/PlaybackController.cpp.obj.d"
   "CMakeFiles/CodeTayApp.dir/src/main.cpp.obj"
   "CMakeFiles/CodeTayApp.dir/src/main.cpp.obj.d"
   "CodeTayApp.exe"

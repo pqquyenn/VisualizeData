@@ -632,30 +632,6 @@ src/UI/MultilineTextBox.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/UI/MultilineTextBox.cpp.s
 .PHONY : src/UI/MultilineTextBox.cpp.s
 
-src/UI/PlaybackController.obj: src/UI/PlaybackController.cpp.obj
-.PHONY : src/UI/PlaybackController.obj
-
-# target to build an object file
-src/UI/PlaybackController.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/UI/PlaybackController.cpp.obj
-.PHONY : src/UI/PlaybackController.cpp.obj
-
-src/UI/PlaybackController.i: src/UI/PlaybackController.cpp.i
-.PHONY : src/UI/PlaybackController.i
-
-# target to preprocess a source file
-src/UI/PlaybackController.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/UI/PlaybackController.cpp.i
-.PHONY : src/UI/PlaybackController.cpp.i
-
-src/UI/PlaybackController.s: src/UI/PlaybackController.cpp.s
-.PHONY : src/UI/PlaybackController.s
-
-# target to generate assembly for a file
-src/UI/PlaybackController.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/UI/PlaybackController.cpp.s
-.PHONY : src/UI/PlaybackController.cpp.s
-
 src/main.obj: src/main.cpp.obj
 .PHONY : src/main.obj
 
@@ -752,9 +728,6 @@ help:
 	@echo ... src/UI/MultilineTextBox.obj
 	@echo ... src/UI/MultilineTextBox.i
 	@echo ... src/UI/MultilineTextBox.s
-	@echo ... src/UI/PlaybackController.obj
-	@echo ... src/UI/PlaybackController.i
-	@echo ... src/UI/PlaybackController.s
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s
