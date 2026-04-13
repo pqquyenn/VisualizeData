@@ -2,6 +2,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
+#include <queue> // Cần để dùng priority_queue
 
 DijkstraGraph::DijkstraGraph(sf::Font& font) : font(font) {
     std::srand(std::time(0));
@@ -176,7 +177,7 @@ void DijkstraGraph::draw(sf::RenderWindow& window) {
     for (auto& pair : nodes) pair.second->draw(window);
 }
 
-// --- THUẬT TOÁN DIJKSTRA ---
+// --- THUẬT TOÁN DIJKSTRA ĐÃ CHỈNH SỬA MÀU CAM ---
 void DijkstraGraph::startDijkstra(int sourceId) {
     if (edges.empty() || nodes.empty()) return;
     if (nodes.find(sourceId) == nodes.end()) return;
@@ -187,11 +188,14 @@ void DijkstraGraph::startDijkstra(int sourceId) {
     isPaused = false;
     isAnimating = true;
 
+    // reset màu cạnh mặc định trước khi chạy
+    for(auto& edge : edges) edge.color = sf::Color(200, 200, 200);
+
     std::map<int, int> dist;
     std::map<int, int> parentEdge;
     std::map<int, bool> visited;
     
-    // Khởi tạo trạng thái ban đầu
+    // Khởi tạo trạng thái ban đầu cho animation
     DijkstraState state;
     state.edgeColors.assign(edges.size(), sf::Color(200, 200, 200)); // Xám
     
@@ -199,26 +203,25 @@ void DijkstraGraph::startDijkstra(int sourceId) {
         dist[id] = -1; // -1 đại diện cho INF
         visited[id] = false;
         parentEdge[id] = -1;
-        state.nodeColors[id] = sf::Color(70, 130, 180); // Xanh bích
+        state.nodeColors[id] = sf::Color(70, 130, 180); // Xanh bích (mặc định)
         state.nodeCosts[id] = -1;
     }
     
     dist[sourceId] = 0;
     state.nodeCosts[sourceId] = 0;
-    animationSteps.push_back(state);
+    animationSteps.push_back(state); // Bước 0
 
-    while (true) {
-        // 1. Tìm đỉnh có khoảng cách nhỏ nhất chưa duyệt
-        int u = -1;
-        int minDist = 1e9;
-        for (auto const& [id, d] : dist) {
-            if (!visited[id] && d != -1 && d < minDist) {
-                minDist = d;
-                u = id;
-            }
-        }
+    // Priority Queue: pair<distance, node_id>
+    std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, std::greater<std::pair<int, int>>> pq;
+    pq.push({0, sourceId});
 
-        if (u == -1) break; // Xong
+    while (!pq.empty()) {
+        int u = pq.top().second;
+        int d = pq.top().first;
+        pq.pop();
+
+        if (dist[u] != -1 && d > dist[u]) continue; // Skip nếu đã tìm được đường ngắn hơn
+
         visited[u] = true;
 
         // 2. Highlight Node đang xét (Xanh lá)
@@ -234,7 +237,7 @@ void DijkstraGraph::startDijkstra(int sourceId) {
             if (v != -1 && !visited[v]) {
                 // Đổi cạnh đang check sang Vàng
                 sf::Color oldEdgeColor = state.edgeColors[i];
-                state.edgeColors[i] = sf::Color::Yellow;
+                state.edgeColors[i] = sf::Color::Yellow; // Cạnh đang check (Vàng)
                 animationSteps.push_back(state);
 
                 int weight = edges[i].weight;
@@ -243,13 +246,16 @@ void DijkstraGraph::startDijkstra(int sourceId) {
                     dist[v] = dist[u] + weight;
                     state.nodeCosts[v] = dist[v];
                     
-                    // Nếu đã có cạnh cha trước đó, chuyển cạnh cũ về xám
+                    // Nếu đã có cạnh cha trước đó, chuyển cạnh cũ về xám (hoặc màu gốc nếu là cây)
                     if (parentEdge[v] != -1) state.edgeColors[parentEdge[v]] = sf::Color(200, 200, 200);
                     parentEdge[v] = i;
                     
-                    // Highlight cạnh đường đi ngắn nhất tạm thời (Đỏ)
-                    state.edgeColors[i] = sf::Color::Red; 
+                    // Highlight cạnh đường đi ngắn nhất tạm thời (Đổi từ Đỏ sang Cam sáng)
+                    //state.edgeColors[i] = sf::Color::Red; // Màu đỏ gốc - BỊ CHÓI MẮT
+                    state.edgeColors[i] = sf::Color(255, 165, 0); // Màu Cam sáng (255, 165, 0)
                     animationSteps.push_back(state);
+
+                    pq.push({dist[v], v});
                 } else {
                     // Trả lại màu cũ nếu không chọn
                     state.edgeColors[i] = oldEdgeColor;
@@ -257,9 +263,12 @@ void DijkstraGraph::startDijkstra(int sourceId) {
             }
         }
 
-        // 4. Duyệt xong u, Node chuyển thành màu Đỏ
-        state.nodeColors[u] = sf::Color::Red; 
-        if (parentEdge[u] != -1) state.edgeColors[parentEdge[u]] = sf::Color::Red;
+        // 4. Duyệt xong u, Node và cạnh cha chuyển sang màu Cam
+        //state.nodeColors[u] = sf::Color::Red; // Màu đỏ gốc - BỊ CHÓI MẮT
+        state.nodeColors[u] = sf::Color(210, 105, 30); // Màu Cam sậm hơn (Sienna) để dễ phân biệt với cạnh
+        if (parentEdge[u] != -1) {
+            state.edgeColors[parentEdge[u]] = sf::Color(255, 165, 0); // Giữ màu Cam sáng cho cạnh cha
+        }
         animationSteps.push_back(state);
     }
 }

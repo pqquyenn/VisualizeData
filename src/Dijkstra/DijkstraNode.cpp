@@ -20,7 +20,8 @@ DijkstraNode::DijkstraNode(int nodeId, sf::Font& font) : id(nodeId), isDragging(
     costText.setFont(font);
     costText.setString(costString);
     costText.setCharacterSize(16);
-    costText.setFillColor(sf::Color::Red);
+    //costText.setFillColor(sf::Color::Red); // Màu đỏ gốc - BỊ CHÓI MẮT
+    costText.setFillColor(sf::Color::White); // Đổi sang màu trắng để không bị chói
     sf::FloatRect costBounds = costText.getLocalBounds();
     costText.setOrigin(costBounds.left + costBounds.width / 2.0f, costBounds.top + costBounds.height / 2.0f);
 }

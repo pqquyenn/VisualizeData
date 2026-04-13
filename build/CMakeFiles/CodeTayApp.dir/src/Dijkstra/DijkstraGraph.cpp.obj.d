@@ -265,4 +265,9 @@ CMakeFiles/CodeTayApp.dir/src/Dijkstra/DijkstraGraph.cpp.obj: \
  C:/msys64/ucrt64/include/c++/15.2.0/tr1/modified_bessel_func.tcc \
  C:/msys64/ucrt64/include/c++/15.2.0/tr1/poly_hermite.tcc \
  C:/msys64/ucrt64/include/c++/15.2.0/tr1/poly_laguerre.tcc \
- C:/msys64/ucrt64/include/c++/15.2.0/tr1/riemann_zeta.tcc
+ C:/msys64/ucrt64/include/c++/15.2.0/tr1/riemann_zeta.tcc \
+ C:/msys64/ucrt64/include/c++/15.2.0/queue \
+ C:/msys64/ucrt64/include/c++/15.2.0/deque \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_deque.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/deque.tcc \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_queue.h
