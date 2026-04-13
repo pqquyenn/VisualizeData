@@ -37,6 +37,18 @@
 },
 {
   "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\Dijkstra\\DijkstraGraph.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\Dijkstra\\DijkstraGraph.cpp",
+  "file": "C:/Users/LENOVO/Desktop/Codetay/src/Dijkstra/DijkstraGraph.cpp",
+  "output": "CMakeFiles/CodeTayApp.dir/src/Dijkstra/DijkstraGraph.cpp.obj"
+},
+{
+  "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\Dijkstra\\DijkstraNode.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\Dijkstra\\DijkstraNode.cpp",
+  "file": "C:/Users/LENOVO/Desktop/Codetay/src/Dijkstra/DijkstraNode.cpp",
+  "output": "CMakeFiles/CodeTayApp.dir/src/Dijkstra/DijkstraNode.cpp.obj"
+},
+{
+  "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
   "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\Heap\\HeapNode.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\Heap\\HeapNode.cpp",
   "file": "C:/Users/LENOVO/Desktop/Codetay/src/Heap/HeapNode.cpp",
   "output": "CMakeFiles/CodeTayApp.dir/src/Heap/HeapNode.cpp.obj"
@@ -70,6 +82,12 @@
   "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\Screen\\AVLScreen.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\Screen\\AVLScreen.cpp",
   "file": "C:/Users/LENOVO/Desktop/Codetay/src/Screen/AVLScreen.cpp",
   "output": "CMakeFiles/CodeTayApp.dir/src/Screen/AVLScreen.cpp.obj"
+},
+{
+  "directory": "C:/Users/LENOVO/Desktop/Codetay/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe -DSFML_STATIC @CMakeFiles/CodeTayApp.dir/includes_CXX.rsp -g -std=gnu++17 -o CMakeFiles\\CodeTayApp.dir\\src\\Screen\\DijkstraScreen.cpp.obj -c C:\\Users\\LENOVO\\Desktop\\Codetay\\src\\Screen\\DijkstraScreen.cpp",
+  "file": "C:/Users/LENOVO/Desktop/Codetay/src/Screen/DijkstraScreen.cpp",
+  "output": "CMakeFiles/CodeTayApp.dir/src/Screen/DijkstraScreen.cpp.obj"
 },
 {
   "directory": "C:/Users/LENOVO/Desktop/Codetay/build",

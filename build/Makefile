@@ -272,6 +272,54 @@ src/Core/State.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Core/State.cpp.s
 .PHONY : src/Core/State.cpp.s
 
+src/Dijkstra/DijkstraGraph.obj: src/Dijkstra/DijkstraGraph.cpp.obj
+.PHONY : src/Dijkstra/DijkstraGraph.obj
+
+# target to build an object file
+src/Dijkstra/DijkstraGraph.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Dijkstra/DijkstraGraph.cpp.obj
+.PHONY : src/Dijkstra/DijkstraGraph.cpp.obj
+
+src/Dijkstra/DijkstraGraph.i: src/Dijkstra/DijkstraGraph.cpp.i
+.PHONY : src/Dijkstra/DijkstraGraph.i
+
+# target to preprocess a source file
+src/Dijkstra/DijkstraGraph.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Dijkstra/DijkstraGraph.cpp.i
+.PHONY : src/Dijkstra/DijkstraGraph.cpp.i
+
+src/Dijkstra/DijkstraGraph.s: src/Dijkstra/DijkstraGraph.cpp.s
+.PHONY : src/Dijkstra/DijkstraGraph.s
+
+# target to generate assembly for a file
+src/Dijkstra/DijkstraGraph.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Dijkstra/DijkstraGraph.cpp.s
+.PHONY : src/Dijkstra/DijkstraGraph.cpp.s
+
+src/Dijkstra/DijkstraNode.obj: src/Dijkstra/DijkstraNode.cpp.obj
+.PHONY : src/Dijkstra/DijkstraNode.obj
+
+# target to build an object file
+src/Dijkstra/DijkstraNode.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Dijkstra/DijkstraNode.cpp.obj
+.PHONY : src/Dijkstra/DijkstraNode.cpp.obj
+
+src/Dijkstra/DijkstraNode.i: src/Dijkstra/DijkstraNode.cpp.i
+.PHONY : src/Dijkstra/DijkstraNode.i
+
+# target to preprocess a source file
+src/Dijkstra/DijkstraNode.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Dijkstra/DijkstraNode.cpp.i
+.PHONY : src/Dijkstra/DijkstraNode.cpp.i
+
+src/Dijkstra/DijkstraNode.s: src/Dijkstra/DijkstraNode.cpp.s
+.PHONY : src/Dijkstra/DijkstraNode.s
+
+# target to generate assembly for a file
+src/Dijkstra/DijkstraNode.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Dijkstra/DijkstraNode.cpp.s
+.PHONY : src/Dijkstra/DijkstraNode.cpp.s
+
 src/Heap/HeapNode.obj: src/Heap/HeapNode.cpp.obj
 .PHONY : src/Heap/HeapNode.obj
 
@@ -415,6 +463,30 @@ src/Screen/AVLScreen.s: src/Screen/AVLScreen.cpp.s
 src/Screen/AVLScreen.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Screen/AVLScreen.cpp.s
 .PHONY : src/Screen/AVLScreen.cpp.s
+
+src/Screen/DijkstraScreen.obj: src/Screen/DijkstraScreen.cpp.obj
+.PHONY : src/Screen/DijkstraScreen.obj
+
+# target to build an object file
+src/Screen/DijkstraScreen.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Screen/DijkstraScreen.cpp.obj
+.PHONY : src/Screen/DijkstraScreen.cpp.obj
+
+src/Screen/DijkstraScreen.i: src/Screen/DijkstraScreen.cpp.i
+.PHONY : src/Screen/DijkstraScreen.i
+
+# target to preprocess a source file
+src/Screen/DijkstraScreen.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Screen/DijkstraScreen.cpp.i
+.PHONY : src/Screen/DijkstraScreen.cpp.i
+
+src/Screen/DijkstraScreen.s: src/Screen/DijkstraScreen.cpp.s
+.PHONY : src/Screen/DijkstraScreen.s
+
+# target to generate assembly for a file
+src/Screen/DijkstraScreen.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\CodeTayApp.dir\build.make CMakeFiles/CodeTayApp.dir/src/Screen/DijkstraScreen.cpp.s
+.PHONY : src/Screen/DijkstraScreen.cpp.s
 
 src/Screen/HeapScreen.obj: src/Screen/HeapScreen.cpp.obj
 .PHONY : src/Screen/HeapScreen.obj
@@ -683,6 +755,12 @@ help:
 	@echo ... src/Core/State.obj
 	@echo ... src/Core/State.i
 	@echo ... src/Core/State.s
+	@echo ... src/Dijkstra/DijkstraGraph.obj
+	@echo ... src/Dijkstra/DijkstraGraph.i
+	@echo ... src/Dijkstra/DijkstraGraph.s
+	@echo ... src/Dijkstra/DijkstraNode.obj
+	@echo ... src/Dijkstra/DijkstraNode.i
+	@echo ... src/Dijkstra/DijkstraNode.s
 	@echo ... src/Heap/HeapNode.obj
 	@echo ... src/Heap/HeapNode.i
 	@echo ... src/Heap/HeapNode.s
@@ -701,6 +779,9 @@ help:
 	@echo ... src/Screen/AVLScreen.obj
 	@echo ... src/Screen/AVLScreen.i
 	@echo ... src/Screen/AVLScreen.s
+	@echo ... src/Screen/DijkstraScreen.obj
+	@echo ... src/Screen/DijkstraScreen.i
+	@echo ... src/Screen/DijkstraScreen.s
 	@echo ... src/Screen/HeapScreen.obj
 	@echo ... src/Screen/HeapScreen.i
 	@echo ... src/Screen/HeapScreen.s
