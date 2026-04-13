@@ -1673,6 +1673,7 @@ CMakeFiles/CodeTayApp.dir/src/Dijkstra/DijkstraGraph.cpp.obj: C:/Users/LENOVO/De
   C:/msys64/ucrt64/include/c++/15.2.0/bits/cpp_type_traits.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/cxxabi_forced.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/cxxabi_init_exception.h \
+  C:/msys64/ucrt64/include/c++/15.2.0/bits/deque.tcc \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/erase_if.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/exception.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/exception_defines.h \
@@ -1713,6 +1714,7 @@ CMakeFiles/CodeTayApp.dir/src/Dijkstra/DijkstraGraph.cpp.obj: C:/Users/LENOVO/De
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_algobase.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_bvector.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_construct.h \
+  C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_deque.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_function.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_heap.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_iterator.h \
@@ -1721,6 +1723,7 @@ CMakeFiles/CodeTayApp.dir/src/Dijkstra/DijkstraGraph.cpp.obj: C:/Users/LENOVO/De
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_map.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_multimap.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_pair.h \
+  C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_queue.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_tempbuf.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_tree.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_uninitialized.h \
@@ -1749,6 +1752,7 @@ CMakeFiles/CodeTayApp.dir/src/Dijkstra/DijkstraGraph.cpp.obj: C:/Users/LENOVO/De
   C:/msys64/ucrt64/include/c++/15.2.0/cwctype \
   C:/msys64/ucrt64/include/c++/15.2.0/debug/assertions.h \
   C:/msys64/ucrt64/include/c++/15.2.0/debug/debug.h \
+  C:/msys64/ucrt64/include/c++/15.2.0/deque \
   C:/msys64/ucrt64/include/c++/15.2.0/exception \
   C:/msys64/ucrt64/include/c++/15.2.0/ext/aligned_buffer.h \
   C:/msys64/ucrt64/include/c++/15.2.0/ext/alloc_traits.h \
@@ -1769,6 +1773,7 @@ CMakeFiles/CodeTayApp.dir/src/Dijkstra/DijkstraGraph.cpp.obj: C:/Users/LENOVO/De
   C:/msys64/ucrt64/include/c++/15.2.0/pstl/execution_defs.h \
   C:/msys64/ucrt64/include/c++/15.2.0/pstl/glue_algorithm_defs.h \
   C:/msys64/ucrt64/include/c++/15.2.0/pstl/pstl_config.h \
+  C:/msys64/ucrt64/include/c++/15.2.0/queue \
   C:/msys64/ucrt64/include/c++/15.2.0/sstream \
   C:/msys64/ucrt64/include/c++/15.2.0/stdexcept \
   C:/msys64/ucrt64/include/c++/15.2.0/stdlib.h \
@@ -6724,6 +6729,8 @@ C:/Users/LENOVO/Desktop/Codetay/src/Heap/HeapNode.cpp:
 
 C:/msys64/ucrt64/include/c++/15.2.0/bits/sstream.tcc:
 
+C:/msys64/ucrt64/include/c++/15.2.0/bits/deque.tcc:
+
 C:/Users/LENOVO/Desktop/Codetay/include/Screen/MainMenu.h:
 
 C:/Users/LENOVO/Desktop/Codetay/src/Screen/MSTScreen.cpp:
@@ -6739,6 +6746,8 @@ C:/Users/LENOVO/Desktop/Codetay/src/AVLTree/AVLTree.cpp:
 C:/Users/LENOVO/Desktop/Codetay/include/AVLTree/AVLNode.h:
 
 C:/Users/LENOVO/Desktop/Codetay/include/AATree/AATree.h:
+
+C:/msys64/ucrt64/include/c++/15.2.0/queue:
 
 C:/Users/LENOVO/Desktop/Codetay/src/AATree/AATree.cpp:
 
@@ -6811,6 +6820,8 @@ C:/msys64/ucrt64/include/math.h:
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/limits.h:
 
 C:/msys64/ucrt64/include/_mingw_mac.h:
+
+C:/msys64/ucrt64/include/c++/15.2.0/deque:
 
 C:/msys64/ucrt64/include/c++/15.2.0/bits/locale_classes.tcc:
 
@@ -7052,6 +7063,8 @@ C:/msys64/ucrt64/include/SFML/System/String.hpp:
 
 C:/msys64/ucrt64/include/SFML/System/Export.hpp:
 
+C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_queue.h:
+
 C:/msys64/ucrt64/include/c++/15.2.0/algorithm:
 
 C:/msys64/ucrt64/include/SFML/System/Thread.hpp:
@@ -7227,6 +7240,8 @@ C:/msys64/ucrt64/include/c++/15.2.0/ext/aligned_buffer.h:
 C:/msys64/ucrt64/include/c++/15.2.0/ext/atomicity.h:
 
 C:/msys64/ucrt64/include/c++/15.2.0/initializer_list:
+
+C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_deque.h:
 
 C:/msys64/ucrt64/include/c++/15.2.0/iterator:
 

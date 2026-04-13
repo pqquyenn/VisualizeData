@@ -16,7 +16,7 @@ DijkstraScreen::DijkstraScreen(App* app) : State(app) {
     btnAdjList = new Button(570, 220, 120, 30, app->font, "Adj List");
     btnGoInput = new Button(700, 220, 60, 30, app->font, "Go");
 
-    btnStepBack    = new Button(530, 80, 40, 40, app->font, "<");          
+    btnStepBack    = new Button(900, 80, 40, 40, app->font, "<");          
     btnPausePlay   = new Button(590, 80, 120, 40, app->font, "Pause/Play"); 
     btnStepForward = new Button(730, 80, 40, 40, app->font, ">");          
     btnSpeedDown   = new Button(790, 80, 50, 40, app->font, "<<");         
