@@ -173,9 +173,9 @@ void MSTScreen::draw(sf::RenderWindow& window) {
         
         sf::Text hint; hint.setFont(app->font); hint.setCharacterSize(14); hint.setFillColor(sf::Color::White);
         hint.setPosition(150, 350); // Dời Hint xuống dưới khung text box
-       if (selectedInputType == 1) hint.setString("Format: u v weight (e.g. 1 2 99)");
+       if (selectedInputType == 1) hint.setString("Format: n following lines input u v weight (e.g. 1 2 99)");
         else if (selectedInputType == 2) hint.setString("Format: N x N grid (0-based indexing)");
-        else if (selectedInputType == 3) hint.setString("Format: u v1 w1 v2 w2... (e.g. 4 2 99 3 4)");
+        else if (selectedInputType == 3) hint.setString("Format: First line u v1 w1 v2 w2... (e.g. 4 2 99 3 4)");
         window.draw(hint);
     } 
     else if (currentMode == UI_Mode::RANDOM_GRAPH) {
@@ -188,6 +188,6 @@ void MSTScreen::draw(sf::RenderWindow& window) {
         sf::Text labelE; labelE.setFont(app->font); labelE.setString("E:"); labelE.setCharacterSize(18); labelE.setPosition(280, 150);
         window.draw(labelV); window.draw(labelE);
     }
-        btnStepBack->draw(window); btnPausePlay->draw(window); 
+    btnStepBack->draw(window); btnPausePlay->draw(window); 
     btnStepForward->draw(window); btnSpeedDown->draw(window); btnSpeedUp->draw(window);
 }

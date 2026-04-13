@@ -14,7 +14,7 @@ private:
     Button* btnBackToMenu;
     Button* btnInputGraph;
     Button* btnRandom;
-    Button* btnRunDijkstra; // Đổi từ btnKruskal
+    Button* btnMenuDijkstra; 
 
     // UI Input Graph
     MultilineTextBox* inputGraphData; 
@@ -22,6 +22,11 @@ private:
     Button* btnAdjMatrix;
     Button* btnAdjList;
     Button* btnGoInput;
+
+    // UI Source Node Dijkstra
+    bool showSourceInput = false;
+    InputBox* inputSourceNode;
+    Button* btnRunDijkstraAction;
 
     // Playback
     Button* btnStepBack;

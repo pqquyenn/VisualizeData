@@ -8,7 +8,7 @@ DijkstraScreen::DijkstraScreen(App* app) : State(app) {
     
     btnInputGraph = new Button(150, 80, 120, 40, app->font, "Input Graph");
     btnRandom = new Button(290, 80, 100, 40, app->font, "Random");
-    btnRunDijkstra = new Button(410, 80, 100, 40, app->font, "Dijkstra"); // Chữ hiển thị là Dijkstra
+    btnMenuDijkstra = new Button(410, 80, 100, 40, app->font, "Dijkstra"); 
 
     inputGraphData = new MultilineTextBox(150, 140, 400, 200, app->font); 
     btnEdgeList = new Button(570, 140, 120, 30, app->font, "Edge List");
@@ -26,13 +26,18 @@ DijkstraScreen::DijkstraScreen(App* app) : State(app) {
     inputE = new InputBox(310, 140, 80, 40, app->font, 3);
     btnGoRandom = new Button(410, 140, 60, 40, app->font, "Go");
 
+    // UI Mới cho việc nhập Source Node
+    inputSourceNode = new InputBox(410, 140, 60, 40, app->font, 3);
+    btnRunDijkstraAction = new Button(480, 140, 60, 40, app->font, "Run");
+
     graph = new DijkstraGraph(app->font);
 }
 
 DijkstraScreen::~DijkstraScreen() {
-    delete btnBackToMenu; delete btnInputGraph; delete btnRandom; delete btnRunDijkstra;
+    delete btnBackToMenu; delete btnInputGraph; delete btnRandom; delete btnMenuDijkstra;
     delete inputGraphData; delete btnEdgeList; delete btnAdjMatrix; delete btnAdjList; delete btnGoInput;
     delete inputV; delete inputE; delete btnGoRandom;
+    delete inputSourceNode; delete btnRunDijkstraAction;
     delete graph;
 
     delete btnStepBack; delete btnPausePlay; delete btnStepForward;
@@ -56,8 +61,7 @@ void DijkstraScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
         sf::Vector2i pixelPos = sf::Mouse::getPosition(window);
         if (pixelPos.y > 350 && !graph->isDraggingNode()) { 
-            isPanning = true; 
-            oldMousePos = pixelPos; 
+            isPanning = true; oldMousePos = pixelPos; 
         }
     } else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left) {
         isPanning = false;
@@ -72,16 +76,20 @@ void DijkstraScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
     sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
 
     if (btnBackToMenu->isClicked(event, mousePos)) {
-        app->changeState(new MainMenu(app)); 
-        return;
+        app->changeState(new MainMenu(app)); return;
     }
 
-    if (btnInputGraph->isClicked(event, mousePos)) currentMode = Dijkstra_UI_Mode::INPUT_GRAPH;
-    if (btnRandom->isClicked(event, mousePos)) currentMode = Dijkstra_UI_Mode::RANDOM_GRAPH;
+    if (btnInputGraph->isClicked(event, mousePos)) { currentMode = Dijkstra_UI_Mode::INPUT_GRAPH; showSourceInput = false; }
+    if (btnRandom->isClicked(event, mousePos)) { currentMode = Dijkstra_UI_Mode::RANDOM_GRAPH; showSourceInput = false; }
     
+    // Khi bấm nút Dijkstra trên Menu, bật hộp nhập Node nguồn
+    if (btnMenuDijkstra->isClicked(event, mousePos)) {
+        currentMode = Dijkstra_UI_Mode::NONE; // Tắt các khung nhập khác
+        showSourceInput = true;
+    }
+
     if (currentMode == Dijkstra_UI_Mode::INPUT_GRAPH) {
         inputGraphData->handleEvent(event, mousePos);
-        
         if (btnEdgeList->isClicked(event, mousePos)) selectedInputType = 1;
         if (btnAdjMatrix->isClicked(event, mousePos)) selectedInputType = 2;
         if (btnAdjList->isClicked(event, mousePos)) selectedInputType = 3;
@@ -103,24 +111,27 @@ void DijkstraScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
     else if (currentMode == Dijkstra_UI_Mode::RANDOM_GRAPH) {
         inputV->handleEvent(event, mousePos);
         inputE->handleEvent(event, mousePos);
-        
         if (btnGoRandom->isClicked(event, mousePos)) {
             std::string vStr = inputV->getText();
             std::string eStr = inputE->getText();
             if (!vStr.empty() && !eStr.empty()) {
-                try {
-                    int v = std::stoi(vStr);
-                    int e = std::stoi(eStr);
-                    graph->generateRandomGraph(v, e);
-                } catch (...) {}
+                try { graph->generateRandomGraph(std::stoi(vStr), std::stoi(eStr)); } catch (...) {}
             }
         }
     }
 
-    // Nút chạy thuật toán (Giả sử Mặc định đỉnh xuất phát là 0)
-    // Nếu muốn, sau này bạn có thể thêm 1 ô InputBox để nhập đỉnh xuất phát
-    if (btnRunDijkstra->isClicked(event, mousePos)) {
-        graph->startDijkstra(0); 
+    // Xử lý khi chạy thuật toán
+    if (showSourceInput) {
+        inputSourceNode->handleEvent(event, mousePos);
+        if (btnRunDijkstraAction->isClicked(event, mousePos)) {
+            std::string sourceStr = inputSourceNode->getText();
+            if (!sourceStr.empty()) {
+                try {
+                    int sourceId = std::stoi(sourceStr);
+                    graph->startDijkstra(sourceId);
+                } catch(...) {}
+            }
+        }
     }
 
     if (btnPausePlay->isClicked(event, mousePos)) graph->togglePause();
@@ -134,7 +145,7 @@ void DijkstraScreen::update(float deltaTime, sf::RenderWindow& window) {
     sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
     
     btnBackToMenu->update(mousePos); btnInputGraph->update(mousePos); 
-    btnRandom->update(mousePos); btnRunDijkstra->update(mousePos);
+    btnRandom->update(mousePos); btnMenuDijkstra->update(mousePos);
 
     if (currentMode == Dijkstra_UI_Mode::INPUT_GRAPH) {
         btnEdgeList->update(mousePos); btnAdjMatrix->update(mousePos); 
@@ -142,6 +153,11 @@ void DijkstraScreen::update(float deltaTime, sf::RenderWindow& window) {
     } else if (currentMode == Dijkstra_UI_Mode::RANDOM_GRAPH) {
         btnGoRandom->update(mousePos);
     }
+
+    if (showSourceInput) {
+        btnRunDijkstraAction->update(mousePos);
+    }
+
     btnStepBack->update(mousePos); btnPausePlay->update(mousePos); 
     btnStepForward->update(mousePos); btnSpeedDown->update(mousePos); btnSpeedUp->update(mousePos);
     graph->update(deltaTime);
@@ -150,11 +166,10 @@ void DijkstraScreen::update(float deltaTime, sf::RenderWindow& window) {
 void DijkstraScreen::draw(sf::RenderWindow& window) {
     if (isViewInitialized) window.setView(graphView);
     graph->draw(window);
-
     window.setView(window.getDefaultView()); 
     
     btnBackToMenu->draw(window); 
-    btnInputGraph->draw(window); btnRandom->draw(window); btnRunDijkstra->draw(window);
+    btnInputGraph->draw(window); btnRandom->draw(window); btnMenuDijkstra->draw(window);
 
     if (currentMode == Dijkstra_UI_Mode::INPUT_GRAPH) {
         inputGraphData->draw(window);
@@ -169,13 +184,18 @@ void DijkstraScreen::draw(sf::RenderWindow& window) {
         window.draw(hint);
     } 
     else if (currentMode == Dijkstra_UI_Mode::RANDOM_GRAPH) {
-        inputV->draw(window);
-        inputE->draw(window);
-        btnGoRandom->draw(window);
-
+        inputV->draw(window); inputE->draw(window); btnGoRandom->draw(window);
         sf::Text labelV; labelV.setFont(app->font); labelV.setString("V:"); labelV.setCharacterSize(18); labelV.setPosition(150, 150);
         sf::Text labelE; labelE.setFont(app->font); labelE.setString("E:"); labelE.setCharacterSize(18); labelE.setPosition(280, 150);
         window.draw(labelV); window.draw(labelE);
+    }
+
+    if (showSourceInput) {
+        inputSourceNode->draw(window);
+        btnRunDijkstraAction->draw(window);
+        sf::Text labelSource; labelSource.setFont(app->font); labelSource.setString("Source:"); 
+        labelSource.setCharacterSize(18); labelSource.setPosition(340, 150); labelSource.setFillColor(sf::Color::White);
+        window.draw(labelSource);
     }
     
     btnStepBack->draw(window); btnPausePlay->draw(window); 

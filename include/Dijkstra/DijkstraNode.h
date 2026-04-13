@@ -6,15 +6,14 @@ class DijkstraNode {
 public:
     int id;
     sf::CircleShape shape;
-    sf::Text text;       // Text hiển thị ID của Node
+    sf::Text text;       
     
-    // --- THÊM CHO DIJKSTRA ---
-    int cost;            // Chi phí đường đi từ Source tới Node này
+    int cost;            
     std::string costString; 
-    sf::Text costText;   // Text hiển thị chi phí (INF hoặc số)
+    sf::Text costText;   
 
     sf::Vector2f currentPos;
-    sf::Color currentColor;
+    sf::Color currentColor; // Sẽ được cập nhật liên tục từ Graph
 
     bool isDragging;
     sf::Vector2f dragOffset;
@@ -24,7 +23,6 @@ public:
     void draw(sf::RenderWindow& window);
     void handleEvent(const sf::Event& event, const sf::RenderWindow& window, const sf::View& view);
     
-    // Hàm hỗ trợ cập nhật chi phí hiển thị
     void setCost(int newCost);
     void resetCost();
 };

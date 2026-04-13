@@ -41,18 +41,14 @@ void DijkstraGraph::arrangeCircularLayout() {
     }
 }
 
-// Reset lại trạng thái INF cho mọi Node
 void DijkstraGraph::resetAllCosts() {
-    for(auto& pair : nodes) {
-        pair.second->resetCost();
-    }
+    for(auto& pair : nodes) pair.second->resetCost();
 }
 
 bool DijkstraGraph::buildFromEdgeList(const std::string& input) {
     clear();
     std::stringstream ss(input);
     std::string line;
-    
     while (std::getline(ss, line)) {
         std::stringstream lineStream(line);
         int u, v, w;
@@ -68,7 +64,6 @@ bool DijkstraGraph::buildFromEdgeList(const std::string& input) {
 bool DijkstraGraph::buildFromAdjMatrix(const std::string& input, int numVertices) {
     clear();
     for (int i = 0; i < numVertices; i++) addNode(i);
-    
     std::stringstream ss(input);
     std::vector<int> tokens;
     int temp;
@@ -83,9 +78,7 @@ bool DijkstraGraph::buildFromAdjMatrix(const std::string& input, int numVertices
         for (int j = 0; j < numVertices; j++) {
             if (tokenIdx < tokens.size()) {
                 int w = tokens[tokenIdx++];
-                if (w != 0 && i < j) { 
-                    edges.push_back({i, j, w});
-                }
+                if (w != 0 && i < j) edges.push_back({i, j, w});
             }
         }
     }
@@ -97,7 +90,6 @@ bool DijkstraGraph::buildFromAdjList(const std::string& input) {
     clear();
     std::stringstream ss(input);
     std::string line;
-    
     while (std::getline(ss, line)) {
         std::stringstream lineStream(line);
         int u;
@@ -117,7 +109,6 @@ bool DijkstraGraph::buildFromAdjList(const std::string& input) {
 void DijkstraGraph::generateRandomGraph(int vCount, int eCount) {
     clear();
     if (vCount <= 0) return;
-
     for (int i = 0; i < vCount; i++) addNode(i);
 
     int edgesAdded = 0;
@@ -156,7 +147,6 @@ bool DijkstraGraph::isDraggingNode() const {
 }
 
 void DijkstraGraph::draw(sf::RenderWindow& window) {
-    // Vẽ cạnh
     for (const auto& edge : edges) {
         sf::Vector2f posU = nodes[edge.u]->currentPos;
         sf::Vector2f posV = nodes[edge.v]->currentPos;
@@ -175,7 +165,6 @@ void DijkstraGraph::draw(sf::RenderWindow& window) {
         thickLine.setFillColor(edge.color);
         window.draw(thickLine);
 
-        // Vẽ trọng số (Weight)
         sf::Text weightText;
         weightText.setFont(font);
         weightText.setString(std::to_string(edge.weight));
@@ -184,52 +173,110 @@ void DijkstraGraph::draw(sf::RenderWindow& window) {
         weightText.setPosition((posU.x + posV.x) / 2.0f, (posU.y + posV.y) / 2.0f - 15.f); 
         window.draw(weightText);
     }
-
-    // Vẽ đỉnh
     for (auto& pair : nodes) pair.second->draw(window);
 }
 
-// --- CHỖ ĐỂ BẠN CODE THUẬT TOÁN ---
+// --- THUẬT TOÁN DIJKSTRA ---
 void DijkstraGraph::startDijkstra(int sourceId) {
     if (edges.empty() || nodes.empty()) return;
-    
-    // Reset mọi thứ trước khi chạy
-    resetAllCosts();
-    for (auto& e : edges) e.color = sf::Color(200, 200, 200);
-    
-    // Nếu đỉnh nguồn không tồn tại thì thoát
     if (nodes.find(sourceId) == nodes.end()) return;
 
-    // Gán đỉnh nguồn có chi phí = 0
-    nodes[sourceId]->setCost(0);
+    animationSteps.clear();
+    currentStep = 0;
+    timer = 0.0f;
+    isPaused = false;
+    isAnimating = true;
 
-    // TODO: Viết logic Dijkstra và đẩy trạng thái vào animationSteps tại đây
+    std::map<int, int> dist;
+    std::map<int, int> parentEdge;
+    std::map<int, bool> visited;
+    
+    // Khởi tạo trạng thái ban đầu
+    DijkstraState state;
+    state.edgeColors.assign(edges.size(), sf::Color(200, 200, 200)); // Xám
+    
+    for (auto const& [id, node] : nodes) {
+        dist[id] = -1; // -1 đại diện cho INF
+        visited[id] = false;
+        parentEdge[id] = -1;
+        state.nodeColors[id] = sf::Color(70, 130, 180); // Xanh bích
+        state.nodeCosts[id] = -1;
+    }
+    
+    dist[sourceId] = 0;
+    state.nodeCosts[sourceId] = 0;
+    animationSteps.push_back(state);
+
+    while (true) {
+        // 1. Tìm đỉnh có khoảng cách nhỏ nhất chưa duyệt
+        int u = -1;
+        int minDist = 1e9;
+        for (auto const& [id, d] : dist) {
+            if (!visited[id] && d != -1 && d < minDist) {
+                minDist = d;
+                u = id;
+            }
+        }
+
+        if (u == -1) break; // Xong
+        visited[u] = true;
+
+        // 2. Highlight Node đang xét (Xanh lá)
+        state.nodeColors[u] = sf::Color::Green;
+        animationSteps.push_back(state);
+
+        // 3. Loang ra các đỉnh kề
+        for (size_t i = 0; i < edges.size(); ++i) {
+            int v = -1;
+            if (edges[i].u == u) v = edges[i].v;
+            else if (edges[i].v == u) v = edges[i].u;
+
+            if (v != -1 && !visited[v]) {
+                // Đổi cạnh đang check sang Vàng
+                sf::Color oldEdgeColor = state.edgeColors[i];
+                state.edgeColors[i] = sf::Color::Yellow;
+                animationSteps.push_back(state);
+
+                int weight = edges[i].weight;
+                if (dist[v] == -1 || dist[u] + weight < dist[v]) {
+                    // Relax cạnh
+                    dist[v] = dist[u] + weight;
+                    state.nodeCosts[v] = dist[v];
+                    
+                    // Nếu đã có cạnh cha trước đó, chuyển cạnh cũ về xám
+                    if (parentEdge[v] != -1) state.edgeColors[parentEdge[v]] = sf::Color(200, 200, 200);
+                    parentEdge[v] = i;
+                    
+                    // Highlight cạnh đường đi ngắn nhất tạm thời (Đỏ)
+                    state.edgeColors[i] = sf::Color::Red; 
+                    animationSteps.push_back(state);
+                } else {
+                    // Trả lại màu cũ nếu không chọn
+                    state.edgeColors[i] = oldEdgeColor;
+                }
+            }
+        }
+
+        // 4. Duyệt xong u, Node chuyển thành màu Đỏ
+        state.nodeColors[u] = sf::Color::Red; 
+        if (parentEdge[u] != -1) state.edgeColors[parentEdge[u]] = sf::Color::Red;
+        animationSteps.push_back(state);
+    }
 }
 
-// --- CÁC HÀM PLAYBACK GIỮ NGUYÊN NHƯ KRUSKAL ---
 void DijkstraGraph::togglePause() { isPaused = !isPaused; }
-
 void DijkstraGraph::stepForward() {
     if (animationSteps.empty()) return;
-    isPaused = true; 
-    timer = 0.0f; 
+    isPaused = true; timer = 0.0f; 
     if (currentStep < animationSteps.size() - 1) currentStep++;
 }
-
 void DijkstraGraph::stepBackward() {
     if (animationSteps.empty()) return;
-    isPaused = true; 
-    timer = 0.0f;
+    isPaused = true; timer = 0.0f;
     if (currentStep > 0) currentStep--;
 }
-
-void DijkstraGraph::increaseSpeed() {
-    stepDuration = std::max(0.1f, stepDuration - 0.2f); 
-}
-
-void DijkstraGraph::decreaseSpeed() {
-    stepDuration = std::min(3.0f, stepDuration + 0.2f); 
-}
+void DijkstraGraph::increaseSpeed() { stepDuration = std::max(0.1f, stepDuration - 0.2f); }
+void DijkstraGraph::decreaseSpeed() { stepDuration = std::min(3.0f, stepDuration + 0.2f); }
 
 void DijkstraGraph::update(float dt) {
     for (auto& pair : nodes) pair.second->update(dt);
@@ -238,17 +285,25 @@ void DijkstraGraph::update(float dt) {
         timer += dt;
         if (timer >= stepDuration) {
             timer = 0.0f;
-            if (currentStep < animationSteps.size() - 1) {
-                currentStep++;
-            } else {
-                isPaused = true; 
-            }
+            if (currentStep < animationSteps.size() - 1) currentStep++;
+            else isPaused = true; 
         }
     }
 
+    // Luôn áp dụng trạng thái đồ thị theo currentStep
     if (!animationSteps.empty() && currentStep < animationSteps.size()) {
+        const auto& state = animationSteps[currentStep];
+        
+        // Cập nhật màu cạnh
         for (size_t i = 0; i < edges.size(); ++i) {
-            edges[i].color = animationSteps[currentStep][i];
+            edges[i].color = state.edgeColors[i];
+        }
+        
+        // Cập nhật màu và cost cho Node
+        for (auto& pair : nodes) {
+            int id = pair.first;
+            pair.second->currentColor = state.nodeColors.at(id);
+            pair.second->setCost(state.nodeCosts.at(id));
         }
     }
 }
