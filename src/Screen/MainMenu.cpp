@@ -5,9 +5,12 @@
 #include "HeapScreen.h"
 #include "AAScreen.h"
 #include "MSTScreen.h"
+#include "DijkstraScreen.h"
+
 #include <cstdlib>
 #include <ctime>
 #include <cmath>
+
 
 MainMenu::MainMenu(App* app) : State(app) {
     // Khởi tạo seed cho hàm random
@@ -60,6 +63,7 @@ MainMenu::~MainMenu() {
     delete btnHeap;
     delete btnAA;
     delete btnMST;
+    delete btnDijkstra;
 }
 
 void MainMenu::initLeaves(int count) {
@@ -119,6 +123,9 @@ void MainMenu::handleEvent(sf::Event& event, sf::RenderWindow& window) {
     }
     if (btnMST->isClicked(event, mousePos)){
         app->changeState(new MSTScreen(app));
+    }
+    if (btnDijkstra->isClicked(event, mousePos)){
+        app->changeState(new DijkstraScreen(app));
     }
 }
 
