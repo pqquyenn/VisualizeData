@@ -166,12 +166,18 @@ void DijkstraGraph::draw(sf::RenderWindow& window) {
         thickLine.setFillColor(edge.color);
         window.draw(thickLine);
 
+// Trong file DijkstraGraph.cpp, hàm draw()
         sf::Text weightText;
         weightText.setFont(font);
         weightText.setString(std::to_string(edge.weight));
-        weightText.setCharacterSize(16);
+
+        weightText.setCharacterSize(18); // Tăng nhẹ từ 16 lên 18
+        weightText.setStyle(sf::Text::Bold); // In đậm
         weightText.setFillColor(sf::Color::Yellow);
-        weightText.setPosition((posU.x + posV.x) / 2.0f, (posU.y + posV.y) / 2.0f - 15.f); 
+        weightText.setOutlineColor(sf::Color::Black); // Thêm viền đen
+        weightText.setOutlineThickness(2.f); 
+
+        weightText.setPosition((posU.x + posV.x) / 2.0f, (posU.y + posV.y) / 2.0f - 15.f);
         window.draw(weightText);
     }
     for (auto& pair : nodes) pair.second->draw(window);
