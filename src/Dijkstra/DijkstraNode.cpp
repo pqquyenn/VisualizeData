@@ -17,13 +17,29 @@ DijkstraNode::DijkstraNode(int nodeId, sf::Font& font) : id(nodeId), isDragging(
     sf::FloatRect bounds = text.getLocalBounds();
     text.setOrigin(bounds.left + bounds.width / 2.0f, bounds.top + bounds.height / 2.0f);
 
+    // --- CHỈNH SỬA PHẦN NÀY ĐỂ LÀM NỔI BẬT COST TEXT ---
     costText.setFont(font);
     costText.setString(costString);
-    costText.setCharacterSize(16);
-    //costText.setFillColor(sf::Color::Red); // Màu đỏ gốc - BỊ CHÓI MẮT
-    costText.setFillColor(sf::Color::White); // Đổi sang màu trắng để không bị chói
+    
+    // 1. Tăng kích thước chữ (từ 16 lên 24 hoặc 28 tùy ý bạn)
+    costText.setCharacterSize(26); 
+    
+    // 2. In đậm chữ
+    costText.setStyle(sf::Text::Bold); 
+    
+    // 3. Chọn một màu thật nổi bật (Ví dụ: Màu Cyan/Xanh lơ mạ)
+    costText.setFillColor(sf::Color::Cyan); 
+    
+    // 4. Thêm viền đen để chữ luôn rõ nét dù đè lên cạnh (Edge) màu gì
+    costText.setOutlineColor(sf::Color::Black);
+    costText.setOutlineThickness(2.5f); 
+
+    // Căn giữa origin
     sf::FloatRect costBounds = costText.getLocalBounds();
     costText.setOrigin(costBounds.left + costBounds.width / 2.0f, costBounds.top + costBounds.height / 2.0f);
+
+    //
+    
 }
 
 void DijkstraNode::setCost(int newCost) {
@@ -64,7 +80,8 @@ void DijkstraNode::update(float dt) {
     // Cập nhật màu sắc từ biến currentColor
     shape.setFillColor(currentColor);
     
-    costText.setPosition(currentPos.x, currentPos.y - 35.f); 
+    // Tăng khoảng cách offset Y từ -35.f lên khoảng -45.f hoặc -50.f
+    costText.setPosition(currentPos.x, currentPos.y - 48.f); 
 }
 
 void DijkstraNode::draw(sf::RenderWindow& window) {
