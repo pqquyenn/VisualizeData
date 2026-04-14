@@ -197,12 +197,17 @@ void MSTGraph::draw(sf::RenderWindow& window) {
         window.draw(thickLine);
 
         // Vẽ trọng số (Weight)
-        sf::Text weightText;
+             sf::Text weightText;
         weightText.setFont(font);
         weightText.setString(std::to_string(edge.weight));
-        weightText.setCharacterSize(16);
-        weightText.setFillColor(sf::Color::Yellow); // Màu vàng cho nổi bật
-        weightText.setPosition((posU.x + posV.x) / 2.0f, (posU.y + posV.y) / 2.0f - 15.f); // Nhích lên chút để không đè vào cạnh dày
+
+        weightText.setCharacterSize(18); // Tăng nhẹ từ 16 lên 18
+        weightText.setStyle(sf::Text::Bold); // In đậm
+        weightText.setFillColor(sf::Color::Yellow);
+        weightText.setOutlineColor(sf::Color::Black); // Thêm viền đen
+        weightText.setOutlineThickness(2.f); 
+
+        weightText.setPosition((posU.x + posV.x) / 2.0f, (posU.y + posV.y) / 2.0f - 15.f);
         window.draw(weightText);
     }
 
