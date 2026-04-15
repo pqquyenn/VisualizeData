@@ -21,6 +21,7 @@ private:
     Button* btnMST;
     Button* btnDijkstra;
     sf::Text titleText; // Thêm biến này để làm tiêu đề
+    sf::Text titleShadow; // Thêm biến bóng đổ cho tiêu đề
     // ... các biến khác giữ nguyên
     // Quản lý danh sách lá
     std::vector<Leaf> leaves;

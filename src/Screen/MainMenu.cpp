@@ -23,6 +23,9 @@ MainMenu::MainMenu(App* app) : State(app) {
     titleText.setFillColor(sf::Color::White); 
     titleText.setStyle(sf::Text::Bold);
 
+    // Thêm viền đen cho chữ để nổi bật trên nền lá
+    titleText.setOutlineThickness(4.f);
+    titleText.setOutlineColor(sf::Color::Black);
     // Căn giữa tiêu đề theo trục X của màn hình 1280 (Tâm X = 640)
     sf::FloatRect textRect = titleText.getLocalBounds();
     titleText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
@@ -162,7 +165,8 @@ void MainMenu::draw(sf::RenderWindow& window) {
         window.draw(leaf.shape);
     }
 
-    // 2. Vẽ Tiêu đề ở giữa
+// 2. Vẽ Bóng đổ trước, sau đó vẽ Tiêu đề đè lên
+    window.draw(titleShadow);
     window.draw(titleText);
 
     // 3. Vẽ các nút lên trên cùng (Foreground)
