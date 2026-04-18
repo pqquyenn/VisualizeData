@@ -7,7 +7,7 @@ App::App() {
     window.create(sf::VideoMode(1280, 720), "DSVisual - Data Structure Visualizer");
     window.setFramerateLimit(60);
 
-    if (!font.loadFromFile("../external/ARIAL.TTF")) {
+    if (!font.loadFromFile("../assets/ARIAL.TTF")) {
         std::cerr << "Loi load font!\n" << std::endl;
     }
 
