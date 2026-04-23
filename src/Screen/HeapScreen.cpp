@@ -13,7 +13,7 @@ HeapScreen::HeapScreen(App* app) : State(app), isPanning(false), isViewInitializ
 
     heapTree = new HeapTree(font);
 
-    btnBackToMenu = new Button(20, 20, 100, 40, app->font, "Back Menu");
+    btnBackToMenu = new Button(20, 20, 110, 40, app->font, "Back Menu");
     inputVal = new InputBox(150, 80, 100, 40, app->font, 3);
     
     btnInsert = new Button(270, 80, 100, 40, app->font, "Insert");
