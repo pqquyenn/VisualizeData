@@ -91,7 +91,7 @@ void SinglyLinkedList::initList(int n) {
     std::vector<std::string> code = {
         "Initialize list with random values",
         "for (int i = 0; i < n; i++)",
-        "    Insert(random_val);"
+        "    InsertAtTail(random_val);"
     };
     saveSnapshot(code, 0);
 
