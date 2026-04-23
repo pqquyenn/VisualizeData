@@ -123,7 +123,7 @@ void SinglyLinkedList::initFromFile(const std::string& filename) {
     std::vector<std::string> code = {
         "Read from file: " + filename,
         "while(file >> val) {",
-        "    Insert(val);",
+        "    InsertAtTail(val);",
         "}"
     };
     saveSnapshot(code, 0);
