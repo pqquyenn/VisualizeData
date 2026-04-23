@@ -5,7 +5,7 @@
 #include <exception>
 
 SLLScreen::SLLScreen(App* app) : State(app) {
-    btnBackToMenu = new Button(20, 20, 100, 40, app->font, "Back Menu");
+    btnBackToMenu = new Button(20, 20, 110, 40, app->font, "Back Menu");
     inputVal = new InputBox(150, 80, 100, 40, app->font, 3);
     
     // Đổi tên nhãn Insert thành Ins Tail cho rõ ràng (tuỳ chọn)
