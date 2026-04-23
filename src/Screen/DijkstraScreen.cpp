@@ -4,7 +4,7 @@
 #include <cmath>
 
 DijkstraScreen::DijkstraScreen(App* app) : State(app) {
-    btnBackToMenu = new Button(20, 20, 100, 40, app->font, "Back Menu");
+    btnBackToMenu = new Button(20, 20, 110, 40, app->font, "Back Menu");
     
     btnInputGraph = new Button(150, 80, 120, 40, app->font, "Input Graph");
     btnRandom = new Button(290, 80, 100, 40, app->font, "Random");
