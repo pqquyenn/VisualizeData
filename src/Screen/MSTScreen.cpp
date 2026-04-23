@@ -5,7 +5,7 @@
 
 MSTScreen::MSTScreen(App* app) : State(app) {
     // Menu hạ xuống Y = 20
-    btnBackToMenu = new Button(20, 20, 100, 40, app->font, "Back Menu");
+    btnBackToMenu = new Button(20, 20, 110, 40, app->font, "Back Menu");
     
     // Các nút chức năng chính hạ xuống Y = 80 (Giống AVL)
     btnInputGraph = new Button(150, 80, 120, 40, app->font, "Input Graph");
