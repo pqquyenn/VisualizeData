@@ -87,7 +87,14 @@ void DijkstraScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
             currentMode = Dijkstra_UI_Mode::INPUT_GRAPH; // Nếu đang tắt hoặc ở mode khác thì mở lên
         }
     }
-    if (btnRandom->isClicked(event, mousePos)) { currentMode = Dijkstra_UI_Mode::RANDOM_GRAPH; showSourceInput = false; }
+    // Xử lý bật/tắt khung Random (Khuyên dùng để đồng bộ UX)
+    if (btnRandom->isClicked(event, mousePos)) {
+        if (currentMode == Dijkstra_UI_Mode::RANDOM_GRAPH) {
+            currentMode = Dijkstra_UI_Mode::NONE; // Nếu đang mở thì tắt đi
+        } else {
+            currentMode = Dijkstra_UI_Mode::RANDOM_GRAPH; // Nếu đang tắt hoặc ở mode khác thì mở lên
+        }
+    }
     
     // Khi bấm nút Dijkstra trên Menu, bật hộp nhập Node nguồn
     if (btnMenuDijkstra->isClicked(event, mousePos)) {
