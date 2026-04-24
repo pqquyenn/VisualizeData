@@ -94,6 +94,7 @@ if (btnInputGraph->isClicked(event, mousePos)) {
             currentMode = Dijkstra_UI_Mode::NONE; // Nếu đang mở thì tắt đi
         } else {
             currentMode = Dijkstra_UI_Mode::RANDOM_GRAPH; // Nếu đang tắt hoặc ở mode khác thì mở lên
+            showSourceInput = false;
         }
     }
     
