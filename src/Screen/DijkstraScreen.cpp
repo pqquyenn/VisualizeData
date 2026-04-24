@@ -79,7 +79,14 @@ void DijkstraScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
         app->changeState(new MainMenu(app)); return;
     }
 
-    if (btnInputGraph->isClicked(event, mousePos)) { currentMode = Dijkstra_UI_Mode::INPUT_GRAPH; showSourceInput = false; }
+    // Xử lý bật/tắt khung Input Graph
+    if (btnInputGraph->isClicked(event, mousePos)) {
+        if (currentMode == Dijkstra_UI_Mode::INPUT_GRAPH) {
+            currentMode = Dijkstra_UI_Mode::NONE; // Nếu đang mở thì tắt đi
+        } else {
+            currentMode = Dijkstra_UI_Mode::INPUT_GRAPH; // Nếu đang tắt hoặc ở mode khác thì mở lên
+        }
+    }
     if (btnRandom->isClicked(event, mousePos)) { currentMode = Dijkstra_UI_Mode::RANDOM_GRAPH; showSourceInput = false; }
     
     // Khi bấm nút Dijkstra trên Menu, bật hộp nhập Node nguồn
