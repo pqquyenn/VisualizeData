@@ -103,6 +103,25 @@ Step 4: Run the application
 ```bash
 ./VisualizeData.exe
 ```
+🎮 Usage
 
+After launching the application, the Main Menu will appear. You can:
 
+1. Click on the corresponding buttons to select the algorithm or data structure you want to view.
 
+2. Use the input boxes to add, delete, or search for values.
+
+3. Observe the step-by-step simulation displayed on the screen.
+
+🤝 Contributing
+Contributions to improve this project are always welcome! If you want to add a new algorithm or fix a bug, please:
+
+1. Fork this repository.
+
+2. Create a new branch (git checkout -b feature/NewFeatureName).
+
+3. Commit your changes (git commit -m 'Add some feature').
+
+4. Push to the branch (git push origin feature/NewFeatureName).
+
+5. Open a Pull Request.
