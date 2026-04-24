@@ -84,7 +84,14 @@ void MSTScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
         return;
     }
 
-    if (btnInputGraph->isClicked(event, mousePos)) currentMode = UI_Mode::INPUT_GRAPH;
+    // Xử lý bật/tắt khung Input Graph
+    if (btnInputGraph->isClicked(event, mousePos)) {
+        if (currentMode == UI_Mode::INPUT_GRAPH) {
+            currentMode = UI_Mode::NONE; // Nếu đang mở thì tắt đi
+        } else {
+            currentMode = UI_Mode::INPUT_GRAPH; // Nếu đang tắt hoặc ở mode khác thì mở lên
+        }
+    }
     if (btnRandom->isClicked(event, mousePos)) currentMode = UI_Mode::RANDOM_GRAPH;
     
     if (currentMode == UI_Mode::INPUT_GRAPH) {
