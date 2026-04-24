@@ -80,11 +80,12 @@ void DijkstraScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
     }
 
     // Xử lý bật/tắt khung Input Graph
-    if (btnInputGraph->isClicked(event, mousePos)) {
+if (btnInputGraph->isClicked(event, mousePos)) {
         if (currentMode == Dijkstra_UI_Mode::INPUT_GRAPH) {
-            currentMode = Dijkstra_UI_Mode::NONE; // Nếu đang mở thì tắt đi
+            currentMode = Dijkstra_UI_Mode::NONE; 
         } else {
-            currentMode = Dijkstra_UI_Mode::INPUT_GRAPH; // Nếu đang tắt hoặc ở mode khác thì mở lên
+            currentMode = Dijkstra_UI_Mode::INPUT_GRAPH; 
+            showSourceInput = false; // Thêm dòng này để tắt khung Dijkstra nếu nó đang mở
         }
     }
     // Xử lý bật/tắt khung Random (Khuyên dùng để đồng bộ UX)
