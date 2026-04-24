@@ -46,3 +46,63 @@ The project is organized following modern C++ standards:
 ├── 📜CMakeLists.txt
 ```
 
+## 🛠️ Prerequisites
+
+To build and run this project on your local machine, you need to install:
+
+* C++ Compiler: Supports C++17 or higher (GCC, Clang, or MSVC).
+
+* CMake: Version 3.10 or higher.
+
+* SFML Library: The graphical library used for the UI. (For Windows, it is highly recommended to install GCC, CMake, and SFML via MSYS2 / MinGW-w64 using pacman).
+
+Intructions of storing Cmake and SFML from MinGW Environment
+
+1.  **Install MSYS2:** Download and install MSYS2 from [https://www.msys2.org/](https://www.msys2.org/).
+2. **Install required tools:** Open the **MSYS2 MinGW 64-bit** terminal (make sure to select the correct 64-bit version) and run the following commands:
+   
+   Update the system:
+   ```bash
+   pacman -Syu
+
+Install C++ Compiler (GCC), Make, and CMake:
+```bash
+pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-make mingw-w64-x86_64-cmake
+```
+Install the SFML graphics library:
+```bash
+pacman -S mingw-w64-x86_64-sfml
+```
+## 🚀 Build Instructions
+
+Follow these steps to clone and run the project locally:
+
+**Step 1**: Clone the repository
+
+```bash
+git clone [https://github.com/pqquyenn/VisualizeData.git](https://github.com/pqquyenn/VisualizeData.git)
+cd VisualizeData
+```
+
+**Step 2**: Create a build directory and configure CMake
+```bash
+mkdir build
+cd build
+cmake ..
+```
+
+Step 3: Build the project
+```bash
+# Đối với Linux/macOS
+make
+
+# Hoặc dùng lệnh chung của CMake cho mọi hệ điều hành
+cmake --build .
+```
+Step 4: Run the application
+```bash
+./VisualizeData.exe
+```
+
+
+
