@@ -39,7 +39,8 @@ private:
     float delay;
     bool isPaused;
     std::string currentOpName;
-
+    // THÊM DÒNG NÀY VÀO TRONG PHẦN PRIVATE:
+    float speedMultiplier;
     void saveSnapshot(int line = -1);
     void calculateLayout(LogicalNode* node, float x, float y, float hGap, std::vector<AANodeInfo>& snapshotNodes);
     void applyStep(size_t stepIndex);
@@ -86,6 +87,8 @@ public:
     void skipToFirstStep();
     void skipToLastStep();
 
+    // XoÁ HÀM getDelay() CŨ, THAY BẰNG HÀM NÀY:
+    float getSpeedMultiplier() const { return speedMultiplier; }
     void updatePosition(float deltaTime);
     void updateAnimation(float deltaTime);
     void draw(sf::RenderWindow& window);
