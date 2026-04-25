@@ -67,6 +67,9 @@ private:
     // Sửa lại hàm saveSnapshot chỉ nhận 1 tham số dòng code:
     void applyStep(size_t stepIndex);
 
+    // THÊM BIẾN NÀY VÀO PHẦN PRIVATE:
+    float speedMultiplier;
+
 public:
     AVLTree(sf::Font& font);
     ~AVLTree();
@@ -109,4 +112,6 @@ public:
     
     // THÊM HÀM NÀY VÀO:
     bool isDraggingNode() const;
+
+    float getSpeedMultiplier() const { return speedMultiplier; }
 };

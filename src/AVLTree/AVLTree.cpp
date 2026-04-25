@@ -3,7 +3,10 @@
 #include <ctime>
 
 AVLTree::AVLTree(sf::Font& font) : font(font), root(nullptr), currentStep(0), timer(0), delay(0.8f), isPaused(false) {
+    // THÊM DÒNG NÀY ĐỂ KHỞI TẠO TỐC ĐỘ 1.0x:
+    speedMultiplier = 1.0f;
     std::srand(std::time(0));
+    
 }
 
 AVLTree::~AVLTree() { clear(); }
@@ -370,8 +373,18 @@ void AVLTree::skipToLastStep() {
     applyStep(currentStep);
 }
 
-void AVLTree::increaseSpeed() { delay = std::max(0.1f, delay - 0.2f); }
-void AVLTree::decreaseSpeed() { delay = std::min(2.0f, delay + 0.2f); }
+// XÓA 2 HÀM CŨ VÀ THAY BẰNG ĐOẠN NÀY:
+void AVLTree::increaseSpeed() { 
+    speedMultiplier += 0.25f;
+    if (speedMultiplier > 3.0f) speedMultiplier = 3.0f; // Tối đa 3.0x
+    delay = 0.8f / speedMultiplier; 
+}
+
+void AVLTree::decreaseSpeed() { 
+    speedMultiplier -= 0.25f;
+    if (speedMultiplier < 0.25f) speedMultiplier = 0.25f; // Tối thiểu 0.25x
+    delay = 0.8f / speedMultiplier; 
+}
 
 void AVLTree::updateAnimation(float deltaTime) {
     if (snapshots.empty() || isPaused) return;
