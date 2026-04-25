@@ -72,6 +72,11 @@ public:
     void increaseSpeed();
     void decreaseSpeed();
 
+
+    // THÊM 2 DÒNG NÀY VÀO ĐÂY:
+    void skipToFirstStep();
+    void skipToLastStep();
+    // ... (các code cũ)
     void updatePosition(float deltaTime);
     void updateAnimation(float deltaTime); 
     void draw(sf::RenderWindow& window);
