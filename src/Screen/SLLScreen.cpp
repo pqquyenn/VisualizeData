@@ -45,7 +45,7 @@ SLLScreen::SLLScreen(App* app) : State(app) {
     textSpeed.setFont(app->font);
     textSpeed.setCharacterSize(16);
     textSpeed.setFillColor(sf::Color::White);
-    textSpeed.setPosition(590, 210); // Đặt bên phải nút ">>"
+    textSpeed.setPosition(590 + 20, 210); // Đặt bên phải nút ">>"
 
     sll = new SinglyLinkedList(app->font);
 }
