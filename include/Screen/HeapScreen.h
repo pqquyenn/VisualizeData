@@ -27,6 +27,10 @@ private:
     Button* btnStepForward;
     Button* btnSpeedUp;
 
+    // THÊM 2 NÚT NÀY (Nhảy về đầu và Nhảy tới cuối)
+    Button* btnSkipBack;    
+    Button* btnSkipForward;
+
     // Biến cho Camera (Pan & Zoom)
     sf::View treeView;
     sf::View uiView;

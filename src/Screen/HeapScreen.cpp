@@ -21,11 +21,14 @@ HeapScreen::HeapScreen(App* app) : State(app), isPanning(false), isViewInitializ
     btnDeleteMax = new Button(510, 80, 100, 40, app->font, "Delete");
     btnInit= new Button(630, 80, 100, 40, app->font, "Init");
     btnInitFromFile = new Button(750, 80, 100, 40, app->font, "Init File");
-    btnStepBack = new Button(200, 140, 40, 40, app->font, "<");
-    btnPausePlay = new Button(250, 140, 120, 40, app->font, "Pause/Play");
-    btnStepForward = new Button(380, 140, 40, 40, app->font, ">");
-    btnSpeedDown = new Button(430, 140, 50, 40, app->font, "<<");
-    btnSpeedUp = new Button(490, 140, 50, 40, app->font, ">>");
+
+    btnSpeedDown   = new Button(150, 140, 50, 40, app->font, "<<");
+    btnSkipBack    = new Button(190 + 20, 140, 40, 40, app->font, "|<"); // Nút mới
+    btnStepBack    = new Button(240 + 20, 140, 40, 40, app->font, "<");
+    btnPausePlay   = new Button(290 + 20, 140, 120, 40, app->font, "Pause/Play");
+    btnStepForward = new Button(420 + 20, 140, 40, 40, app->font, ">");
+    btnSkipForward = new Button(470 + 20, 140, 40, 40, app->font, ">|"); // Nút mới
+    btnSpeedUp     = new Button(520 + 20, 140, 50, 40, app->font, ">>");
 
 
     treeView.setSize(1280, 720); 
@@ -38,7 +41,8 @@ HeapScreen::~HeapScreen() {
     delete btnDeleteMax; delete btnInit; delete inputVal;
     delete btnSpeedDown; delete btnStepBack; delete btnPausePlay;
     delete btnStepForward; delete btnSpeedUp;
-
+    delete btnSkipBack; 
+    delete btnSkipForward;
     delete btnInitFromFile; // Nhớ xóa vùng nhớ
     delete btnSearch; // Nhớ xóa nút Search
 }
@@ -106,6 +110,8 @@ void HeapScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
     if (btnStepForward->isClicked(event, mousePosUI)) heapTree->stepForward();
     if (btnSpeedUp->isClicked(event, mousePosUI)) heapTree->increaseSpeed();
     if (btnSpeedDown->isClicked(event, mousePosUI)) heapTree->decreaseSpeed();
+    if (btnSkipForward->isClicked(event, mousePosUI)) heapTree->skipToLastStep();
+    if (btnSkipBack->isClicked(event, mousePosUI)) heapTree->skipToFirstStep();
 
     window.setView(treeView);
     
@@ -145,6 +151,8 @@ void HeapScreen::update(float deltaTime, sf::RenderWindow& window) {
     btnPausePlay->update(mousePosUI);
     btnStepForward->update(mousePosUI); 
     btnSpeedUp->update(mousePosUI);
+    btnSkipBack->update(mousePosUI); 
+    btnSkipForward->update(mousePosUI);
 
     heapTree->updateAnimation(deltaTime);
     heapTree->updatePosition(deltaTime); 
@@ -169,6 +177,8 @@ void HeapScreen::draw(sf::RenderWindow& window) {
     btnSearch->draw(window); // Vẽ nút Search
     btnSpeedDown->draw(window); btnStepBack->draw(window); btnPausePlay->draw(window);
     btnStepForward->draw(window); btnSpeedUp->draw(window);
+    btnSkipBack->draw(window); 
+    btnSkipForward->draw(window);
 }
 
 // 4. Cài đặt hàm vẽ khung Code góc dưới bên phải
