@@ -16,11 +16,13 @@ DijkstraScreen::DijkstraScreen(App* app) : State(app) {
     btnAdjList = new Button(570, 220, 120, 30, app->font, "Adj List");
     btnGoInput = new Button(700, 220, 60, 30, app->font, "Go");
 
-    btnStepBack    = new Button(530, 80, 40, 40, app->font, "<");          
-    btnPausePlay   = new Button(590, 80, 120, 40, app->font, "Pause/Play"); 
-    btnStepForward = new Button(730, 80, 40, 40, app->font, ">");          
-    btnSpeedDown   = new Button(790, 80, 50, 40, app->font, "<<");         
-    btnSpeedUp     = new Button(860, 80, 50, 40, app->font, ">>");         
+    btnSpeedDown   = new Button(530, 80, 50, 40, app->font, "<<");
+    btnSkipBack    = new Button(570, 80, 40, 40, app->font, "|<"); // Nút mới
+    btnStepBack    = new Button(610 + 20, 80, 40, 40, app->font, "<");
+    btnPausePlay   = new Button(650 + 20, 80, 120, 40, app->font, "Pause/Play");
+    btnStepForward = new Button(690 + 20, 80, 40, 40, app->font, ">");
+    btnSkipForward = new Button(730 + 20, 80, 40, 40, app->font, ">|"); // Nút mới
+    btnSpeedUp     = new Button(770 + 20, 80, 50, 40, app->font, ">>");    
 
     inputV = new InputBox(180, 140, 80, 40, app->font, 3); 
     inputE = new InputBox(310, 140, 80, 40, app->font, 3);
@@ -38,6 +40,7 @@ DijkstraScreen::~DijkstraScreen() {
     delete inputGraphData; delete btnEdgeList; delete btnAdjMatrix; delete btnAdjList; delete btnGoInput;
     delete inputV; delete inputE; delete btnGoRandom;
     delete inputSourceNode; delete btnRunDijkstraAction;
+    delete btnSkipBack; delete btnSkipForward;
     delete graph;
 
     delete btnStepBack; delete btnPausePlay; delete btnStepForward;
@@ -156,9 +159,10 @@ if (btnInputGraph->isClicked(event, mousePos)) {
         }
     }
 
-    if (btnPausePlay->isClicked(event, mousePos)) graph->togglePause();
+    if (btnSkipBack->isClicked(event, mousePos)) graph->skipToFirstStep();       // THÊM MỚI
     if (btnStepBack->isClicked(event, mousePos)) graph->stepBackward();
     if (btnStepForward->isClicked(event, mousePos)) graph->stepForward();
+    if (btnSkipForward->isClicked(event, mousePos)) graph->skipToLastStep();
     if (btnSpeedDown->isClicked(event, mousePos)) graph->decreaseSpeed();
     if (btnSpeedUp->isClicked(event, mousePos)) graph->increaseSpeed();
 }
@@ -182,6 +186,9 @@ void DijkstraScreen::update(float deltaTime, sf::RenderWindow& window) {
 
     btnStepBack->update(mousePos); btnPausePlay->update(mousePos); 
     btnStepForward->update(mousePos); btnSpeedDown->update(mousePos); btnSpeedUp->update(mousePos);
+    // Thêm update cho 2 nút mới
+    btnSkipBack->update(mousePos); 
+    btnSkipForward->update(mousePos);
     graph->update(deltaTime);
 }
 
@@ -219,7 +226,9 @@ void DijkstraScreen::draw(sf::RenderWindow& window) {
         labelSource.setCharacterSize(18); labelSource.setPosition(340, 150); labelSource.setFillColor(sf::Color::White);
         window.draw(labelSource);
     }
-    
+    // Thêm draw cho 2 nút mới
+    btnSkipBack->draw(window); 
+    btnSkipForward->draw(window);
     btnStepBack->draw(window); btnPausePlay->draw(window); 
     btnStepForward->draw(window); btnSpeedDown->draw(window); btnSpeedUp->draw(window);
 }

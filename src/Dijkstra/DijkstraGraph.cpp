@@ -290,6 +290,26 @@ void DijkstraGraph::stepBackward() {
     isPaused = true; timer = 0.0f;
     if (currentStep > 0) currentStep--;
 }
+
+// THÊM CODE NÀY VÀO TRONG FILE SinglyLinkedList.cpp
+void DijkstraGraph::skipToFirstStep() {
+    if (animationSteps.empty()) return;
+    
+    isPaused = true;  // Tự động Pause thuật toán
+    timer = 0.0f;     // Reset bộ đếm thời gian
+    
+    currentStep = 0;  // Nhảy về bước đầu tiên
+    // Không cần hàm applyStep vì hàm update() của đồ thị đã tự động render theo currentStep
+}
+
+void DijkstraGraph::skipToLastStep() {
+    if (animationSteps.empty()) return;
+    
+    isPaused = true;  // Tự động Pause thuật toán
+    timer = 0.0f;     // Reset bộ đếm thời gian
+    
+    currentStep = animationSteps.size() - 1; // Nhảy tới bước cuối cùng
+}
 void DijkstraGraph::increaseSpeed() { stepDuration = std::max(0.1f, stepDuration - 0.2f); }
 void DijkstraGraph::decreaseSpeed() { stepDuration = std::min(3.0f, stepDuration + 0.2f); }
 
