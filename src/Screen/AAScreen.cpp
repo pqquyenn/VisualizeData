@@ -91,12 +91,12 @@ void AAScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
     
     inputVal->handleEvent(event, mousePos); 
 
-    if (btnPausePlay->isClicked(event, mousePos)) aaTree->togglePause();
+    if (btnSkipBack->isClicked(event, mousePos)) aaTree->skipToFirstStep();       // THÊM MỚI
     if (btnStepBack->isClicked(event, mousePos)) aaTree->stepBackward();
     if (btnStepForward->isClicked(event, mousePos)) aaTree->stepForward();
+    if (btnSkipForward->isClicked(event, mousePos)) aaTree->skipToLastStep();
     if (btnSpeedDown->isClicked(event, mousePos)) aaTree->decreaseSpeed();
     if (btnSpeedUp->isClicked(event, mousePos)) aaTree->increaseSpeed();
-
 
     if (btnInsert->isClicked(event, mousePos) || btnSearch->isClicked(event, mousePos) || 
         btnDelete->isClicked(event, mousePos) || btnInit->isClicked(event, mousePos)) {
@@ -122,7 +122,7 @@ void AAScreen::update(float deltaTime, sf::RenderWindow& window) {
     btnSearch->update(mousePos); btnDelete->update(mousePos); btnInit->update(mousePos);
     btnStepBack->update(mousePos); btnPausePlay->update(mousePos); btnStepForward->update(mousePos);
     btnSpeedDown->update(mousePos); btnSpeedUp->update(mousePos); btnInitFromFile->update(mousePos);
-
+    btnSkipBack->update(mousePos); btnSkipForward->update(mousePos);
     aaTree->updateAnimation(deltaTime);
     aaTree->updatePosition(deltaTime);
 }
@@ -136,10 +136,12 @@ void AAScreen::draw(sf::RenderWindow& window) {
     btnBackToMenu->draw(window); inputVal->draw(window); 
     btnInsert->draw(window); btnSearch->draw(window); btnDelete->draw(window); 
     btnInit->draw(window); btnInitFromFile->draw(window); 
+
     
     drawCodeBlock(window); 
     btnStepBack->draw(window); btnPausePlay->draw(window); btnStepForward->draw(window);
     btnSpeedDown->draw(window); btnSpeedUp->draw(window);
+    btnSkipBack->draw(window); btnSkipForward->draw(window);
 }
 
 void AAScreen::drawCodeBlock(sf::RenderWindow& window) {
