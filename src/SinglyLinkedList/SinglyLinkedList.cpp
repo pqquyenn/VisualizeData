@@ -4,6 +4,8 @@
 #include <fstream>
 
 SinglyLinkedList::SinglyLinkedList(sf::Font& font) : head(nullptr), idCounter(0), font(font), currentStep(0), timer(0), delay(0.8f), isPaused(false) {
+    // THÊM DÒNG NÀY ĐỂ KHỞI TẠO TỐC ĐỘ MẶC ĐỊNH LÀ 1.0x
+    speedMultiplier = 1.0f;
     std::srand(std::time(0));
 
     codeBox.setFillColor(sf::Color(253, 246, 227)); // Màu be sáng
@@ -447,8 +449,19 @@ void SinglyLinkedList::updateAnimation(float deltaTime) {
     }
 }
 
-void SinglyLinkedList::increaseSpeed() { delay = std::max(0.1f, delay - 0.2f); }
-void SinglyLinkedList::decreaseSpeed() { delay = std::min(2.0f, delay + 0.2f); }
+void SinglyLinkedList::increaseSpeed() { 
+    speedMultiplier += 0.25f;
+    if (speedMultiplier > 3.0f) speedMultiplier = 3.0f; // Chặn tối đa ở mức 3.0x
+    
+    delay = 0.8f / speedMultiplier; // Tính lại delay dựa trên hệ số tốc độ
+}
+
+void SinglyLinkedList::decreaseSpeed() { 
+    speedMultiplier -= 0.25f;
+    if (speedMultiplier < 0.25f) speedMultiplier = 0.25f; // Chặn tối thiểu ở mức 0.25x
+    
+    delay = 0.8f / speedMultiplier; // Tính lại delay dựa trên hệ số tốc độ
+}
 
 
 void SinglyLinkedList::updatePosition(float deltaTime) {

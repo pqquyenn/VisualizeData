@@ -48,6 +48,8 @@ private:
     sf::Text codeText;
     std::vector<std::string> currentCode;
     int currentHighlight;
+    // THÊM DÒNG NÀY VÀO TRONG PHẦN PRIVATE:
+    float speedMultiplier;
 
     void saveSnapshot(const std::vector<std::string>& code = {}, int line = -1);
     void applyStep(size_t stepIndex);

@@ -184,8 +184,9 @@ void SLLScreen::update(float deltaTime, sf::RenderWindow& window) {
     float speedMultiplier = 0.8f / currentDelay;
     
     std::stringstream ss;
-    ss << "Speed: " << std::fixed << std::setprecision(1) << speedMultiplier << "x";
-    textSpeed.setString(ss.str());  
+    // Set precision(2) để hiển thị đẹp các số .25 và .75
+    ss << "Speed: " << std::fixed << std::setprecision(2) << speedMultiplier << "x";
+    textSpeed.setString(ss.str());
 
     // Thêm update cho 2 nút mới
     btnSkipBack->update(mousePos); 
