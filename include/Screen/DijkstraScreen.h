@@ -52,6 +52,8 @@ private:
     bool isPanning = false;
     sf::Vector2i oldMousePos;
     bool isViewInitialized = false;
+    // THÊM DÒNG NÀY ĐỂ KHAI BÁO TEXT
+    sf::Text textSpeed;
 
 public:
     DijkstraScreen(App* app);

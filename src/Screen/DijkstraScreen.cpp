@@ -3,6 +3,9 @@
 #include "MainMenu.h"
 #include <cmath>
 
+// THÊM 2 THƯ VIỆN NÀY ĐỂ FORMAT SỐ THẬP PHÂN
+#include <sstream>
+#include <iomanip>
 DijkstraScreen::DijkstraScreen(App* app) : State(app) {
     btnBackToMenu = new Button(20, 20, 110, 40, app->font, "Back Menu");
     
@@ -31,6 +34,11 @@ DijkstraScreen::DijkstraScreen(App* app) : State(app) {
     // UI Mới cho việc nhập Source Node
     inputSourceNode = new InputBox(410, 140, 60, 40, app->font, 3);
     btnRunDijkstraAction = new Button(480, 140, 60, 40, app->font, "Run");
+    // THÊM ĐOẠN NÀY VÀO ĐỂ KHỞI TẠO TEXT TỐC ĐỘ:
+    textSpeed.setFont(app->font);
+    textSpeed.setCharacterSize(16);
+    textSpeed.setFillColor(sf::Color::White);
+    textSpeed.setPosition(950, 90); // Đặt bên phải nút ">>"
 
     graph = new DijkstraGraph(app->font);
 }
@@ -184,6 +192,14 @@ void DijkstraScreen::update(float deltaTime, sf::RenderWindow& window) {
         btnRunDijkstraAction->update(mousePos);
     }
 
+    // Xoá đoạn code tính toán speedMultiplier cũ và THAY BẰNG ĐOẠN SAU:
+    float currentSpeed = graph->getSpeedMultiplier();
+    
+    std::stringstream ss;
+    // Set precision(2) để hiển thị đẹp các số .25 và .75
+    ss << "Speed: " << std::fixed << std::setprecision(2) << currentSpeed << "x";
+    textSpeed.setString(ss.str());
+
     btnStepBack->update(mousePos); btnPausePlay->update(mousePos); 
     btnStepForward->update(mousePos); btnSpeedDown->update(mousePos); btnSpeedUp->update(mousePos);
     // Thêm update cho 2 nút mới
@@ -231,4 +247,5 @@ void DijkstraScreen::draw(sf::RenderWindow& window) {
     btnSkipForward->draw(window);
     btnStepBack->draw(window); btnPausePlay->draw(window); 
     btnStepForward->draw(window); btnSpeedDown->draw(window); btnSpeedUp->draw(window);
+    window.draw(textSpeed);
 }
