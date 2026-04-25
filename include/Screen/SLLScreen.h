@@ -29,10 +29,14 @@ private:
     Button* btnSpeedDown;
     Button* btnSpeedUp;
 
+    // THÊM DÒNG NÀY ĐỂ KHAI BÁO TEXT
+    sf::Text textSpeed;
+
+    InputBox* inputVal;
+
     Button* btnSkipBack;    
     Button* btnSkipForward;
 
-    InputBox* inputVal;
     SinglyLinkedList* sll;
 
     sf::View listView;

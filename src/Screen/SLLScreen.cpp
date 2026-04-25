@@ -4,6 +4,10 @@
 #include <string>
 #include <exception>
 
+// THÊM 2 THƯ VIỆN NÀY ĐỂ FORMAT SỐ THẬP PHÂN
+#include <sstream>
+#include <iomanip>
+
 SLLScreen::SLLScreen(App* app) : State(app) {
     btnBackToMenu = new Button(20, 20, 110, 40, app->font, "Back Menu");
     inputVal = new InputBox(150, 80, 100, 40, app->font, 3);
@@ -33,6 +37,15 @@ SLLScreen::SLLScreen(App* app) : State(app) {
     btnStepForward = new Button(420, 200, 40, 40, app->font, ">");
     btnSkipForward = new Button(470, 200, 40, 40, app->font, ">|"); // Nút mới
     btnSpeedUp     = new Button(520, 200, 50, 40, app->font, ">>");
+
+    // Tìm đến phần khởi tạo các nút hàng 3 (y = 200), ngay dưới dòng khởi tạo btnSpeedUp:
+    btnSpeedUp     = new Button(520, 200, 50, 40, app->font, ">>");
+
+    // THÊM ĐOẠN NÀY VÀO ĐỂ KHỞI TẠO TEXT TỐC ĐỘ:
+    textSpeed.setFont(app->font);
+    textSpeed.setCharacterSize(16);
+    textSpeed.setFillColor(sf::Color::White);
+    textSpeed.setPosition(590, 210); // Đặt bên phải nút ">>"
 
     sll = new SinglyLinkedList(app->font);
 }
@@ -165,6 +178,15 @@ void SLLScreen::update(float deltaTime, sf::RenderWindow& window) {
     btnStepBack->update(mousePos); btnPausePlay->update(mousePos); btnStepForward->update(mousePos);
     btnSpeedDown->update(mousePos); btnSpeedUp->update(mousePos);
 
+    // THÊM ĐOẠN NÀY TRƯỚC KHI GỌI sll->updateAnimation:
+    // Tính toán tốc độ: delay mặc định là 0.8f tương đương 1.0x
+    float currentDelay = sll->getDelay();
+    float speedMultiplier = 0.8f / currentDelay;
+    
+    std::stringstream ss;
+    ss << "Speed: " << std::fixed << std::setprecision(1) << speedMultiplier << "x";
+    textSpeed.setString(ss.str());  
+
     // Thêm update cho 2 nút mới
     btnSkipBack->update(mousePos); 
     btnSkipForward->update(mousePos);
@@ -197,4 +219,6 @@ void SLLScreen::draw(sf::RenderWindow& window) {
     btnSkipForward->draw(window);
     btnStepBack->draw(window); btnPausePlay->draw(window); btnStepForward->draw(window);
     btnSpeedDown->draw(window); btnSpeedUp->draw(window);
+    // THÊM VÀO DÒNG NÀY Ở CUỐI CÙNG:
+    window.draw(textSpeed);
 }

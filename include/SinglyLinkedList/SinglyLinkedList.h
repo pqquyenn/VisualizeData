@@ -76,6 +76,8 @@ public:
     // THÊM 2 DÒNG NÀY VÀO ĐÂY:
     void skipToFirstStep();
     void skipToLastStep();
+    // THÊM DÒNG NÀY ĐỂ LẤY GIÁ TRỊ DELAY
+    float getDelay() const { return delay; }
     // ... (các code cũ)
     void updatePosition(float deltaTime);
     void updateAnimation(float deltaTime); 
