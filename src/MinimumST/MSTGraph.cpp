@@ -292,6 +292,25 @@ void MSTGraph::stepBackward() {
         currentStep--;
     }
 }
+
+void MSTGraph::skipToFirstStep() {
+    if (animationSteps.empty()) return;
+    
+    isPaused = true;  // Tự động Pause thuật toán
+    timer = 0.0f;     // Reset bộ đếm thời gian
+    
+    currentStep = 0;  // Nhảy về bước đầu tiên
+    // Không cần hàm applyStep vì hàm update() của đồ thị đã tự động render theo currentStep
+}
+
+void MSTGraph::skipToLastStep() {
+    if (animationSteps.empty()) return;
+    
+    isPaused = true;  // Tự động Pause thuật toán
+    timer = 0.0f;     // Reset bộ đếm thời gian
+    
+    currentStep = animationSteps.size() - 1; // Nhảy tới bước cuối cùng
+}
 void MSTGraph::increaseSpeed() {
     stepDuration = std::max(0.1f, stepDuration - 0.2f); // Nhanh nhất là 0.1s/bước
 }

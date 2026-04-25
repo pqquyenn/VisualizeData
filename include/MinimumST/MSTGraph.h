@@ -61,6 +61,10 @@ public:
     void increaseSpeed();
     void decreaseSpeed();
 
+        // THÊM 2 DÒNG NÀY VÀO ĐÂY:
+    void skipToFirstStep();
+    void skipToLastStep();
+
     void update(float dt);
     void draw(sf::RenderWindow& window);
     void handleEvent(const sf::Event& event, const sf::RenderWindow& window, const sf::View& view);
