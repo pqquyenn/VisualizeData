@@ -56,6 +56,9 @@ public:
     void stepBackward();
     void increaseSpeed();
     void decreaseSpeed();
+    // THÊM 2 DÒNG NÀY VÀO ĐÂY:
+    void skipToFirstStep();
+    void skipToLastStep();
     void togglePause() { isPaused = !isPaused; }
 
     // Xử lý đồ họa & Event

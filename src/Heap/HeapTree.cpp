@@ -275,6 +275,27 @@ void HeapTree::stepBackward() {
     }
 }
 
+// THÊM CODE NÀY VÀO TRONG FILE SinglyLinkedList.cpp
+void HeapTree::skipToFirstStep() {
+    if (snapshots.empty()) return;
+    
+    isPaused = true;  // Tự động Pause thuật toán
+    timer = 0.0f;     // Reset bộ đếm thời gian
+    
+    currentStep = 0;  // Nhảy về bước đầu tiên
+    applyStep(currentStep);
+}
+
+void HeapTree::skipToLastStep() {
+    if (snapshots.empty()) return;
+    
+    isPaused = true;  // Tự động Pause thuật toán
+    timer = 0.0f;     // Reset bộ đếm thời gian
+    
+    currentStep = snapshots.size() - 1; // Nhảy tới bước cuối cùng
+    applyStep(currentStep);
+}
+
 void HeapTree::increaseSpeed() { delay = std::max(0.1f, delay - 0.2f); } 
 void HeapTree::decreaseSpeed() { delay = std::min(2.0f, delay + 0.2f); } 
 
