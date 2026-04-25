@@ -4,6 +4,10 @@
 #include <iostream>
 #include <fstream>
 
+// THÊM 2 THƯ VIỆN NÀY ĐỂ FORMAT SỐ THẬP PHÂN
+#include <sstream>
+#include <iomanip>
+
 HeapScreen::HeapScreen(App* app) : State(app), isPanning(false), isViewInitialized(false) {
     if (!font.loadFromFile("C:\\Windows\\Fonts\\arial.ttf")) {
         if (!font.loadFromFile("external/ARIAL.TTF")) {
@@ -30,6 +34,11 @@ HeapScreen::HeapScreen(App* app) : State(app), isPanning(false), isViewInitializ
     btnSkipForward = new Button(470 + 20, 140, 40, 40, app->font, ">|"); // Nút mới
     btnSpeedUp     = new Button(520 + 20, 140, 50, 40, app->font, ">>");
 
+    textSpeed.setFont(app->font);
+    textSpeed.setCharacterSize(16);
+    textSpeed.setFillColor(sf::Color::White);
+    // Vị trí X = 600 để nằm bên phải nút ">>" (vì X của nút là 540, rộng 50)
+    textSpeed.setPosition(610, 150);
 
     treeView.setSize(1280, 720); 
     uiView.setSize(1280, 720);   
@@ -154,6 +163,11 @@ void HeapScreen::update(float deltaTime, sf::RenderWindow& window) {
     btnSkipBack->update(mousePosUI); 
     btnSkipForward->update(mousePosUI);
 
+    float currentSpeed = heapTree->getSpeedMultiplier();
+    std::stringstream ss;
+    ss << "Speed: " << std::fixed << std::setprecision(2) << currentSpeed << "x";
+    textSpeed.setString(ss.str());
+
     heapTree->updateAnimation(deltaTime);
     heapTree->updatePosition(deltaTime); 
 
@@ -179,6 +193,8 @@ void HeapScreen::draw(sf::RenderWindow& window) {
     btnStepForward->draw(window); btnSpeedUp->draw(window);
     btnSkipBack->draw(window); 
     btnSkipForward->draw(window);
+    // THÊM VÀO DÒNG NÀY Ở CUỐI CÙNG:
+    window.draw(textSpeed);
 }
 
 // 4. Cài đặt hàm vẽ khung Code góc dưới bên phải

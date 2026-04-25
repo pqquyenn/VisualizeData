@@ -31,6 +31,9 @@ private:
     Button* btnSkipBack;    
     Button* btnSkipForward;
 
+        // THÊM DÒNG NÀY ĐỂ KHAI BÁO TEXT
+    sf::Text textSpeed;
+
     // Biến cho Camera (Pan & Zoom)
     sf::View treeView;
     sf::View uiView;
