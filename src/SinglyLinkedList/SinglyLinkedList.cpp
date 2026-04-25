@@ -409,6 +409,27 @@ void SinglyLinkedList::stepBackward() {
     }
 }
 
+// THÊM CODE NÀY VÀO TRONG FILE SinglyLinkedList.cpp
+void SinglyLinkedList::skipToFirstStep() {
+    if (snapshots.empty()) return;
+    
+    isPaused = true;  // Tự động Pause thuật toán
+    timer = 0.0f;     // Reset bộ đếm thời gian
+    
+    currentStep = 0;  // Nhảy về bước đầu tiên
+    applyStep(currentStep);
+}
+
+void SinglyLinkedList::skipToLastStep() {
+    if (snapshots.empty()) return;
+    
+    isPaused = true;  // Tự động Pause thuật toán
+    timer = 0.0f;     // Reset bộ đếm thời gian
+    
+    currentStep = snapshots.size() - 1; // Nhảy tới bước cuối cùng
+    applyStep(currentStep);
+}
+
 void SinglyLinkedList::updateAnimation(float deltaTime) {
     if (snapshots.empty() || isPaused) return;
     timer += deltaTime;
