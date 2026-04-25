@@ -21,11 +21,13 @@ MSTScreen::MSTScreen(App* app) : State(app) {
 
     // Đặt dưới đoạn khởi tạo btnKruskal
 // Các nút Playback (Nối tiếp sau nút Kruskal)
-    btnStepBack    = new Button(530, 80, 40, 40, app->font, "<");           // 510 + 20 = 530
-    btnPausePlay   = new Button(590, 80, 120, 40, app->font, "Pause/Play"); // 570 + 20 = 590
-    btnStepForward = new Button(730, 80, 40, 40, app->font, ">");           // 710 + 20 = 730
-    btnSpeedDown   = new Button(790, 80, 50, 40, app->font, "<<");          // 770 + 20 = 790
-    btnSpeedUp     = new Button(860, 80, 50, 40, app->font, ">>");          // 840 + 20 = 860
+    btnSpeedDown   = new Button(530, 80, 40, 40, app->font, "<<");
+    btnSkipBack    = new Button(580, 80, 40, 40, app->font, "|<"); 
+    btnStepBack    = new Button(630, 80, 40, 40, app->font, "<");
+    btnPausePlay   = new Button(680, 80, 110, 40, app->font, "Pause/Play");
+    btnStepForward = new Button(800, 80, 40, 40, app->font, ">");
+    btnSkipForward = new Button(850, 80, 40, 40, app->font, ">|"); 
+    btnSpeedUp     = new Button(900, 80, 40, 40, app->font, ">>");      // 840 + 20 = 860
 // Bạn có thể chỉnh lại toạ độ Y (đang để 300) cho phù hợp với UI của bạn
 
     // UI Random hạ xuống Y = 140, fix toạ độ để không đè chữ V/E
@@ -41,7 +43,7 @@ MSTScreen::~MSTScreen() {
     delete inputGraphData; delete btnEdgeList; delete btnAdjMatrix; delete btnAdjList; delete btnGoInput;
     delete inputV; delete inputE; delete btnGoRandom;
     delete graph;
-
+    delete btnSkipBack; delete btnSkipForward;
     delete btnStepBack; delete btnPausePlay; delete btnStepForward;
     delete btnSpeedDown; delete btnSpeedUp;
     }
@@ -146,8 +148,10 @@ void MSTScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
     }
 
     if (btnPausePlay->isClicked(event, mousePos)) graph->togglePause();
+    if (btnSkipBack->isClicked(event, mousePos)) graph->skipToFirstStep();       // THÊM MỚI
     if (btnStepBack->isClicked(event, mousePos)) graph->stepBackward();
     if (btnStepForward->isClicked(event, mousePos)) graph->stepForward();
+    if (btnSkipForward->isClicked(event, mousePos)) graph->skipToLastStep();
     if (btnSpeedDown->isClicked(event, mousePos)) graph->decreaseSpeed();
     if (btnSpeedUp->isClicked(event, mousePos)) graph->increaseSpeed();
 }
@@ -204,4 +208,6 @@ void MSTScreen::draw(sf::RenderWindow& window) {
     }
     btnStepBack->draw(window); btnPausePlay->draw(window); 
     btnStepForward->draw(window); btnSpeedDown->draw(window); btnSpeedUp->draw(window);
+    btnSkipBack->draw(window); 
+    btnSkipForward->draw(window);
 }

@@ -29,6 +29,10 @@ private:
     Button* btnStepForward;
     Button* btnSpeedDown;
     Button* btnSpeedUp;
+
+        // THÊM 2 NÚT NÀY (Nhảy về đầu và Nhảy tới cuối)
+    Button* btnSkipBack;    
+    Button* btnSkipForward;
     int selectedInputType = 1;
 
     // UI Random Graph

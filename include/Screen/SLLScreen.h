@@ -37,6 +37,8 @@ private:
     Button* btnSkipBack;    
     Button* btnSkipForward;
 
+        // THÊM 2 NÚT NÀY (Nhảy về đầu và Nhảy tới cuối)
+
     SinglyLinkedList* sll;
 
     sf::View listView;
