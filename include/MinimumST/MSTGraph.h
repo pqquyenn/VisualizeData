@@ -40,6 +40,9 @@ private:
     bool isPaused = false;
     bool isAnimating = false;
 
+        // THÊM DÒNG NÀY VÀO TRONG PHẦN PRIVATE:
+    float speedMultiplier;
+
     void addNode(int id);
     void arrangeCircularLayout();
 
@@ -60,6 +63,9 @@ public:
     void stepBackward();
     void increaseSpeed();
     void decreaseSpeed();
+
+        // XoÁ HÀM getDelay() CŨ, THAY BẰNG HÀM NÀY:
+    float getSpeedMultiplier() const { return speedMultiplier; }
 
         // THÊM 2 DÒNG NÀY VÀO ĐÂY:
     void skipToFirstStep();

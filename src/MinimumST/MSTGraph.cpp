@@ -4,6 +4,7 @@
 #include <ctime>
 
 MSTGraph::MSTGraph(sf::Font& font) : font(font) {
+    speedMultiplier = 1.0f;
     std::srand(std::time(0));
 }
 
@@ -311,12 +312,18 @@ void MSTGraph::skipToLastStep() {
     
     currentStep = animationSteps.size() - 1; // Nhảy tới bước cuối cùng
 }
-void MSTGraph::increaseSpeed() {
-    stepDuration = std::max(0.1f, stepDuration - 0.2f); // Nhanh nhất là 0.1s/bước
+void MSTGraph::increaseSpeed() { 
+    speedMultiplier += 0.25f;
+    if (speedMultiplier > 3.0f) speedMultiplier = 3.0f; // Chặn tối đa ở mức 3.0x
+    
+    stepDuration = 0.8f / speedMultiplier; // Tính lại delay dựa trên hệ số tốc độ
 }
 
-void MSTGraph::decreaseSpeed() {
-    stepDuration = std::min(3.0f, stepDuration + 0.2f); // Chậm nhất là 3s/bước
+void MSTGraph::decreaseSpeed() { 
+    speedMultiplier -= 0.25f;
+    if (speedMultiplier < 0.25f) speedMultiplier = 0.25f; // Chặn tối thiểu ở mức 0.25x
+    
+    stepDuration = 0.8f / speedMultiplier; // Tính lại delay dựa trên hệ số tốc độ
 }
 // --- CẬP NHẬT HÀM UPDATE ---
 // --- CẬP NHẬT HÀM UPDATE ---
