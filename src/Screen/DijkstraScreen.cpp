@@ -16,13 +16,13 @@ DijkstraScreen::DijkstraScreen(App* app) : State(app) {
     btnAdjList = new Button(570, 220, 120, 30, app->font, "Adj List");
     btnGoInput = new Button(700, 220, 60, 30, app->font, "Go");
 
-    btnSpeedDown   = new Button(530, 80, 50, 40, app->font, "<<");
-    btnSkipBack    = new Button(570, 80, 40, 40, app->font, "|<"); // Nút mới
-    btnStepBack    = new Button(610 + 20, 80, 40, 40, app->font, "<");
-    btnPausePlay   = new Button(650 + 20, 80, 120, 40, app->font, "Pause/Play");
-    btnStepForward = new Button(690 + 20, 80, 40, 40, app->font, ">");
-    btnSkipForward = new Button(730 + 20, 80, 40, 40, app->font, ">|"); // Nút mới
-    btnSpeedUp     = new Button(770 + 20, 80, 50, 40, app->font, ">>");    
+    btnSpeedDown   = new Button(530, 80, 40, 40, app->font, "<<");
+    btnSkipBack    = new Button(580, 80, 40, 40, app->font, "|<"); 
+    btnStepBack    = new Button(630, 80, 40, 40, app->font, "<");
+    btnPausePlay   = new Button(680, 80, 110, 40, app->font, "Pause/Play");
+    btnStepForward = new Button(800, 80, 40, 40, app->font, ">");
+    btnSkipForward = new Button(850, 80, 40, 40, app->font, ">|"); 
+    btnSpeedUp     = new Button(900, 80, 40, 40, app->font, ">>");
 
     inputV = new InputBox(180, 140, 80, 40, app->font, 3); 
     inputE = new InputBox(310, 140, 80, 40, app->font, 3);
