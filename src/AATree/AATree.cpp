@@ -283,6 +283,26 @@ void AATree::stepBackward() {
         applyStep(currentStep);
     }
 }
+
+void AATree::skipToFirstStep() {
+    if (snapshots.empty()) return;
+    
+    isPaused = true;  // Tự động Pause thuật toán
+    timer = 0.0f;     // Reset bộ đếm thời gian
+    
+    currentStep = 0;  // Nhảy về bước đầu tiên
+    applyStep(currentStep);
+}
+
+void AATree::skipToLastStep() {
+    if (snapshots.empty()) return;
+    
+    isPaused = true;  // Tự động Pause thuật toán
+    timer = 0.0f;     // Reset bộ đếm thời gian
+    
+    currentStep = snapshots.size() - 1; // Nhảy tới bước cuối cùng
+    applyStep(currentStep);
+}
 void AATree::increaseSpeed() { delay = std::max(0.1f, delay - 0.2f); }
 void AATree::decreaseSpeed() { delay = std::min(2.0f, delay + 0.2f); }
 

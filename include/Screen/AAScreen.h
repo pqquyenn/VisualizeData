@@ -23,6 +23,10 @@ private:
     Button* btnSpeedDown;
     Button* btnSpeedUp;
 
+    // THÊM 2 NÚT NÀY (Nhảy về đầu và Nhảy tới cuối)
+    Button* btnSkipBack;    
+    Button* btnSkipForward;
+
     InputBox* inputVal;
     AATree* aaTree;
 

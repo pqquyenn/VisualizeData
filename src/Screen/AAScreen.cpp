@@ -18,11 +18,13 @@ AAScreen::AAScreen(App* app) : State(app) {
     btnInit = new Button(630, 80, 100, 40, app->font, "Init");
     btnInitFromFile = new Button(750, 80, 100, 40, app->font, "Init File");
 
-    btnStepBack = new Button(200, 140, 40, 40, app->font, "<");
-    btnPausePlay = new Button(250, 140, 120, 40, app->font, "Pause/Play");
-    btnStepForward = new Button(380, 140, 40, 40, app->font, ">");
-    btnSpeedDown = new Button(430, 140, 50, 40, app->font, "<<");
-    btnSpeedUp = new Button(490, 140, 50, 40, app->font, ">>");
+    btnSpeedDown   = new Button(150, 140, 50, 40, app->font, "<<");
+    btnSkipBack    = new Button(190 + 20, 140, 40, 40, app->font, "|<"); // Nút mới
+    btnStepBack    = new Button(240 + 20, 140, 40, 40, app->font, "<");
+    btnPausePlay   = new Button(290 + 20, 140, 120, 40, app->font, "Pause/Play");
+    btnStepForward = new Button(420 + 20, 140, 40, 40, app->font, ">");
+    btnSkipForward = new Button(470 + 20, 140, 40, 40, app->font, ">|"); // Nút mới
+    btnSpeedUp     = new Button(520 + 20, 140, 50, 40, app->font, ">>");
     
     aaTree = new AATree(app->font);
     
@@ -33,6 +35,7 @@ AAScreen::~AAScreen() {
     delete btnDelete; delete btnInit; delete inputVal;
     delete btnStepBack; delete btnPausePlay; delete btnStepForward;
     delete btnSpeedDown; delete btnSpeedUp; delete btnInitFromFile;
+    delete btnSkipBack; delete btnSkipForward;
     delete aaTree;
 }
 
@@ -93,6 +96,7 @@ void AAScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
     if (btnStepForward->isClicked(event, mousePos)) aaTree->stepForward();
     if (btnSpeedDown->isClicked(event, mousePos)) aaTree->decreaseSpeed();
     if (btnSpeedUp->isClicked(event, mousePos)) aaTree->increaseSpeed();
+
 
     if (btnInsert->isClicked(event, mousePos) || btnSearch->isClicked(event, mousePos) || 
         btnDelete->isClicked(event, mousePos) || btnInit->isClicked(event, mousePos)) {
