@@ -26,6 +26,9 @@ private:
     Button* btnSkipBack;    
     Button* btnSkipForward;
 
+    // THÊM DÒNG NÀY:
+    sf::Text textSpeed;
+
     InputBox* inputVal;
     AVLTree* avlTree;
 

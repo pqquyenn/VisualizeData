@@ -4,6 +4,10 @@
 #include <string>
 #include <exception>
 
+// THÊM 2 THƯ VIỆN NÀY:
+#include <sstream>
+#include <iomanip>
+
 AAScreen::AAScreen(App* app) : State(app) {
     btnBackToMenu = new Button(20, 20, 110, 40, app->font, "Back Menu");
     inputVal = new InputBox(150, 80, 100, 40, app->font, 3);
@@ -21,6 +25,7 @@ AAScreen::AAScreen(App* app) : State(app) {
     btnSpeedUp = new Button(490, 140, 50, 40, app->font, ">>");
     
     aaTree = new AATree(app->font);
+    
 }
 
 AAScreen::~AAScreen() {

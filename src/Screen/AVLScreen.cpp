@@ -4,6 +4,10 @@
 #include <string>
 #include <exception>
 
+// THÊM 2 THƯ VIỆN NÀY:
+#include <sstream>
+#include <iomanip>
+
 AVLScreen::AVLScreen(App* app) : State(app) {
     btnBackToMenu = new Button(20, 20, 110, 40, app->font, "Back Menu");
     inputVal = new InputBox(150, 80, 100, 40, app->font, 3);
@@ -30,6 +34,12 @@ AVLScreen::AVLScreen(App* app) : State(app) {
     btnStepForward = new Button(420 + 20, 140, 40, 40, app->font, ">");
     btnSkipForward = new Button(470 + 20, 140, 40, 40, app->font, ">|"); // Nút mới
     btnSpeedUp     = new Button(520 + 20, 140, 50, 40, app->font, ">>");
+    // THÊM ĐOẠN NÀY VÀO CUỐI CONSTRUCTOR:
+    textSpeed.setFont(app->font);
+    textSpeed.setCharacterSize(16);
+    textSpeed.setFillColor(sf::Color::White);
+    // Vị trí X = 600 để nằm bên phải nút ">>" (vì X của nút là 540, rộng 50)
+    textSpeed.setPosition(610, 150);
     avlTree = new AVLTree(app->font);
 }
 
@@ -151,6 +161,12 @@ void AVLScreen::update(float deltaTime, sf::RenderWindow& window) {
     // THÊM DÒNG NÀY ĐỂ UPDATE 2 NÚT MỚI:
     btnSkipBack->update(mousePos); btnSkipForward->update(mousePos);
 
+    // THÊM ĐOẠN NÀY ĐỂ LẤY VÀ FORMAT SỐ:
+    float currentSpeed = avlTree->getSpeedMultiplier();
+    std::stringstream ss;
+    ss << "Speed: " << std::fixed << std::setprecision(2) << currentSpeed << "x";
+    textSpeed.setString(ss.str());
+
     avlTree->updateAnimation(deltaTime);
     avlTree->updatePosition(deltaTime);
     btnInitFromFile->update(mousePos);
@@ -172,6 +188,8 @@ if (isViewInitialized) window.setView(treeView);
     drawCodeBlock(window); // Vẽ khung pseudo-code
     btnStepBack->draw(window); btnPausePlay->draw(window); btnStepForward->draw(window);
     btnSpeedDown->draw(window); btnSpeedUp->draw(window);
+    // THÊM VÀO CUỐI HÀM:
+    window.draw(textSpeed);
 }
 
 // 5. THÊM HÀM VẼ KHUNG CODE XUỐNG DƯỚI CÙNG
