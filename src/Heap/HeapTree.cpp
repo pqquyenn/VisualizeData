@@ -4,6 +4,8 @@
 #include <ctime>
 
 HeapTree::HeapTree(sf::Font& f) : font(f), currentStep(0), timer(0), delay(0.8f), isPaused(true), draggedNode(nullptr) {
+    // THÊM DÒNG NÀY ĐỂ KHỞI TẠO TỐC ĐỘ MẶC ĐỊNH LÀ 1.0x
+    speedMultiplier = 1.0f;
     std::srand(std::time(0));
 }
 
@@ -296,8 +298,19 @@ void HeapTree::skipToLastStep() {
     applyStep(currentStep);
 }
 
-void HeapTree::increaseSpeed() { delay = std::max(0.1f, delay - 0.2f); } 
-void HeapTree::decreaseSpeed() { delay = std::min(2.0f, delay + 0.2f); } 
+void HeapTree::increaseSpeed() { 
+    speedMultiplier += 0.25f;
+    if (speedMultiplier > 3.0f) speedMultiplier = 3.0f; // Chặn tối đa ở mức 3.0x
+    
+    delay = 0.8f / speedMultiplier; // Tính lại delay dựa trên hệ số tốc độ
+}
+
+void HeapTree::decreaseSpeed() { 
+    speedMultiplier -= 0.25f;
+    if (speedMultiplier < 0.25f) speedMultiplier = 0.25f; // Chặn tối thiểu ở mức 0.25x
+    
+    delay = 0.8f / speedMultiplier; // Tính lại delay dựa trên hệ số tốc độ
+}
 
 void HeapTree::updateAnimation(float deltaTime) {
     if (snapshots.empty() || isPaused) return;

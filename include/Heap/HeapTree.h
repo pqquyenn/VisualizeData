@@ -28,6 +28,8 @@ private:
     float timer;
     float delay;
     bool isPaused;
+    // THÊM DÒNG NÀY VÀO TRONG PHẦN PRIVATE:
+    float speedMultiplier;
     
     HeapNode* draggedNode; // Con trỏ lưu Node đang bị kéo thả
 
@@ -59,6 +61,8 @@ public:
     // THÊM 2 DÒNG NÀY VÀO ĐÂY:
     void skipToFirstStep();
     void skipToLastStep();
+    // XoÁ HÀM getDelay() CŨ, THAY BẰNG HÀM NÀY:
+    float getSpeedMultiplier() const { return speedMultiplier; }
     void togglePause() { isPaused = !isPaused; }
 
     // Xử lý đồ họa & Event
