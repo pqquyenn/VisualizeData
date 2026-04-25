@@ -34,6 +34,9 @@ private:
     void addNode(int id);
     void arrangeCircularLayout();
 
+    // THÊM DÒNG NÀY VÀO TRONG PHẦN PRIVATE:
+    float speedMultiplier;
+
 public:
     DijkstraGraph(sf::Font& font);
     ~DijkstraGraph();
@@ -50,12 +53,16 @@ public:
     void togglePause();
     void stepForward();
     void stepBackward();
-    void increaseSpeed();
-    void decreaseSpeed();
+
 
     // THÊM 2 DÒNG NÀY VÀO ĐÂY:
     void skipToFirstStep();
     void skipToLastStep();
+
+    void increaseSpeed();
+    void decreaseSpeed();
+    // XoÁ HÀM getDelay() CŨ, THAY BẰNG HÀM NÀY:
+    float getSpeedMultiplier() const { return speedMultiplier; }
     void update(float dt);
     void draw(sf::RenderWindow& window);
     void handleEvent(const sf::Event& event, const sf::RenderWindow& window, const sf::View& view);

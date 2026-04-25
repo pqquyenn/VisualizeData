@@ -5,6 +5,8 @@
 #include <queue> // Cần để dùng priority_queue
 
 DijkstraGraph::DijkstraGraph(sf::Font& font) : font(font) {
+    // THÊM DÒNG NÀY ĐỂ KHỞI TẠO TỐC ĐỘ MẶC ĐỊNH LÀ 1.0x
+    speedMultiplier = 1.0f;
     std::srand(std::time(0));
 }
 
@@ -310,8 +312,19 @@ void DijkstraGraph::skipToLastStep() {
     
     currentStep = animationSteps.size() - 1; // Nhảy tới bước cuối cùng
 }
-void DijkstraGraph::increaseSpeed() { stepDuration = std::max(0.1f, stepDuration - 0.2f); }
-void DijkstraGraph::decreaseSpeed() { stepDuration = std::min(3.0f, stepDuration + 0.2f); }
+void DijkstraGraph::increaseSpeed() { 
+    speedMultiplier += 0.25f;
+    if (speedMultiplier > 3.0f) speedMultiplier = 3.0f; // Chặn tối đa ở mức 3.0x
+    
+    stepDuration = 0.8f / speedMultiplier; // Tính lại delay dựa trên hệ số tốc độ
+}
+
+void DijkstraGraph::decreaseSpeed() { 
+    speedMultiplier -= 0.25f;
+    if (speedMultiplier < 0.25f) speedMultiplier = 0.25f; // Chặn tối thiểu ở mức 0.25x
+    
+    stepDuration = 0.8f / speedMultiplier; // Tính lại delay dựa trên hệ số tốc độ
+}
 
 void DijkstraGraph::update(float dt) {
     for (auto& pair : nodes) pair.second->update(dt);
