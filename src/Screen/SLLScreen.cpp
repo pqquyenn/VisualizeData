@@ -180,12 +180,12 @@ void SLLScreen::update(float deltaTime, sf::RenderWindow& window) {
 
     // THÊM ĐOẠN NÀY TRƯỚC KHI GỌI sll->updateAnimation:
     // Tính toán tốc độ: delay mặc định là 0.8f tương đương 1.0x
-    float currentDelay = sll->getDelay();
-    float speedMultiplier = 0.8f / currentDelay;
+// Xoá đoạn code tính toán speedMultiplier cũ và THAY BẰNG ĐOẠN SAU:
+    float currentSpeed = sll->getSpeedMultiplier();
     
     std::stringstream ss;
     // Set precision(2) để hiển thị đẹp các số .25 và .75
-    ss << "Speed: " << std::fixed << std::setprecision(2) << speedMultiplier << "x";
+    ss << "Speed: " << std::fixed << std::setprecision(2) << currentSpeed << "x";
     textSpeed.setString(ss.str());
 
     // Thêm update cho 2 nút mới
