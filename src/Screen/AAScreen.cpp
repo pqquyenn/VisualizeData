@@ -26,6 +26,11 @@ AAScreen::AAScreen(App* app) : State(app) {
     btnSkipForward = new Button(470 + 20, 140, 40, 40, app->font, ">|"); // Nút mới
     btnSpeedUp     = new Button(520 + 20, 140, 50, 40, app->font, ">>");
     
+    textSpeed.setFont(app->font);
+    textSpeed.setCharacterSize(16);
+    textSpeed.setFillColor(sf::Color::White);
+    // Vị trí X = 600 để nằm bên phải nút ">>" (vì X của nút là 540, rộng 50)
+    textSpeed.setPosition(610, 150);
     aaTree = new AATree(app->font);
     
 }
@@ -123,6 +128,12 @@ void AAScreen::update(float deltaTime, sf::RenderWindow& window) {
     btnStepBack->update(mousePos); btnPausePlay->update(mousePos); btnStepForward->update(mousePos);
     btnSpeedDown->update(mousePos); btnSpeedUp->update(mousePos); btnInitFromFile->update(mousePos);
     btnSkipBack->update(mousePos); btnSkipForward->update(mousePos);
+
+        // THÊM ĐOẠN NÀY ĐỂ LẤY VÀ FORMAT SỐ:
+    float currentSpeed = aaTree->getSpeedMultiplier();
+    std::stringstream ss;
+    ss << "Speed: " << std::fixed << std::setprecision(2) << currentSpeed << "x";
+    textSpeed.setString(ss.str());
     aaTree->updateAnimation(deltaTime);
     aaTree->updatePosition(deltaTime);
 }
@@ -142,6 +153,8 @@ void AAScreen::draw(sf::RenderWindow& window) {
     btnStepBack->draw(window); btnPausePlay->draw(window); btnStepForward->draw(window);
     btnSpeedDown->draw(window); btnSpeedUp->draw(window);
     btnSkipBack->draw(window); btnSkipForward->draw(window);
+        // THÊM VÀO CUỐI HÀM:
+    window.draw(textSpeed);
 }
 
 void AAScreen::drawCodeBlock(sf::RenderWindow& window) {

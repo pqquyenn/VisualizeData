@@ -26,6 +26,8 @@ private:
     // THÊM 2 NÚT NÀY (Nhảy về đầu và Nhảy tới cuối)
     Button* btnSkipBack;    
     Button* btnSkipForward;
+    // THÊM DÒNG NÀY ĐỂ KHAI BÁO TEXT
+    sf::Text textSpeed;
 
     InputBox* inputVal;
     AATree* aaTree;
