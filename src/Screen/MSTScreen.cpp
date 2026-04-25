@@ -3,6 +3,10 @@
 #include "MainMenu.h"
 #include <cmath>
 
+// THÊM 2 THƯ VIỆN NÀY ĐỂ FORMAT SỐ THẬP PHÂN
+#include <sstream>
+#include <iomanip>
+
 MSTScreen::MSTScreen(App* app) : State(app) {
     // Menu hạ xuống Y = 20
     btnBackToMenu = new Button(20, 20, 110, 40, app->font, "Back Menu");
@@ -34,6 +38,12 @@ MSTScreen::MSTScreen(App* app) : State(app) {
     inputV = new InputBox(180, 140, 80, 40, app->font, 3); 
     inputE = new InputBox(310, 140, 80, 40, app->font, 3);
     btnGoRandom = new Button(410, 140, 60, 40, app->font, "Go");
+
+        // THÊM ĐOẠN NÀY VÀO ĐỂ KHỞI TẠO TEXT TỐC ĐỘ:
+    textSpeed.setFont(app->font);
+    textSpeed.setCharacterSize(16);
+    textSpeed.setFillColor(sf::Color::White);
+    textSpeed.setPosition(950, 90); // Đặt bên phải nút ">>"
 
     graph = new MSTGraph(app->font);
 }
@@ -168,6 +178,14 @@ void MSTScreen::update(float deltaTime, sf::RenderWindow& window) {
     } else if (currentMode == UI_Mode::RANDOM_GRAPH) {
         btnGoRandom->update(mousePos);
     }
+    // Xoá đoạn code tính toán speedMultiplier cũ và THAY BẰNG ĐOẠN SAU:
+    float currentSpeed = graph->getSpeedMultiplier();
+    
+    std::stringstream ss;
+    // Set precision(2) để hiển thị đẹp các số .25 và .75
+    ss << "Speed: " << std::fixed << std::setprecision(2) << currentSpeed << "x";
+    textSpeed.setString(ss.str());
+
     btnStepBack->update(mousePos); btnPausePlay->update(mousePos); 
     btnStepForward->update(mousePos); btnSpeedDown->update(mousePos); btnSpeedUp->update(mousePos);
     graph->update(deltaTime);
@@ -210,4 +228,5 @@ void MSTScreen::draw(sf::RenderWindow& window) {
     btnStepForward->draw(window); btnSpeedDown->draw(window); btnSpeedUp->draw(window);
     btnSkipBack->draw(window); 
     btnSkipForward->draw(window);
+    window.draw(textSpeed);
 }
