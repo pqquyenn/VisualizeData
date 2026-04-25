@@ -53,7 +53,7 @@ private:
     void rightRotate(LogicalNode*& y);
     void leftRotate(LogicalNode*& x);
     
-    void insertRecursive(LogicalNode*& node, int key);
+    void insertRecursive(LogicalNode*& node, int key);  
     void deleteRecursive(LogicalNode*& node, int key);
     LogicalNode* minValueNode(LogicalNode* node);
     void searchRecursive(LogicalNode* node, int key);
@@ -96,6 +96,9 @@ public:
     void stepBackward();
     void increaseSpeed();
     void decreaseSpeed();
+    // THÊM 2 HÀM NÀY:
+    void skipToFirstStep(); 
+    void skipToLastStep();
 
     void updatePosition(float deltaTime);
     void updateAnimation(float deltaTime);

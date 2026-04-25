@@ -23,13 +23,14 @@ AVLScreen::AVLScreen(App* app) : State(app) {
     // btnSpeedUp     = new Button(580, 140, 50, 40, app->font, ">>");
 
 
-    btnSpeedDown   = new Button(150, 200, 50, 40, app->font, "<<");
-    btnSkipBack    = new Button(190 + 20, 200, 40, 40, app->font, "|<"); // Nút mới
-    btnStepBack    = new Button(240 + 20, 200, 40, 40, app->font, "<");
-    btnPausePlay   = new Button(290 + 20, 200, 120, 40, app->font, "Pause/Play");
-    btnStepForward = new Button(420 + 20, 200, 40, 40, app->font, ">");
-    btnSkipForward = new Button(470 + 20, 200, 40, 40, app->font, ">|"); // Nút mới
-    btnSpeedUp     = new Button(520 + 20, 200, 50, 40, app->font, ">>");
+    btnSpeedDown   = new Button(150, 140, 50, 40, app->font, "<<");
+    btnSkipBack    = new Button(190 + 20, 140, 40, 40, app->font, "|<"); // Nút mới
+    btnStepBack    = new Button(240 + 20, 140, 40, 40, app->font, "<");
+    btnPausePlay   = new Button(290 + 20, 140, 120, 40, app->font, "Pause/Play");
+    btnStepForward = new Button(420 + 20, 140, 40, 40, app->font, ">");
+    btnSkipForward = new Button(470 + 20, 140, 40, 40, app->font, ">|"); // Nút mới
+    btnSpeedUp     = new Button(520 + 20, 140, 50, 40, app->font, ">>");
+    avlTree = new AVLTree(app->font);
 }
 
 AVLScreen::~AVLScreen() {
@@ -113,10 +114,10 @@ if (!isViewInitialized) {
     // Playback logic
     if (btnPausePlay->isClicked(event, mousePos)) avlTree->togglePause();
     
-    // if (btnSkipBack->isClicked(event, mousePos)) avlTree->skipToFirstStep();       // THÊM MỚI
+    if (btnSkipBack->isClicked(event, mousePos)) avlTree->skipToFirstStep();       // THÊM MỚI
     if (btnStepBack->isClicked(event, mousePos)) avlTree->stepBackward();
     if (btnStepForward->isClicked(event, mousePos)) avlTree->stepForward();
-    // if (btnSkipForward->isClicked(event, mousePos)) avlTree->skipToLastStep();
+    if (btnSkipForward->isClicked(event, mousePos)) avlTree->skipToLastStep();
     if (btnSpeedDown->isClicked(event, mousePos)) avlTree->decreaseSpeed();
     if (btnSpeedUp->isClicked(event, mousePos)) avlTree->increaseSpeed();
 
@@ -147,6 +148,8 @@ void AVLScreen::update(float deltaTime, sf::RenderWindow& window) {
     btnSearch->update(mousePos); btnDelete->update(mousePos); btnInit->update(mousePos);
     btnStepBack->update(mousePos); btnPausePlay->update(mousePos); btnStepForward->update(mousePos);
     btnSpeedDown->update(mousePos); btnSpeedUp->update(mousePos);
+    // THÊM DÒNG NÀY ĐỂ UPDATE 2 NÚT MỚI:
+    btnSkipBack->update(mousePos); btnSkipForward->update(mousePos);
 
     avlTree->updateAnimation(deltaTime);
     avlTree->updatePosition(deltaTime);
@@ -162,6 +165,8 @@ if (isViewInitialized) window.setView(treeView);
     btnBackToMenu->draw(window); inputVal->draw(window); 
     btnInsert->draw(window); btnSearch->draw(window); btnDelete->draw(window); 
     btnInit->draw(window); btnInitFromFile->draw(window); // Vẽ Init File
+    // THÊM DÒNG NÀY ĐỂ VẼ 2 NÚT MỚI:
+    btnSkipBack->draw(window); btnSkipForward->draw(window);
     // ... Vẽ các nút Playback ...
     
     drawCodeBlock(window); // Vẽ khung pseudo-code
