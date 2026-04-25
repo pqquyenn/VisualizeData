@@ -30,16 +30,16 @@ SLLScreen::SLLScreen(App* app) : State(app) {
     // --- DỜI UI PLAYBACK XUỐNG DƯỚI (Hàng 3: y = 200) ---
 // --- DỜI UI PLAYBACK XUỐNG DƯỚI (Hàng 3: y = 200) ---
     // Cập nhật lại toạ độ X để nhét thêm 2 nút mới cho cân xứng
-    btnSpeedDown   = new Button(130, 200, 50, 40, app->font, "<<");
-    btnSkipBack    = new Button(190, 200, 40, 40, app->font, "|<"); // Nút mới
-    btnStepBack    = new Button(240, 200, 40, 40, app->font, "<");
-    btnPausePlay   = new Button(290, 200, 120, 40, app->font, "Pause/Play");
-    btnStepForward = new Button(420, 200, 40, 40, app->font, ">");
-    btnSkipForward = new Button(470, 200, 40, 40, app->font, ">|"); // Nút mới
-    btnSpeedUp     = new Button(520, 200, 50, 40, app->font, ">>");
+    btnSpeedDown   = new Button(150, 200, 50, 40, app->font, "<<");
+    btnSkipBack    = new Button(190 + 20, 200, 40, 40, app->font, "|<"); // Nút mới
+    btnStepBack    = new Button(240 + 20, 200, 40, 40, app->font, "<");
+    btnPausePlay   = new Button(290 + 20, 200, 120, 40, app->font, "Pause/Play");
+    btnStepForward = new Button(420 + 20, 200, 40, 40, app->font, ">");
+    btnSkipForward = new Button(470 + 20, 200, 40, 40, app->font, ">|"); // Nút mới
+    btnSpeedUp     = new Button(520 + 20, 200, 50, 40, app->font, ">>");
 
     // Tìm đến phần khởi tạo các nút hàng 3 (y = 200), ngay dưới dòng khởi tạo btnSpeedUp:
-    btnSpeedUp     = new Button(520, 200, 50, 40, app->font, ">>");
+    // btnSpeedUp     = new Button(520, 200, 50, 40, app->font, ">>");
 
     // THÊM ĐOẠN NÀY VÀO ĐỂ KHỞI TẠO TEXT TỐC ĐỘ:
     textSpeed.setFont(app->font);
