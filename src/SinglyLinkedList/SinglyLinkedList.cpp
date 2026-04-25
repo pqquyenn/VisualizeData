@@ -418,7 +418,7 @@ void SinglyLinkedList::skipToFirstStep() {
     
     currentStep = 0;  // Nhảy về bước đầu tiên
     applyStep(currentStep);
-}
+}   
 
 void SinglyLinkedList::skipToLastStep() {
     if (snapshots.empty()) return;

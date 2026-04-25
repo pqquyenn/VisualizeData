@@ -24,11 +24,15 @@ SLLScreen::SLLScreen(App* app) : State(app) {
     btnGoInsertIndex = new Button(470, 140, 50, 40, app->font, "Go");
 
     // --- DỜI UI PLAYBACK XUỐNG DƯỚI (Hàng 3: y = 200) ---
-    btnStepBack = new Button(200, 200, 40, 40, app->font, "<");
-    btnPausePlay = new Button(250, 200, 120, 40, app->font, "Pause/Play");
-    btnStepForward = new Button(380, 200, 40, 40, app->font, ">");
-    btnSpeedDown = new Button(430, 200, 50, 40, app->font, "<<");
-    btnSpeedUp = new Button(490, 200, 50, 40, app->font, ">>");
+// --- DỜI UI PLAYBACK XUỐNG DƯỚI (Hàng 3: y = 200) ---
+    // Cập nhật lại toạ độ X để nhét thêm 2 nút mới cho cân xứng
+    btnSpeedDown   = new Button(130, 200, 50, 40, app->font, "<<");
+    btnSkipBack    = new Button(190, 200, 40, 40, app->font, "|<"); // Nút mới
+    btnStepBack    = new Button(240, 200, 40, 40, app->font, "<");
+    btnPausePlay   = new Button(290, 200, 120, 40, app->font, "Pause/Play");
+    btnStepForward = new Button(420, 200, 40, 40, app->font, ">");
+    btnSkipForward = new Button(470, 200, 40, 40, app->font, ">|"); // Nút mới
+    btnSpeedUp     = new Button(520, 200, 50, 40, app->font, ">>");
 
     sll = new SinglyLinkedList(app->font);
 }
@@ -44,6 +48,10 @@ SLLScreen::~SLLScreen() {
     delete btnStepBack; delete btnPausePlay; delete btnStepForward;
     delete btnSpeedDown; delete btnSpeedUp;
     delete sll;
+
+    // Thêm 2 nút này vào phần delete
+    delete btnSkipBack; 
+    delete btnSkipForward;
 }
 
 void SLLScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
@@ -82,8 +90,11 @@ void SLLScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
     if (showIndexInput) inputIndex->handleEvent(event, mousePos); // Chỉ gõ được index khi nó hiện
 
     if (btnPausePlay->isClicked(event, mousePos)) sll->togglePause();
+    
+    if (btnSkipBack->isClicked(event, mousePos)) sll->skipToFirstStep();       // THÊM MỚI
     if (btnStepBack->isClicked(event, mousePos)) sll->stepBackward();
     if (btnStepForward->isClicked(event, mousePos)) sll->stepForward();
+    if (btnSkipForward->isClicked(event, mousePos)) sll->skipToLastStep();
     if (btnSpeedDown->isClicked(event, mousePos)) sll->decreaseSpeed();
     if (btnSpeedUp->isClicked(event, mousePos)) sll->increaseSpeed();
 
@@ -154,6 +165,10 @@ void SLLScreen::update(float deltaTime, sf::RenderWindow& window) {
     btnStepBack->update(mousePos); btnPausePlay->update(mousePos); btnStepForward->update(mousePos);
     btnSpeedDown->update(mousePos); btnSpeedUp->update(mousePos);
 
+    // Thêm update cho 2 nút mới
+    btnSkipBack->update(mousePos); 
+    btnSkipForward->update(mousePos);
+
     sll->updateAnimation(deltaTime);
     sll->updatePosition(deltaTime);
 }
@@ -177,7 +192,9 @@ void SLLScreen::draw(sf::RenderWindow& window) {
         inputIndex->draw(window);
         btnGoInsertIndex->draw(window);
     }
-
+    // Thêm draw cho 2 nút mới
+    btnSkipBack->draw(window); 
+    btnSkipForward->draw(window);
     btnStepBack->draw(window); btnPausePlay->draw(window); btnStepForward->draw(window);
     btnSpeedDown->draw(window); btnSpeedUp->draw(window);
 }
