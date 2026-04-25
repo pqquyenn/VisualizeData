@@ -23,12 +23,13 @@ AVLScreen::AVLScreen(App* app) : State(app) {
     // btnSpeedUp     = new Button(580, 140, 50, 40, app->font, ">>");
 
 
-    btnStepBack = new Button(200, 140, 40, 40, app->font, "<");
-    btnPausePlay = new Button(250, 140, 120, 40, app->font, "Pause/Play");
-    btnStepForward = new Button(380, 140, 40, 40, app->font, ">");
-    btnSpeedDown = new Button(430, 140, 50, 40, app->font, "<<");
-    btnSpeedUp = new Button(490, 140, 50, 40, app->font, ">>");
-    avlTree = new AVLTree(app->font);
+    btnSpeedDown   = new Button(150, 200, 50, 40, app->font, "<<");
+    btnSkipBack    = new Button(190 + 20, 200, 40, 40, app->font, "|<"); // Nút mới
+    btnStepBack    = new Button(240 + 20, 200, 40, 40, app->font, "<");
+    btnPausePlay   = new Button(290 + 20, 200, 120, 40, app->font, "Pause/Play");
+    btnStepForward = new Button(420 + 20, 200, 40, 40, app->font, ">");
+    btnSkipForward = new Button(470 + 20, 200, 40, 40, app->font, ">|"); // Nút mới
+    btnSpeedUp     = new Button(520 + 20, 200, 50, 40, app->font, ">>");
 }
 
 AVLScreen::~AVLScreen() {
@@ -37,6 +38,8 @@ AVLScreen::~AVLScreen() {
     delete btnStepBack; delete btnPausePlay; delete btnStepForward;
     delete btnSpeedDown; delete btnSpeedUp;
     delete avlTree;
+    delete btnSkipBack;
+    delete btnSkipForward;
     delete btnInitFromFile; // Nhớ xóa vùng nhớ
 }
 
@@ -109,8 +112,11 @@ if (!isViewInitialized) {
 
     // Playback logic
     if (btnPausePlay->isClicked(event, mousePos)) avlTree->togglePause();
+    
+    // if (btnSkipBack->isClicked(event, mousePos)) avlTree->skipToFirstStep();       // THÊM MỚI
     if (btnStepBack->isClicked(event, mousePos)) avlTree->stepBackward();
     if (btnStepForward->isClicked(event, mousePos)) avlTree->stepForward();
+    // if (btnSkipForward->isClicked(event, mousePos)) avlTree->skipToLastStep();
     if (btnSpeedDown->isClicked(event, mousePos)) avlTree->decreaseSpeed();
     if (btnSpeedUp->isClicked(event, mousePos)) avlTree->increaseSpeed();
 

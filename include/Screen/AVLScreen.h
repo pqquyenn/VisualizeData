@@ -23,6 +23,9 @@ private:
     Button* btnSpeedDown;
     Button* btnSpeedUp;
 
+    Button* btnSkipBack;    
+    Button* btnSkipForward;
+
     InputBox* inputVal;
     AVLTree* avlTree;
 
