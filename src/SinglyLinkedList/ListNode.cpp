@@ -38,6 +38,12 @@ void ListNode::draw(sf::RenderWindow& window) {
     }
 }
 
+void ListNode::setValue(int val) {
+    this->value = val;
+    // Cập nhật lại chuỗi số hiển thị trên màn hình
+    this->text.setString(std::to_string(val)); 
+}
+
 void ListNode::drawArrow(sf::RenderWindow& window, std::map<int, ListNode*>& allNodes) {
     if (!isActive || nextId == -1 || !allNodes.count(nextId) || !allNodes[nextId]->isActive) return;
 

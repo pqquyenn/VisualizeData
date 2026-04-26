@@ -85,9 +85,12 @@ void SinglyLinkedList::applyStep(size_t stepIndex) {
         vn->targetPos = info.pos;
         vn->targetColor = info.color;
         vn->nextId = info.nextId;
+        
+        // ---- THÊM DÒNG NÀY VÀO ĐÂY ----
+        // Bắt buộc VisualNode phải cập nhật lại số từ snapshot (nếu có thay đổi)
+        vn->setValue(info.value); 
     }
 }
-
 void SinglyLinkedList::initList(int n) {
     clear();
     std::vector<std::string> code = {

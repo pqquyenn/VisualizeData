@@ -37,6 +37,12 @@ private:
     Button* btnSkipBack;    
     Button* btnSkipForward;
 
+    // Tìm đến phần khai báo private trong SLLScreen.h và thêm vào:
+    Button* btnUpdate;
+    InputBox* inputUpdateIndex; 
+    Button* btnGoUpdate;
+    bool showUpdateInput = false;
+
         // THÊM 2 NÚT NÀY (Nhảy về đầu và Nhảy tới cuối)
 
     SinglyLinkedList* sll;

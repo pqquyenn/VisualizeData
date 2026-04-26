@@ -10,22 +10,31 @@
 
 SLLScreen::SLLScreen(App* app) : State(app) {
     btnBackToMenu = new Button(20, 20, 110, 40, app->font, "Back Menu");
-    inputVal = new InputBox(150, 80, 100, 40, app->font, 3);
+inputVal = new InputBox(150, 80, 100, 40, app->font, 3);
     
-    // Đổi tên nhãn Insert thành Ins Tail cho rõ ràng (tuỳ chọn)
-    btnInsert = new Button(270, 80, 100, 40, app->font, "Ins Tail");
-    btnSearch = new Button(390, 80, 100, 40, app->font, "Search");
-    btnDelete = new Button(510, 80, 100, 40, app->font, "Delete");
-    btnInit = new Button(630, 80, 100, 40, app->font, "Init");
-    btnInitFile = new Button(750, 80, 100, 40, app->font, "Init File");
+    // --- HÀNG 1: y = 80 ---
+    btnInsertHead = new Button(270, 80, 100, 40, app->font, "Ins Head");
+    btnInsert = new Button(390, 80, 100, 40, app->font, "Ins Tail");
+    btnSearch = new Button(510, 80, 100, 40, app->font, "Search");
+    btnDelete = new Button(630, 80, 100, 40, app->font, "Delete");
+    
+    // Tính năng Update mới
+    btnUpdate = new Button(750, 80, 100, 40, app->font, "Update");
+    
+    btnInit = new Button(870, 80, 100, 40, app->font, "Init");
+    btnInitFile = new Button(990, 80, 100, 40, app->font, "Init File");
+    
+    // Ins Index được đưa vào cuối cùng để popup không đè lên Playback
+    btnInsertIndex = new Button(1110, 80, 100, 40, app->font, "Ins Index");
 
-    // --- KHỞI TẠO UI MỚI (Hàng 2: y = 140) ---
-    btnInsertHead = new Button(150, 140, 100, 40, app->font, "Ins Head");
-    btnInsertIndex = new Button(270, 140, 100, 40, app->font, "Ins Index");
-    
-    // Ô inputIndex và nút Go (ẩn mặc định, sẽ được đặt cạnh Ins Index)
-    inputIndex = new InputBox(390, 140, 60, 40, app->font, 2); 
-    btnGoInsertIndex = new Button(470, 140, 50, 40, app->font, "Go");
+    // --- HÀNG 2 (Popup nhập vị trí): y = 140 ---
+    // Popup cho Update (nằm ngay dưới nút Update)
+    inputUpdateIndex = new InputBox(750, 140, 60, 40, app->font, 2); 
+    btnGoUpdate = new Button(820, 140, 50, 40, app->font, "Go");
+
+    // Popup cho Ins Index (nằm ngay dưới nút Ins Index)
+    inputIndex = new InputBox(1110, 140, 60, 40, app->font, 2); 
+    btnGoInsertIndex = new Button(1180, 140, 50, 40, app->font, "Go");
 
     // --- DỜI UI PLAYBACK XUỐNG DƯỚI (Hàng 3: y = 200) ---
 // --- DỜI UI PLAYBACK XUỐNG DƯỚI (Hàng 3: y = 200) ---
@@ -65,6 +74,7 @@ SLLScreen::~SLLScreen() {
     // Thêm 2 nút này vào phần delete
     delete btnSkipBack; 
     delete btnSkipForward;
+    delete btnUpdate; delete inputUpdateIndex; delete btnGoUpdate;
 }
 
 void SLLScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
@@ -99,8 +109,7 @@ void SLLScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
         return; 
     }
     
-    inputVal->handleEvent(event, mousePos); 
-    if (showIndexInput) inputIndex->handleEvent(event, mousePos); // Chỉ gõ được index khi nó hiện
+
 
     if (btnPausePlay->isClicked(event, mousePos)) sll->togglePause();
     
@@ -116,9 +125,38 @@ void SLLScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
         inputVal->clear();
     }
 
+    inputVal->handleEvent(event, mousePos); 
+    if (showIndexInput) inputIndex->handleEvent(event, mousePos); // Chỉ gõ được index khi nó hiện
+    if (showUpdateInput) inputUpdateIndex->handleEvent(event, mousePos);
+
     // Nút Bật/Tắt ô nhập Index
     if (btnInsertIndex->isClicked(event, mousePos)) {
         showIndexInput = !showIndexInput; 
+        showUpdateInput = false; // Tắt ô update nếu đang mở
+    }
+
+    // Xử lý bật/tắt ô nhập Update
+    if (btnUpdate->isClicked(event, mousePos)) {
+        showUpdateInput = !showUpdateInput;
+        showIndexInput = false; // Tắt ô insert index nếu đang mở
+    }
+
+    // Xử lý Update khi bấm nút Go
+    if (showUpdateInput && btnGoUpdate->isClicked(event, mousePos)) {
+        std::string valText = inputVal->getText();
+        std::string idxText = inputUpdateIndex->getText();
+        if (!valText.empty() && !idxText.empty()) {
+            try {
+                int value = std::stoi(valText);
+                int index = std::stoi(idxText);
+                sll->updateNode(value, index);
+                inputVal->clear();
+                inputUpdateIndex->clear();
+                showUpdateInput = false; // Ẩn UI sau khi chạy
+            } catch (const std::exception& e) {
+                inputVal->clear(); inputUpdateIndex->clear();
+            }
+        }
     }
 
     // Xử lý Insert Index khi bấm nút Go
@@ -177,6 +215,11 @@ void SLLScreen::update(float deltaTime, sf::RenderWindow& window) {
 
     btnStepBack->update(mousePos); btnPausePlay->update(mousePos); btnStepForward->update(mousePos);
     btnSpeedDown->update(mousePos); btnSpeedUp->update(mousePos);
+    btnUpdate->update(mousePos);
+    if (showUpdateInput) {
+        // inputUpdateIndex->update(mousePos);
+        btnGoUpdate->update(mousePos);
+    }
 
     // THÊM ĐOẠN NÀY TRƯỚC KHI GỌI sll->updateAnimation:
     // Tính toán tốc độ: delay mặc định là 0.8f tương đương 1.0x
@@ -220,6 +263,12 @@ void SLLScreen::draw(sf::RenderWindow& window) {
     btnSkipForward->draw(window);
     btnStepBack->draw(window); btnPausePlay->draw(window); btnStepForward->draw(window);
     btnSpeedDown->draw(window); btnSpeedUp->draw(window);
+    // Trong hàm draw(...):
+    btnUpdate->draw(window);
+    if (showUpdateInput) {
+        inputUpdateIndex->draw(window);
+        btnGoUpdate->draw(window);
+    }
     // THÊM VÀO DÒNG NÀY Ở CUỐI CÙNG:
     window.draw(textSpeed);
 }

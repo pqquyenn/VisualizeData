@@ -20,6 +20,7 @@ public:
 
     ListNode(int id, int val, sf::Font& font);
     void update(float dt);
+    void setValue(int val);
     void draw(sf::RenderWindow& window);
     void drawArrow(sf::RenderWindow& window, std::map<int, ListNode*>& allNodes);
 };
