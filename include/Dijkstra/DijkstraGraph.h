@@ -11,11 +11,15 @@ struct DijkstraEdge {
     sf::Color color = sf::Color(200, 200, 200); 
 };
 
-// --- Cấu trúc lưu trạng thái cho Animation Dijkstra ---
+// --- Cập nhật cấu trúc trạng thái để lưu thêm Code ---
 struct DijkstraState {
     std::vector<sf::Color> edgeColors;
     std::map<int, sf::Color> nodeColors;
     std::map<int, int> nodeCosts;
+    
+    // THÊM: Lưu snapshot của code
+    std::vector<std::string> codeLines;
+    int highlightLine = -1;
 };
 
 class DijkstraGraph {
@@ -34,8 +38,13 @@ private:
     void addNode(int id);
     void arrangeCircularLayout();
 
-    // THÊM DÒNG NÀY VÀO TRONG PHẦN PRIVATE:
     float speedMultiplier;
+
+    // THÊM CÁC BIẾN CHO GIAO DIỆN HIỂN THỊ CODE
+    sf::RectangleShape codeBox;
+    sf::Text codeText;
+    std::vector<std::string> currentCode;
+    int currentHighlight = -1;
 
 public:
     DijkstraGraph(sf::Font& font);
@@ -53,19 +62,18 @@ public:
     void togglePause();
     void stepForward();
     void stepBackward();
-
-
-    // THÊM 2 DÒNG NÀY VÀO ĐÂY:
     void skipToFirstStep();
     void skipToLastStep();
 
     void increaseSpeed();
     void decreaseSpeed();
-    // XoÁ HÀM getDelay() CŨ, THAY BẰNG HÀM NÀY:
     float getSpeedMultiplier() const { return speedMultiplier; }
+    
     void update(float dt);
     void draw(sf::RenderWindow& window);
-    void handleEvent(const sf::Event& event, const sf::RenderWindow& window, const sf::View& view);
+    // THÊM HÀM DRAW CODE
+    void drawCode(sf::RenderWindow& window); 
     
+    void handleEvent(const sf::Event& event, const sf::RenderWindow& window, const sf::View& view);
     bool isDraggingNode() const;
 };

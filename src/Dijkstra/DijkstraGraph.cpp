@@ -5,9 +5,17 @@
 #include <queue> // Cần để dùng priority_queue
 
 DijkstraGraph::DijkstraGraph(sf::Font& font) : font(font) {
-    // THÊM DÒNG NÀY ĐỂ KHỞI TẠO TỐC ĐỘ MẶC ĐỊNH LÀ 1.0x
     speedMultiplier = 1.0f;
     std::srand(std::time(0));
+
+    // THÊM: KHỞI TẠO GIAO DIỆN CODE
+    codeBox.setFillColor(sf::Color(253, 246, 227)); // Màu be sáng giống SLL
+    codeBox.setOutlineThickness(1.f);
+    codeBox.setOutlineColor(sf::Color::Black);
+
+    codeText.setFont(font);
+    codeText.setCharacterSize(15);
+    codeText.setFillColor(sf::Color::Black);
 }
 
 DijkstraGraph::~DijkstraGraph() { clear(); }
@@ -22,6 +30,10 @@ void DijkstraGraph::clear() {
     timer = 0.0f;   
     isPaused = false;
     isAnimating = false;
+
+    // THÊM: Xoá lịch sử code khi clear đồ thị
+    currentCode.clear();
+    currentHighlight = -1;
 }
 
 void DijkstraGraph::addNode(int id) {
@@ -149,6 +161,39 @@ bool DijkstraGraph::isDraggingNode() const {
     return false;
 }
 
+void DijkstraGraph::drawCode(sf::RenderWindow& window) {
+    if (currentCode.empty()) return;
+
+    // Chiều rộng để 450.f vì code Dijkstra dài hơn SLL một chút
+    float boxWidth = 450.f; 
+    float lineHeight = 24.f;
+    float boxHeight = currentCode.size() * lineHeight + 15.f; 
+    
+    sf::Vector2f viewSize = window.getDefaultView().getSize();
+    float boxX = viewSize.x - boxWidth - 30.f;
+    float boxY = viewSize.y - boxHeight - 30.f;
+
+    codeBox.setSize(sf::Vector2f(boxWidth, boxHeight));
+    codeBox.setPosition(boxX, boxY);
+    window.draw(codeBox); 
+
+    for (size_t i = 0; i < currentCode.size(); ++i) {
+        float lineY = boxY + 7.f + i * lineHeight;
+
+        if (static_cast<int>(i) == currentHighlight) {
+            sf::RectangleShape highlightRect;
+            highlightRect.setSize(sf::Vector2f(boxWidth, lineHeight));
+            highlightRect.setPosition(boxX, lineY);
+            highlightRect.setFillColor(sf::Color(255, 228, 181)); 
+            window.draw(highlightRect);
+        }
+
+        codeText.setString(currentCode[i]);
+        codeText.setPosition(boxX + 15.f, lineY + 2.f);
+        window.draw(codeText);
+    }
+}
+
 void DijkstraGraph::draw(sf::RenderWindow& window) {
     for (const auto& edge : edges) {
         sf::Vector2f posU = nodes[edge.u]->currentPos;
@@ -196,89 +241,120 @@ void DijkstraGraph::startDijkstra(int sourceId) {
     isPaused = false;
     isAnimating = true;
 
-    // reset màu cạnh mặc định trước khi chạy
     for(auto& edge : edges) edge.color = sf::Color(200, 200, 200);
+
+    // THÊM: Định nghĩa khối code thuật toán
+    std::vector<std::string> code = {
+        "dist[source] = 0; pq.push({0, source});",                    // 0
+        "while (!pq.empty()) {",                                      // 1
+        "    int u = pq.top().second; pq.pop();",                     // 2
+        "    if (visited[u]) continue;",                              // 3
+        "    visited[u] = true;",                                     // 4
+        "    for (edge : adj[u]) {",                                  // 5
+        "        int v = edge.to, w = edge.weight;",                  // 6
+        "        if (!visited[v] && dist[u] + w < dist[v]) {",        // 7
+        "            dist[v] = dist[u] + w;",                         // 8
+        "            pq.push({dist[v], v});",                         // 9
+        "        }",                                                  // 10
+        "    }",                                                      // 11
+        "}"                                                           // 12
+    };
 
     std::map<int, int> dist;
     std::map<int, int> parentEdge;
     std::map<int, bool> visited;
     
-    // Khởi tạo trạng thái ban đầu cho animation
     DijkstraState state;
-    state.edgeColors.assign(edges.size(), sf::Color(200, 200, 200)); // Xám
+    state.edgeColors.assign(edges.size(), sf::Color(200, 200, 200)); 
+    state.codeLines = code; // Nạp code vào state
     
     for (auto const& [id, node] : nodes) {
-        dist[id] = -1; // -1 đại diện cho INF
+        dist[id] = -1; 
         visited[id] = false;
         parentEdge[id] = -1;
-        state.nodeColors[id] = sf::Color(70, 130, 180); // Xanh bích (mặc định)
+        state.nodeColors[id] = sf::Color(70, 130, 180); 
         state.nodeCosts[id] = -1;
     }
     
     dist[sourceId] = 0;
     state.nodeCosts[sourceId] = 0;
-    animationSteps.push_back(state); // Bước 0
+    state.highlightLine = 0; // Highlight dòng 0
+    animationSteps.push_back(state); 
 
-    // Priority Queue: pair<distance, node_id>
     std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, std::greater<std::pair<int, int>>> pq;
     pq.push({0, sourceId});
 
     while (!pq.empty()) {
-        int u = pq.top().second;
-        int d = pq.top().first;
-        pq.pop();
-
-        if (dist[u] != -1 && d > dist[u]) continue; // Skip nếu đã tìm được đường ngắn hơn
-
-        visited[u] = true;
-
-        // 2. Highlight Node đang xét (Xanh lá)
-        state.nodeColors[u] = sf::Color::Green;
+        state.highlightLine = 1; // Highlight: while (!pq.empty())
         animationSteps.push_back(state);
 
-        // 3. Loang ra các đỉnh kề
+        int d = pq.top().first;
+        int u = pq.top().second;
+        pq.pop();
+
+        state.highlightLine = 2; // Highlight: pop
+        animationSteps.push_back(state);
+
+        state.highlightLine = 3; // Highlight: check visited
+        if (dist[u] != -1 && d > dist[u]) {
+            animationSteps.push_back(state);
+            continue; 
+        }
+
+        visited[u] = true;
+        state.nodeColors[u] = sf::Color::Green;
+        state.highlightLine = 4; // Highlight: visited = true
+        animationSteps.push_back(state);
+
+        state.highlightLine = 5; // Highlight: for edges
+        animationSteps.push_back(state);
+
         for (size_t i = 0; i < edges.size(); ++i) {
             int v = -1;
             if (edges[i].u == u) v = edges[i].v;
             else if (edges[i].v == u) v = edges[i].u;
 
             if (v != -1 && !visited[v]) {
-                // Đổi cạnh đang check sang Vàng
                 sf::Color oldEdgeColor = state.edgeColors[i];
-                state.edgeColors[i] = sf::Color::Yellow; // Cạnh đang check (Vàng)
+                state.edgeColors[i] = sf::Color::Yellow; 
+                state.highlightLine = 6; // Highlight: lấy cạnh
                 animationSteps.push_back(state);
 
                 int weight = edges[i].weight;
+                state.highlightLine = 7; // Highlight: if relax
+                animationSteps.push_back(state);
+
                 if (dist[v] == -1 || dist[u] + weight < dist[v]) {
-                    // Relax cạnh
                     dist[v] = dist[u] + weight;
                     state.nodeCosts[v] = dist[v];
                     
-                    // Nếu đã có cạnh cha trước đó, chuyển cạnh cũ về xám (hoặc màu gốc nếu là cây)
                     if (parentEdge[v] != -1) state.edgeColors[parentEdge[v]] = sf::Color(200, 200, 200);
                     parentEdge[v] = i;
+                    state.edgeColors[i] = sf::Color(255, 165, 0); 
                     
-                    // Highlight cạnh đường đi ngắn nhất tạm thời (Đổi từ Đỏ sang Cam sáng)
-                    //state.edgeColors[i] = sf::Color::Red; // Màu đỏ gốc - BỊ CHÓI MẮT
-                    state.edgeColors[i] = sf::Color(255, 165, 0); // Màu Cam sáng (255, 165, 0)
+                    state.highlightLine = 8; // Highlight: cập nhật khoảng cách
                     animationSteps.push_back(state);
 
                     pq.push({dist[v], v});
+                    state.highlightLine = 9; // Highlight: push pq
+                    animationSteps.push_back(state);
                 } else {
-                    // Trả lại màu cũ nếu không chọn
                     state.edgeColors[i] = oldEdgeColor;
                 }
             }
         }
 
-        // 4. Duyệt xong u, Node và cạnh cha chuyển sang màu Cam
-        //state.nodeColors[u] = sf::Color::Red; // Màu đỏ gốc - BỊ CHÓI MẮT
-        state.nodeColors[u] = sf::Color(210, 105, 30); // Màu Cam sậm hơn (Sienna) để dễ phân biệt với cạnh
+        state.nodeColors[u] = sf::Color(210, 105, 30); 
         if (parentEdge[u] != -1) {
-            state.edgeColors[parentEdge[u]] = sf::Color(255, 165, 0); // Giữ màu Cam sáng cho cạnh cha
+            state.edgeColors[parentEdge[u]] = sf::Color(255, 165, 0); 
         }
+        state.highlightLine = 12; // Highlight: End while
         animationSteps.push_back(state);
     }
+    
+    // Bước kết thúc: Xoá highlight
+    state.highlightLine = -1;
+    animationSteps.push_back(state);
 }
 
 void DijkstraGraph::togglePause() { isPaused = !isPaused; }
@@ -338,20 +414,21 @@ void DijkstraGraph::update(float dt) {
         }
     }
 
-    // Luôn áp dụng trạng thái đồ thị theo currentStep
     if (!animationSteps.empty() && currentStep < animationSteps.size()) {
         const auto& state = animationSteps[currentStep];
         
-        // Cập nhật màu cạnh
         for (size_t i = 0; i < edges.size(); ++i) {
             edges[i].color = state.edgeColors[i];
         }
         
-        // Cập nhật màu và cost cho Node
         for (auto& pair : nodes) {
             int id = pair.first;
             pair.second->currentColor = state.nodeColors.at(id);
             pair.second->setCost(state.nodeCosts.at(id));
         }
+
+        // THÊM: Cập nhật dòng code hiện tại từ state
+        currentCode = state.codeLines;
+        currentHighlight = state.highlightLine;
     }
 }

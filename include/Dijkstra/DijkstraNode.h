@@ -1,12 +1,12 @@
-#pragma once
-#include <SFML/Graphics.hpp>
-#include <string>
+    #pragma once
+    #include <SFML/Graphics.hpp>
+    #include <string>
 
 class DijkstraNode {
 public:
     int id;
     sf::CircleShape shape;
-    sf::Text text;       
+    sf::Text text;          
     
     int cost;            
     std::string costString; 
