@@ -26,22 +26,33 @@ struct DisjointSet {
     }
 };
 
+struct MSTState {
+    std::vector<sf::Color> edgeColors;
+    std::vector<std::string> codeLines;
+    int highlightLine = -1;
+};
+
 class MSTGraph {
 private:
     sf::Font& font;
     std::map<int, MSTNode*> nodes;
     std::vector<Edge> edges;
 
-    // --- Biến cho Animation Kruskal ---
-    std::vector<std::vector<sf::Color>> animationSteps; // Lưu trạng thái màu của các cạnh ở mỗi bước
+    // --- CẬP NHẬT: Thay đổi kiểu vector animationSteps ---
+    std::vector<MSTState> animationSteps; 
     int currentStep = 0;
     float timer = 0.0f;
-    float stepDuration = 1.0f; // Tốc độ mặc định (1 giây / bước)
+    float stepDuration = 1.0f; 
     bool isPaused = false;
     bool isAnimating = false;
 
-        // THÊM DÒNG NÀY VÀO TRONG PHẦN PRIVATE:
     float speedMultiplier;
+
+    // --- THÊM MỚI: Các biến cho giao diện hiển thị Code ---
+    sf::RectangleShape codeBox;
+    sf::Text codeText;
+    std::vector<std::string> currentCode;
+    int currentHighlight = -1;
 
     void addNode(int id);
     void arrangeCircularLayout();
@@ -56,7 +67,6 @@ public:
     bool buildFromAdjList(const std::string& input);
     void generateRandomGraph(int v, int e);
 
-    // --- Hàm điều khiển Kruskal và Playback ---
     void startKruskal();
     void togglePause();
     void stepForward();
@@ -64,16 +74,17 @@ public:
     void increaseSpeed();
     void decreaseSpeed();
 
-        // XoÁ HÀM getDelay() CŨ, THAY BẰNG HÀM NÀY:
     float getSpeedMultiplier() const { return speedMultiplier; }
 
-        // THÊM 2 DÒNG NÀY VÀO ĐÂY:
     void skipToFirstStep();
     void skipToLastStep();
 
     void update(float dt);
     void draw(sf::RenderWindow& window);
-    void handleEvent(const sf::Event& event, const sf::RenderWindow& window, const sf::View& view);
     
+    // --- THÊM MỚI: Hàm vẽ hộp Code ---
+    void drawCode(sf::RenderWindow& window);
+    
+    void handleEvent(const sf::Event& event, const sf::RenderWindow& window, const sf::View& view);
     bool isDraggingNode() const;
 };

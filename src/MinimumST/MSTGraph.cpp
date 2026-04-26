@@ -3,9 +3,23 @@
 #include <cstdlib>
 #include <ctime>
 
+#include "MSTGraph.h"
+#include <cmath>
+#include <cstdlib>
+#include <ctime>
+
 MSTGraph::MSTGraph(sf::Font& font) : font(font) {
     speedMultiplier = 1.0f;
     std::srand(std::time(0));
+
+    // --- THÊM: KHỞI TẠO GIAO DIỆN CODE ---
+    codeBox.setFillColor(sf::Color(253, 246, 227)); 
+    codeBox.setOutlineThickness(1.f);
+    codeBox.setOutlineColor(sf::Color::Black);
+
+    codeText.setFont(font);
+    codeText.setCharacterSize(15);
+    codeText.setFillColor(sf::Color::Black);
 }
 
 MSTGraph::~MSTGraph() { clear(); }
@@ -15,12 +29,15 @@ void MSTGraph::clear() {
     nodes.clear();
     edges.clear();
 
-    // --- THÊM PHẦN NÀY ĐỂ RESET ANIMATION KHI TẠO ĐỒ THỊ MỚI ---
     animationSteps.clear();
     currentStep = 0;
     timer = 0.0f;   
     isPaused = false;
     isAnimating = false;
+
+    // --- THÊM: Xoá lịch sử code khi clear đồ thị ---
+    currentCode.clear();
+    currentHighlight = -1;
 }
 
 void MSTGraph::addNode(int id) {
@@ -220,48 +237,94 @@ void MSTGraph::draw(sf::RenderWindow& window) {
 void MSTGraph::startKruskal() {
     if (edges.empty() || nodes.empty()) return;
 
-    // 1. Reset trạng thái
     animationSteps.clear();
     currentStep = 0;
     timer = 0.0f;
     isPaused = false;
     isAnimating = true;
 
-    // Reset màu tất cả cạnh về xám
     for (auto& e : edges) e.color = sf::Color(200, 200, 200);
 
-    // 2. Sắp xếp cạnh theo trọng số tăng dần (Cốt lõi của Kruskal)
+    // THÊM: Định nghĩa khối code thuật toán Kruskal
+    std::vector<std::string> code = {
+        "sort(edges.begin(), edges.end(), cmpWeight);",       // 0
+        "for (int i = 0; i < V; ++i) makeSet(i);",            // 1
+        "for (auto& edge : edges) {",                         // 2
+        "    int rootU = find(edge.u);",                      // 3
+        "    int rootV = find(edge.v);",                      // 4
+        "    if (rootU != rootV) {",                          // 5
+        "        unionSet(rootU, rootV);",                    // 6
+        "        addToMST(edge);",                            // 7
+        "    } else {",                                       // 8
+        "        ignore(edge);",                              // 9
+        "    }",                                              // 10
+        "}"                                                   // 11
+    };
+
+    MSTState state;
+    state.edgeColors.assign(edges.size(), sf::Color(200, 200, 200));
+    state.codeLines = code;
+
+    // Bước 0: Sắp xếp cạnh
     std::sort(edges.begin(), edges.end(), [](const Edge& a, const Edge& b) {
         return a.weight < b.weight;
     });
+    state.highlightLine = 0;
+    animationSteps.push_back(state);
 
-    // 3. Khởi tạo Union-Find
+    // Bước 1: Khởi tạo Disjoint Set
     DisjointSet ds;
     for (auto const& [id, node] : nodes) ds.makeSet(id);
+    state.highlightLine = 1;
+    animationSteps.push_back(state);
 
-    // Lưu bước 0: Trạng thái ban đầu sau khi đã sort cạnh
-    std::vector<sf::Color> currentState(edges.size(), sf::Color(200, 200, 200));
-    animationSteps.push_back(currentState);
-
-    // 4. Chạy thuật toán và lưu từng bước
     for (size_t i = 0; i < edges.size(); ++i) {
-        // Bước A: Đang xét cạnh này (Đổi màu Vàng)
-        currentState[i] = sf::Color::Yellow;
-        animationSteps.push_back(currentState);
+        // Bước 2: Vòng lặp for
+        state.highlightLine = 2;
+        animationSteps.push_back(state);
+
+        // Đang xét cạnh này (Đổi màu Vàng)
+        state.edgeColors[i] = sf::Color::Yellow;
+        
+        // Bước 3 & 4: Tìm root
+        state.highlightLine = 3;
+        animationSteps.push_back(state);
+        state.highlightLine = 4;
+        animationSteps.push_back(state);
 
         int rootU = ds.find(edges[i].u);
         int rootV = ds.find(edges[i].v);
 
+        // Bước 5: Kiểm tra root
+        state.highlightLine = 5;
+        animationSteps.push_back(state);
+
         if (rootU != rootV) {
-            // Bước B1: Không tạo chu trình -> Thêm vào MST (Đổi màu Xanh lá)
             ds.unionSet(rootU, rootV);
-            currentState[i] = sf::Color::Green;
+            
+            // Bước 6: Union
+            state.highlightLine = 6;
+            animationSteps.push_back(state);
+
+            // Bước 7: Thêm vào MST (Đổi màu Xanh lá)
+            state.edgeColors[i] = sf::Color::Green;
+            state.highlightLine = 7;
+            animationSteps.push_back(state);
         } else {
-            // Bước B2: Tạo chu trình -> Bỏ qua (Đổi màu Đỏ hoặc Xám đậm)
-            currentState[i] = sf::Color(100, 100, 100); // Xám đậm
+            // Bước 8: Else (Tạo chu trình)
+            state.highlightLine = 8;
+            animationSteps.push_back(state);
+
+            // Bước 9: Ignore (Bỏ qua, màu xám đậm)
+            state.edgeColors[i] = sf::Color(100, 100, 100); 
+            state.highlightLine = 9;
+            animationSteps.push_back(state);
         }
-        animationSteps.push_back(currentState);
     }
+    
+    // Kết thúc thuật toán
+    state.highlightLine = -1;
+    animationSteps.push_back(state);
 }
 
 // --- CÁC HÀM ĐIỀU KHIỂN PLAYBACK ---
@@ -319,6 +382,39 @@ void MSTGraph::increaseSpeed() {
     stepDuration = 0.8f / speedMultiplier; // Tính lại delay dựa trên hệ số tốc độ
 }
 
+// --- THÊM MỚI: HÀM DRAW CODE ---
+void MSTGraph::drawCode(sf::RenderWindow& window) {
+    if (currentCode.empty()) return;
+
+    float boxWidth = 400.f; 
+    float lineHeight = 24.f;
+    float boxHeight = currentCode.size() * lineHeight + 15.f; 
+    
+    sf::Vector2f viewSize = window.getDefaultView().getSize();
+    float boxX = viewSize.x - boxWidth - 30.f;
+    float boxY = viewSize.y - boxHeight - 30.f;
+
+    codeBox.setSize(sf::Vector2f(boxWidth, boxHeight));
+    codeBox.setPosition(boxX, boxY);
+    window.draw(codeBox); 
+
+    for (size_t i = 0; i < currentCode.size(); ++i) {
+        float lineY = boxY + 7.f + i * lineHeight;
+
+        if (static_cast<int>(i) == currentHighlight) {
+            sf::RectangleShape highlightRect;
+            highlightRect.setSize(sf::Vector2f(boxWidth, lineHeight));
+            highlightRect.setPosition(boxX, lineY);
+            highlightRect.setFillColor(sf::Color(255, 228, 181)); 
+            window.draw(highlightRect);
+        }
+
+        codeText.setString(currentCode[i]);
+        codeText.setPosition(boxX + 15.f, lineY + 2.f);
+        window.draw(codeText);
+    }
+}
+
 void MSTGraph::decreaseSpeed() { 
     speedMultiplier -= 0.25f;
     if (speedMultiplier < 0.25f) speedMultiplier = 0.25f; // Chặn tối thiểu ở mức 0.25x
@@ -331,7 +427,6 @@ void MSTGraph::decreaseSpeed() {
 void MSTGraph::update(float dt) {
     for (auto& pair : nodes) pair.second->update(dt);
 
-    // Xử lý Auto-Animation (chạy tự động)
     if (isAnimating && !isPaused) {
         timer += dt;
         if (timer >= stepDuration) {
@@ -339,18 +434,20 @@ void MSTGraph::update(float dt) {
             if (currentStep < animationSteps.size() - 1) {
                 currentStep++;
             } else {
-                // SỬA Ở ĐÂY: Dùng isPaused = true thay vì isAnimating = false
-                // Để nếu người dùng tua lại (stepBackward) và bấm Play, nó vẫn chạy tiếp được
                 isPaused = true; 
             }
         }
     }
 
-    // LUÔN LUÔN áp dụng màu sắc cho cạnh dựa trên bước hiện tại (currentStep)
-    // Kể cả khi đã pause hoặc đã chạy xong thuật toán
+    // --- CẬP NHẬT: Lấy cả màu và code từ struct MSTState ---
     if (!animationSteps.empty() && currentStep < animationSteps.size()) {
+        const auto& state = animationSteps[currentStep];
+        
         for (size_t i = 0; i < edges.size(); ++i) {
-            edges[i].color = animationSteps[currentStep][i];
+            edges[i].color = state.edgeColors[i];
         }
+
+        currentCode = state.codeLines;
+        currentHighlight = state.highlightLine;
     }
 }
