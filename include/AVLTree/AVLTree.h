@@ -112,6 +112,7 @@ public:
     
     // THÊM HÀM NÀY VÀO:
     bool isDraggingNode() const;
+    void updateVal(int oldVal, int newVal);
 
     float getSpeedMultiplier() const { return speedMultiplier; }
 };

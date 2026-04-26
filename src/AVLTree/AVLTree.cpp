@@ -422,6 +422,48 @@ void AVLTree::handleEvent(const sf::Event& event, const sf::RenderWindow& window
     }
 }
 
+void AVLTree::updateVal(int oldVal, int newVal) {
+    snapshots.clear();
+    currentStep = 0;
+
+    // Bước 1: Duyệt nhánh để kiểm tra xem oldVal có tồn tại trong cây không
+    bool exists = false;
+    LogicalNode* temp = root;
+    while (temp) {
+        if (temp->value == oldVal) { exists = true; break; }
+        if (oldVal < temp->value) temp = temp->left;
+        else temp = temp->right;
+    }
+
+    // Nếu giá trị cũ không tồn tại, chỉ chạy animation Search báo không tìm thấy
+    if (!exists) {
+        currentOpName = "Search";
+        resetColors(root);
+        saveSnapshot(-1);
+        searchRecursive(root, oldVal);
+        applyStep(0);
+        isPaused = false;
+        return;
+    }
+
+    // Nếu tồn tại, thực hiện liên hoàn Xoá node cũ -> Thêm node mới
+    currentOpName = "Delete";
+    resetColors(root);
+    saveSnapshot(-1);
+    deleteRecursive(root, oldVal);
+
+    currentOpName = "Insert";
+    resetColors(root);
+    saveSnapshot(-1);
+    insertRecursive(root, newVal);
+
+    resetColors(root);
+    saveSnapshot(-1);
+
+    applyStep(0);
+    isPaused = false;
+}
+
 bool AVLTree::isDraggingNode() const {
     for (const auto& pair : visualNodes) {
         if (pair.second->isActive && pair.second->isDragging) {
