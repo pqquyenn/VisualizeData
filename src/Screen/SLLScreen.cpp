@@ -10,51 +10,43 @@
 
 SLLScreen::SLLScreen(App* app) : State(app) {
     btnBackToMenu = new Button(20, 20, 110, 40, app->font, "Back Menu");
-inputVal = new InputBox(150, 80, 100, 40, app->font, 3);
     
-    // --- HÀNG 1: y = 80 ---
-    btnInsertHead = new Button(270, 80, 100, 40, app->font, "Ins Head");
-    btnInsert = new Button(390, 80, 100, 40, app->font, "Ins Tail");
-    btnSearch = new Button(510, 80, 100, 40, app->font, "Search");
-    btnDelete = new Button(630, 80, 100, 40, app->font, "Delete");
-    
-    // Tính năng Update mới
+    // --- HÀNG 1 (y = 80): Các thao tác chính liền mạch ---
+    inputVal = new InputBox(150, 80, 100, 40, app->font, 3);
+    btnSearch = new Button(270, 80, 100, 40, app->font, "Search");
+    btnDelete = new Button(390, 80, 100, 40, app->font, "Delete");
+    btnInit = new Button(510, 80, 100, 40, app->font, "Init");
+    btnInitFile = new Button(630, 80, 100, 40, app->font, "Init File");
     btnUpdate = new Button(750, 80, 100, 40, app->font, "Update");
-    
-    btnInit = new Button(870, 80, 100, 40, app->font, "Init");
-    btnInitFile = new Button(990, 80, 100, 40, app->font, "Init File");
-    
-    // Ins Index được đưa vào cuối cùng để popup không đè lên Playback
+    btnInsertHead = new Button(870, 80, 100, 40, app->font, "Ins Head");
+    btnInsert = new Button(990, 80, 100, 40, app->font, "Ins Tail");
     btnInsertIndex = new Button(1110, 80, 100, 40, app->font, "Ins Index");
 
-    // --- HÀNG 2 (Popup nhập vị trí): y = 140 ---
-    // Popup cho Update (nằm ngay dưới nút Update)
-    inputUpdateIndex = new InputBox(750, 140, 60, 40, app->font, 2); 
-    btnGoUpdate = new Button(820, 140, 50, 40, app->font, "Go");
+    // --- HÀNG 2 (y = 140): Playback Controls & Popups ---
+    
+    // 1. Cụm Playback (Đẩy lên y = 140, nằm bên trái để lấp khoảng trống)
+    btnSpeedDown   = new Button(150, 140, 50, 40, app->font, "<<");
+    btnSkipBack    = new Button(210, 140, 40, 40, app->font, "|<"); 
+    btnStepBack    = new Button(260, 140, 40, 40, app->font, "<");
+    btnPausePlay   = new Button(310, 140, 120, 40, app->font, "Pause/Play");
+    btnStepForward = new Button(440, 140, 40, 40, app->font, ">");
+    btnSkipForward = new Button(490, 140, 40, 40, app->font, ">|"); 
+    btnSpeedUp     = new Button(540, 140, 50, 40, app->font, ">>");
 
-    // Popup cho Ins Index (nằm ngay dưới nút Ins Index)
-    inputIndex = new InputBox(1110, 140, 60, 40, app->font, 2); 
-    btnGoInsertIndex = new Button(1180, 140, 50, 40, app->font, "Go");
-
-    // --- DỜI UI PLAYBACK XUỐNG DƯỚI (Hàng 3: y = 200) ---
-// --- DỜI UI PLAYBACK XUỐNG DƯỚI (Hàng 3: y = 200) ---
-    // Cập nhật lại toạ độ X để nhét thêm 2 nút mới cho cân xứng
-    btnSpeedDown   = new Button(150, 200, 50, 40, app->font, "<<");
-    btnSkipBack    = new Button(190 + 20, 200, 40, 40, app->font, "|<"); // Nút mới
-    btnStepBack    = new Button(240 + 20, 200, 40, 40, app->font, "<");
-    btnPausePlay   = new Button(290 + 20, 200, 120, 40, app->font, "Pause/Play");
-    btnStepForward = new Button(420 + 20, 200, 40, 40, app->font, ">");
-    btnSkipForward = new Button(470 + 20, 200, 40, 40, app->font, ">|"); // Nút mới
-    btnSpeedUp     = new Button(520 + 20, 200, 50, 40, app->font, ">>");
-
-    // Tìm đến phần khởi tạo các nút hàng 3 (y = 200), ngay dưới dòng khởi tạo btnSpeedUp:
-    // btnSpeedUp     = new Button(520, 200, 50, 40, app->font, ">>");
-
-    // THÊM ĐOẠN NÀY VÀO ĐỂ KHỞI TẠO TEXT TỐC ĐỘ:
+    // Chỉnh lại vị trí chữ hiển thị Tốc Độ cho thẳng hàng 2
     textSpeed.setFont(app->font);
     textSpeed.setCharacterSize(16);
     textSpeed.setFillColor(sf::Color::White);
-    textSpeed.setPosition(590 + 20, 210); // Đặt bên phải nút ">>"
+    textSpeed.setPosition(600, 150); 
+
+    // 2. Cụm Popup (Nằm ngay dưới nút tương ứng ở hàng 1)
+    // Popup Update (Dưới nút Update x = 750)
+    inputUpdateIndex = new InputBox(750, 140, 60, 40, app->font, 2); 
+    btnGoUpdate = new Button(820, 140, 50, 40, app->font, "Go");
+
+    // Popup Ins Index (Dưới nút Ins Index x = 1110)
+    inputIndex = new InputBox(1110, 140, 60, 40, app->font, 2); 
+    btnGoInsertIndex = new Button(1180, 140, 50, 40, app->font, "Go");
 
     sll = new SinglyLinkedList(app->font);
 }
