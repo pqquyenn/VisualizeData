@@ -46,6 +46,12 @@ private:
     Button* btnInitFromFile;
     Button* btnSearch; // Thêm nút Search
 
+    // THÊM VÀO PHẦN PRIVATE (Cùng chỗ với các Button khác):
+    Button* btnUpdate;
+    InputBox* inputUpdateVal; // Ô nhập giá trị cũ cần tìm
+    Button* btnGoUpdate;
+    bool showUpdateInput = false;
+
     // ... (các mảng codeInsert, codeDelete giữ nguyên)
 
     // Thêm mảng pseudo-code cho Search
