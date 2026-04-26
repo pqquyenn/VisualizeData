@@ -94,4 +94,5 @@ public:
     void draw(sf::RenderWindow& window);
     void handleEvent(const sf::Event& event, const sf::RenderWindow& window, const sf::View& view);
     bool isDraggingNode() const;
+    void updateVal(int oldVal, int newVal);
 };
