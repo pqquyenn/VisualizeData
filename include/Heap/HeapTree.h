@@ -82,4 +82,6 @@ public:
 
     // Thêm hàm Search
     void searchVal(int val);
+
+    void updateVal(int oldVal, int newVal);
 };

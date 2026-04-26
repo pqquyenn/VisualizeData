@@ -329,6 +329,63 @@ void HeapTree::updateAnimation(float deltaTime) {
     }
 }
 
+void HeapTree::updateVal(int oldVal, int newVal) {
+    snapshots.clear(); 
+    currentStep = 0; 
+    timer = 0;
+
+    // BƯỚC 1: Tìm kiếm giá trị cũ (Tái sử dụng hoạt ảnh Search)
+    saveSnapshot("Search", 0); // Highlight code: for loop
+    int targetIdx = -1;
+    
+    for (int i = 0; i < heapData.size(); ++i) {
+        saveSnapshotCompare(i, -1, "Search", 1);
+        if (heapData[i] == oldVal) {
+            targetIdx = i;
+            
+            // Highlight màu xanh lá báo tìm thấy
+            HeapSnapshot snap;
+            calculateLayout(snap.nodes);
+            snap.nodes[i].color = sf::Color(50, 205, 50); 
+            snap.operation = "Search";
+            snap.activeLine = 2; // Highlight code: return i;
+            snapshots.push_back(snap);
+            break;
+        }
+    }
+
+    // BƯỚC 2: Xử lý nếu không tìm thấy
+    if (targetIdx == -1) {
+        saveSnapshot("Search", 3); // Highlight code: return -1;
+        applyStep(0); 
+        isPaused = false;
+        return;
+    }
+
+    // BƯỚC 3: Cập nhật giá trị
+    heapData[targetIdx] = newVal;
+    
+    // Đổi màu Node thành cam để chú ý trước khi vun đống (Heapify)
+    HeapSnapshot snapUpdate;
+    calculateLayout(snapUpdate.nodes);
+    snapUpdate.nodes[targetIdx].color = sf::Color(255, 165, 0); 
+    snapUpdate.operation = (newVal > oldVal) ? "Insert" : "Delete"; 
+    snapUpdate.activeLine = -1; 
+    snapshots.push_back(snapUpdate);
+
+    // BƯỚC 4: Phục hồi tính chất Max Heap
+    if (newVal > oldVal) {
+        // Tăng giá trị -> Có nguy cơ lớn hơn cha -> Vun lên (Sift Up)
+        heapifyUp(targetIdx); 
+    } else if (newVal < oldVal) {
+        // Giảm giá trị -> Có nguy cơ nhỏ hơn con -> Vun xuống (Sift Down)
+        heapifyDown(targetIdx);
+    }
+
+    applyStep(0); 
+    isPaused = false;
+}
+
 void HeapTree::updatePosition(float deltaTime) {
     for (auto node : visualNodes) {
         node->update(deltaTime);
