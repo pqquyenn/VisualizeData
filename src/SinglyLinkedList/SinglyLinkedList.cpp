@@ -473,6 +473,56 @@ void SinglyLinkedList::draw(sf::RenderWindow& window) {
     for (auto& pair : visualNodes) pair.second->draw(window);
 }
 
+void SinglyLinkedList::updateNode(int val, int index) {
+    if (!head) return;
+
+    std::vector<std::string> code = {
+        "Node* curr = head;",
+        "for (int i = 0; i < index && curr != NULL; i++)",
+        "    curr = curr->next;",
+        "if (curr == NULL) return;",
+        "curr->value = newVal;"
+    };
+    snapshots.clear(); currentStep = 0;
+    resetColors(); saveSnapshot(code, -1);
+
+    LogicalNode* curr = head;
+    saveSnapshot(code, 0);
+
+    // Duyệt tìm vị trí index (index 0 sẽ không chạy vòng lặp, curr = head)
+    for (int i = 0; i < index && curr != nullptr; i++) {
+        curr->color = sf::Color(255, 165, 0); // Highlight cam khi duyệt qua
+        saveSnapshot(code, 1);
+        
+        curr->color = sf::Color(169, 169, 169); // Xám lại sau khi qua
+        curr = curr->next;
+        saveSnapshot(code, 2);
+    }
+
+    // Nếu index vượt quá độ dài danh sách
+    if (curr == nullptr) {
+        saveSnapshot(code, 3);
+        applyStep(0);
+        isPaused = false;
+        return;
+    }
+
+    // Highlight node mục tiêu
+    curr->color = sf::Color(255, 165, 0); 
+    saveSnapshot(code, 1); 
+    saveSnapshot(code, 3); // Check (curr == NULL) -> False
+
+    // Cập nhật giá trị
+    curr->value = val;
+    curr->color = sf::Color(50, 205, 50); // Highlight xanh lá báo thành công
+    saveSnapshot(code, 4);
+
+    resetColors();
+    saveSnapshot(code, -1);
+
+    applyStep(0);
+    isPaused = false;
+}
 
 
 void SinglyLinkedList::drawCode(sf::RenderWindow& window) {

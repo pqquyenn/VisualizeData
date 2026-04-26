@@ -87,6 +87,7 @@ public:
     void draw(sf::RenderWindow& window);
     void drawCode(sf::RenderWindow& window); 
 
+    void updateNode(int val, int index);
     // Tìm đến block public trong class SinglyLinkedList và thêm vào 2 dòng sau:
     void insertAtHead(int val);
     void insertAtIndex(int val, int index);
