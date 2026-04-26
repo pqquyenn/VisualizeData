@@ -22,6 +22,11 @@ private:
     Button* btnStepForward;
     Button* btnSpeedDown;
     Button* btnSpeedUp;
+    // THÊM VÀO PHẦN PRIVATE:
+    Button* btnUpdate;
+    InputBox* inputUpdateVal; // Ô nhập giá trị cũ cần tìm
+    Button* btnGoUpdate;
+    bool showUpdateInput = false;
 
     Button* btnSkipBack;    
     Button* btnSkipForward;
@@ -83,6 +88,7 @@ public:
     void update(float deltaTime, sf::RenderWindow& window) override;
     void draw(sf::RenderWindow& window) override;
         // THÊM HÀM VẼ KHUNG CODE
+        
 
     void drawCodeBlock(sf::RenderWindow& window);
 };

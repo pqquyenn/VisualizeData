@@ -10,36 +10,37 @@
 
 AVLScreen::AVLScreen(App* app) : State(app) {
     btnBackToMenu = new Button(20, 20, 110, 40, app->font, "Back Menu");
-    inputVal = new InputBox(150, 80, 100, 40, app->font, 3);
     
+    // --- HÀNG 1 (y = 80): Các thao tác chính ---
+    inputVal = new InputBox(150, 80, 100, 40, app->font, 3);
     btnInsert = new Button(270, 80, 100, 40, app->font, "Insert");
     btnSearch = new Button(390, 80, 100, 40, app->font, "Search");
     btnDelete = new Button(510, 80, 100, 40, app->font, "Delete");
     btnInit = new Button(630, 80, 100, 40, app->font, "Init");
     btnInitFromFile = new Button(750, 80, 100, 40, app->font, "Init File");
+    
+    // Đưa Update về cuối hàng (x = 870)
+    btnUpdate = new Button(870, 80, 100, 40, app->font, "Update"); 
 
-    // --- Đã sửa: Sắp xếp lại thứ tự và căn lề hoàn hảo cho các nút Playback ---
-    // Khối nút trải dài từ X = 250 đến 630, cách nhau 15 pixel
-    // btnSpeedDown   = new Button(250, 140, 50, 40, app->font, "<<");
-    // btnStepBack    = new Button(315, 140, 50, 40, app->font, "<");
-    // btnPausePlay   = new Button(380, 140, 120, 40, app->font, "Pause/Play");
-    // btnStepForward = new Button(515, 140, 50, 40, app->font, ">");
-    // btnSpeedUp     = new Button(580, 140, 50, 40, app->font, ">>");
-
-
+    // --- HÀNG 2 (y = 140): Playback & Popups ---
     btnSpeedDown   = new Button(150, 140, 50, 40, app->font, "<<");
-    btnSkipBack    = new Button(190 + 20, 140, 40, 40, app->font, "|<"); // Nút mới
-    btnStepBack    = new Button(240 + 20, 140, 40, 40, app->font, "<");
-    btnPausePlay   = new Button(290 + 20, 140, 120, 40, app->font, "Pause/Play");
-    btnStepForward = new Button(420 + 20, 140, 40, 40, app->font, ">");
-    btnSkipForward = new Button(470 + 20, 140, 40, 40, app->font, ">|"); // Nút mới
-    btnSpeedUp     = new Button(520 + 20, 140, 50, 40, app->font, ">>");
-    // THÊM ĐOẠN NÀY VÀO CUỐI CONSTRUCTOR:
+    btnSkipBack    = new Button(210, 140, 40, 40, app->font, "|<"); 
+    btnStepBack    = new Button(260, 140, 40, 40, app->font, "<");
+    btnPausePlay   = new Button(310, 140, 120, 40, app->font, "Pause/Play");
+    btnStepForward = new Button(440, 140, 40, 40, app->font, ">");
+    btnSkipForward = new Button(490, 140, 40, 40, app->font, ">|"); 
+    btnSpeedUp     = new Button(540, 140, 50, 40, app->font, ">>");
+
     textSpeed.setFont(app->font);
     textSpeed.setCharacterSize(16);
     textSpeed.setFillColor(sf::Color::White);
-    // Vị trí X = 600 để nằm bên phải nút ">>" (vì X của nút là 540, rộng 50)
-    textSpeed.setPosition(610, 150);
+    textSpeed.setPosition(600, 150); 
+
+    // --- SỬA LẠI TOẠ ĐỘ Ở ĐÂY ---
+    // Popup cho Update dời theo nút Update (Nằm ngay dưới nút Update x = 870)
+    inputUpdateVal = new InputBox(870, 140, 60, 40, app->font, 3); 
+    btnGoUpdate = new Button(940, 140, 50, 40, app->font, "Go");
+
     avlTree = new AVLTree(app->font);
 }
 
@@ -52,6 +53,7 @@ AVLScreen::~AVLScreen() {
     delete btnSkipBack;
     delete btnSkipForward;
     delete btnInitFromFile; // Nhớ xóa vùng nhớ
+    delete btnUpdate; delete inputUpdateVal; delete btnGoUpdate;
 }
 
 void AVLScreen::handleEvent(sf::Event& event, sf::RenderWindow& window) {
@@ -121,6 +123,32 @@ if (!isViewInitialized) {
     
     inputVal->handleEvent(event, mousePos); 
 
+    if (showUpdateInput) inputUpdateVal->handleEvent(event, mousePos);
+
+    // Bật tắt Popup Update
+    if (btnUpdate->isClicked(event, mousePos)) {
+        showUpdateInput = !showUpdateInput;
+    }
+
+    // Xử lý khi nhấn nút Go của Update
+    if (showUpdateInput && btnGoUpdate->isClicked(event, mousePos)) {
+        std::string newText = inputVal->getText(); // Giá trị mới (ô đầu hàng)
+        std::string oldText = inputUpdateVal->getText(); // Giá trị cũ cần tìm (ô dưới Update)
+        
+        if (!newText.empty() && !oldText.empty()) {
+            try {
+                int newVal = std::stoi(newText);
+                int oldVal = std::stoi(oldText);
+                avlTree->updateVal(oldVal, newVal);
+                inputVal->clear();
+                inputUpdateVal->clear();
+                showUpdateInput = false;
+            } catch (const std::exception& e) {
+                inputVal->clear(); inputUpdateVal->clear();
+            }
+        }
+    }
+
     // Playback logic
     if (btnPausePlay->isClicked(event, mousePos)) avlTree->togglePause();
     
@@ -158,6 +186,13 @@ void AVLScreen::update(float deltaTime, sf::RenderWindow& window) {
     btnSearch->update(mousePos); btnDelete->update(mousePos); btnInit->update(mousePos);
     btnStepBack->update(mousePos); btnPausePlay->update(mousePos); btnStepForward->update(mousePos);
     btnSpeedDown->update(mousePos); btnSpeedUp->update(mousePos);
+
+    // Trong hàm AVLScreen::update(...) thêm:
+    btnUpdate->update(mousePos);
+    if (showUpdateInput) {
+        btnGoUpdate->update(mousePos);
+        // Lưu ý: không gọi update cho inputUpdateVal (vì lỗi như bạn từng gặp ở SLL)
+    }
     // THÊM DÒNG NÀY ĐỂ UPDATE 2 NÚT MỚI:
     btnSkipBack->update(mousePos); btnSkipForward->update(mousePos);
 
@@ -184,6 +219,12 @@ if (isViewInitialized) window.setView(treeView);
     // THÊM DÒNG NÀY ĐỂ VẼ 2 NÚT MỚI:
     btnSkipBack->draw(window); btnSkipForward->draw(window);
     // ... Vẽ các nút Playback ...
+
+    btnUpdate->draw(window);
+    if (showUpdateInput) {
+        inputUpdateVal->draw(window);
+        btnGoUpdate->draw(window);
+    }
     
     drawCodeBlock(window); // Vẽ khung pseudo-code
     btnStepBack->draw(window); btnPausePlay->draw(window); btnStepForward->draw(window);
