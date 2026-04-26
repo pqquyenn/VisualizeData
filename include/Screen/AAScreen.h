@@ -23,6 +23,12 @@ private:
     Button* btnSpeedDown;
     Button* btnSpeedUp;
 
+    // THÊM VÀO PHẦN PRIVATE:
+    Button* btnUpdate;
+    InputBox* inputUpdateVal; // Ô nhập giá trị cũ cần tìm
+    Button* btnGoUpdate;
+    bool showUpdateInput = false;
+
     // THÊM 2 NÚT NÀY (Nhảy về đầu và Nhảy tới cuối)
     Button* btnSkipBack;    
     Button* btnSkipForward;
