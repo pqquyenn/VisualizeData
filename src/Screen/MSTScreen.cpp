@@ -197,8 +197,6 @@ void MSTScreen::draw(sf::RenderWindow& window) {
 
     window.setView(window.getDefaultView()); 
     
-    // ĐÃ XÓA KHỐI VẼ NỀN ĐEN uiBg ĐỂ NODE KHÔNG BỊ TỐI
-
     btnBackToMenu->draw(window); 
     btnInputGraph->draw(window); btnRandom->draw(window); btnKruskal->draw(window);
 
@@ -208,8 +206,8 @@ void MSTScreen::draw(sf::RenderWindow& window) {
         btnAdjList->draw(window); btnGoInput->draw(window);
         
         sf::Text hint; hint.setFont(app->font); hint.setCharacterSize(14); hint.setFillColor(sf::Color::White);
-        hint.setPosition(150, 350); // Dời Hint xuống dưới khung text box
-       if (selectedInputType == 1) hint.setString("Format: n following lines input u v weight (e.g. 1 2 99)");
+        hint.setPosition(150, 350);
+        if (selectedInputType == 1) hint.setString("Format: n following lines input u v weight (e.g. 1 2 99)");
         else if (selectedInputType == 2) hint.setString("Format: N x N grid (0-based indexing)");
         else if (selectedInputType == 3) hint.setString("Format: First line u v1 w1 v2 w2... (e.g. 4 2 99 3 4)");
         window.draw(hint);
@@ -219,14 +217,17 @@ void MSTScreen::draw(sf::RenderWindow& window) {
         inputE->draw(window);
         btnGoRandom->draw(window);
 
-        // Chỉnh lại toạ độ chữ V và E để nằm ngang hàng và không bị đè
         sf::Text labelV; labelV.setFont(app->font); labelV.setString("V:"); labelV.setCharacterSize(18); labelV.setPosition(150, 150);
         sf::Text labelE; labelE.setFont(app->font); labelE.setString("E:"); labelE.setCharacterSize(18); labelE.setPosition(280, 150);
         window.draw(labelV); window.draw(labelE);
     }
+    
     btnStepBack->draw(window); btnPausePlay->draw(window); 
     btnStepForward->draw(window); btnSpeedDown->draw(window); btnSpeedUp->draw(window);
     btnSkipBack->draw(window); 
     btnSkipForward->draw(window);
     window.draw(textSpeed);
+
+    // --- THÊM MỚI: Vẽ hộp Code ở cuối để đè lên các UI khác nếu cần ---
+    graph->drawCode(window);
 }
