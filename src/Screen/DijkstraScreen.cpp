@@ -242,10 +242,13 @@ void DijkstraScreen::draw(sf::RenderWindow& window) {
         labelSource.setCharacterSize(18); labelSource.setPosition(340, 150); labelSource.setFillColor(sf::Color::White);
         window.draw(labelSource);
     }
-    // Thêm draw cho 2 nút mới
+    
     btnSkipBack->draw(window); 
     btnSkipForward->draw(window);
     btnStepBack->draw(window); btnPausePlay->draw(window); 
     btnStepForward->draw(window); btnSpeedDown->draw(window); btnSpeedUp->draw(window);
     window.draw(textSpeed);
+
+    // MỚI THÊM: Vẽ hộp Code (Vẽ cuối cùng để nổi lên trên nền và UI)
+    graph->drawCode(window);
 }
